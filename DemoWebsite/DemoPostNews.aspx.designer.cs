@@ -13,6 +13,15 @@ namespace DemoWebsite {
     public partial class DemoPostNews {
         
         /// <summary>
+        /// lblKetQua control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblKetQua;
+        
+        /// <summary>
         /// form1 control.
         /// </summary>
         /// <remarks>
@@ -49,22 +58,13 @@ namespace DemoWebsite {
         protected global::System.Web.UI.WebControls.Button btnGui;
         
         /// <summary>
-        /// txtKetQua control.
+        /// lblLoi control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtKetQua;
-        
-        /// <summary>
-        /// lblEndcode control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblEndcode;
+        protected global::System.Web.UI.WebControls.Label lblLoi;
         
         /// <summary>
         /// lblDecode control.

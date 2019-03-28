@@ -35,7 +35,7 @@ namespace DemoWebsite
             catch (Exception ex)
             {
                 // hien thi loi
-                txtKetQua.Text = ex.Message + ex.StackTrace;
+                lblLoi.Text = ex.Message + ex.StackTrace;
                 return;
             }
 
@@ -43,8 +43,9 @@ namespace DemoWebsite
             //FCMController fcm = new FCMController();
             //string message = fcm.CreateNewsNotification(thongBao);
             //string response = fcm.SendMessage(message);
-            //txtKetQua.Text = response;
 
+            lblKetQua.Text = "Them thanh cong !!!";
+            lblKetQua.CssClass = "text-success";
             txtTieuDe.Text = "";
             txtNoiDung.Text = "";
         }

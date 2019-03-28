@@ -22,11 +22,24 @@ namespace UMS_HUSC_WEB_API.Daos
             return listThongBao;
         }
 
+        public static List<THONGBAO> GetThongBaoTheoSoTrang(int soTrang, int soDongMoiTrang)
+        {
+            var skipRow = (soTrang - 1) * soDongMoiTrang;
+            var list = GetAllThongBao().Skip(skipRow).Take(soDongMoiTrang).ToList();
+            return list;
+        }
+
         public static void AddThongBao(THONGBAO thongBao)
         {
             UMS_HUSCEntities db = new UMS_HUSCEntities();
             db.THONGBAOs.Add(thongBao);
             db.SaveChanges();
+        }
+
+        public static long GetSoDong()
+        {
+            UMS_HUSCEntities db = new UMS_HUSCEntities();
+            return db.THONGBAOs.Count();
         }
     }
 }

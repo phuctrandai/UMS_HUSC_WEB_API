@@ -12,7 +12,7 @@ namespace UMS_HUSC_WEB_API.Controllers
     public class ThongBaoController : ApiController
     {
         private const string ORDER_TAT_CA_THONG_BAO = "tatca";
-        
+
         [HttpGet]
         public IHttpActionResult Get()
         {
@@ -20,7 +20,7 @@ namespace UMS_HUSC_WEB_API.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult Post(string order, string maSinhVien, string matKhau)
+        public IHttpActionResult Get(string order, string maSinhVien, string matKhau)
         {
             if (string.IsNullOrEmpty(order) || string.IsNullOrEmpty(maSinhVien) || string.IsNullOrEmpty(matKhau))
                 return NotFound();
@@ -42,6 +42,25 @@ namespace UMS_HUSC_WEB_API.Controllers
                 }
             }
             return NotFound();
-        }        
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetThongBaoTheoSoTrang(string maSinhVien, string matKhau, int soTrang, int soDongMoiTrang)
+        {
+            if (string.IsNullOrEmpty(maSinhVien) || string.IsNullOrEmpty(matKhau)
+                || soTrang < 1 || soDongMoiTrang < 1)
+                return BadRequest("Tham số truyền vào không hợp lệ !");
+
+            var current = SinhVienDao.GetSinhVien(maSinhVien, matKhau);
+            if (current == null) return BadRequest("Thong tin sinh vien khong hop le !");
+
+            var temp = ThongBaoDao.GetSoDong() % soDongMoiTrang;
+            var subTongSoTrang = ThongBaoDao.GetSoDong() / soDongMoiTrang;
+            var tongSoTrang = temp == 0 ? subTongSoTrang : subTongSoTrang + 1;
+            if (soTrang > tongSoTrang) return Ok(new List<THONGBAO>());
+
+            var listThongBao = ThongBaoDao.GetThongBaoTheoSoTrang(soTrang, soDongMoiTrang);
+            return Ok(listThongBao);
+        }
     }
 }

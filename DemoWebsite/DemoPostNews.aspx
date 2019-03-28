@@ -33,31 +33,26 @@
     </div>
     <br />
     <br />
-    <center><h2>Demo Đăng Thông Báo</h2></center>
+    <center>
+        <h2>Demo Đăng Thông Báo</h2>
+        <asp:Label ID="lblKetQua" runat="server" />
+    </center>
     <br />
     <br />
     <form id="form1" runat="server">
         <div>
-            Nhập tiêu đề thông báo:
-            <br />
+            <p><b><i>Nhập tiêu đề thông báo</i></b></p>
             <asp:TextBox ID="txtTieuDe" runat="server" Width="100%" CssClass="form-control"></asp:TextBox>
             <br />
 
-            Nhập nội dung thông báo:
-            <br />
+            <p><b><i>Nhập nội dung thông báo</i></b></p>
             <asp:TextBox ID="txtNoiDung" runat="server" Height="300px" TextMode="MultiLine" Width="100%" CssClass="form-control"></asp:TextBox>
             <br />
 
             <asp:Button ID="btnGui" runat="server" OnClick="btnGui_Click" Text="Đăng thông báo" CssClass="btn btn-danger" />
             <br />
             <br />
-
-            Kết quả sau khi gửi thông báo có bài mới:
-            <br />
-            <asp:TextBox  ValidateRequestMode="Disabled" ID="txtKetQua" runat="server" Height="300px" TextMode="MultiLine" Width="100%" CssClass="form-control"></asp:TextBox>
-
-            <br />
-            <asp:Label ID="lblEndcode" runat="server"/>
+            <asp:Label ID="lblLoi" runat="server"/>
 
             <br /> <br />
             <asp:Label ID="lblDecode" runat="server"/>
