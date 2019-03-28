@@ -14,7 +14,17 @@ namespace UMS_HUSC_WEB_API.Models
     
     public partial class SINHVIEN
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public SINHVIEN()
+        {
+            this.FIREBASEs = new HashSet<FIREBASE>();
+        }
+    
         public string MaSinhVien { get; set; }
         public string MatKhau { get; set; }
+    
+        public virtual LICHSUBANTHAN LICHSUBANTHAN { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FIREBASE> FIREBASEs { get; set; }
     }
 }

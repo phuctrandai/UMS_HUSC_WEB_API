@@ -26,5 +26,15 @@ namespace UMS_HUSC_WEB_API.Models
         }
     
         public virtual DbSet<SINHVIEN> SINHVIENs { get; set; }
+        public virtual DbSet<VThongTinChung> VThongTinChungs { get; set; }
+        public virtual DbSet<VThongTinLienHe> VThongTinLienHes { get; set; }
+        public virtual DbSet<VDacDiemBanThan> VDacDiemBanThans { get; set; }
+        public virtual DbSet<VQueQuan> VQueQuans { get; set; }
+        public virtual DbSet<VThuongTru> VThuongTrus { get; set; }
+        public virtual DbSet<LICHSUBANTHAN> LICHSUBANTHANs { get; set; }
+        public virtual DbSet<VThongTinCaNhan> VThongTinCaNhans { get; set; }
+        public virtual DbSet<VNoiSinh> VNoiSinhs { get; set; }
+        public virtual DbSet<THONGBAO> THONGBAOs { get; set; }
+        public virtual DbSet<FIREBASE> FIREBASEs { get; set; }
     }
 }

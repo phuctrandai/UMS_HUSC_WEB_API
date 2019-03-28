@@ -4,7 +4,37 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="UMS_HUSCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="UMS_HUSCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="FIREBASE">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Token" Type="nvarchar(max)" />
+          <Property Name="MaSinhVien" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UMS_HUSC.dbo.LICHSUBANTHAN' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="LICHSUBANTHAN">
+          <Key>
+            <PropertyRef Name="MaSinhVien" />
+          </Key>
+          <Property Name="MaSinhVien" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="NamTotNghiepTHPT" Type="int" />
+          <Property Name="XepLoaiTotNghiepTHPT" Type="nvarchar" MaxLength="50" />
+          <Property Name="NoiTotNghiepTHPT" Type="nvarchar" MaxLength="50" />
+          <Property Name="XepLoaiHocTap10" Type="nvarchar" MaxLength="50" />
+          <Property Name="XepLoaiHocTap11" Type="nvarchar" MaxLength="50" />
+          <Property Name="XepLoaiHocTap12" Type="nvarchar" MaxLength="50" />
+          <Property Name="XepLoaiHanhKiem10" Type="nvarchar" MaxLength="50" />
+          <Property Name="XepLoaiHanhKiem11" Type="nvarchar" MaxLength="50" />
+          <Property Name="XepLoaiHanhKiem12" Type="nvarchar" MaxLength="50" />
+          <Property Name="TenLucLuongVuTrang" Type="nvarchar" MaxLength="50" />
+          <Property Name="NgayBatDauLLVT" Type="date" />
+          <Property Name="NgayKetThucLLVT" Type="date" />
+          <Property Name="QuanHamLLVT" Type="nvarchar" MaxLength="50" />
+          <Property Name="NoiCongTacLLVT" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="SINHVIEN">
           <Key>
             <PropertyRef Name="MaSinhVien" />
@@ -12,11 +42,261 @@
           <Property Name="MaSinhVien" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="MatKhau" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="THONGBAO">
+          <Key>
+            <PropertyRef Name="MaThongBao" />
+          </Key>
+          <Property Name="MaThongBao" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TieuDe" Type="nvarchar" MaxLength="500" />
+          <Property Name="ThoiGianDang" Type="datetime" />
+          <Property Name="NoiDung" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UMS_HUSC.dbo.VDacDiemBanThan' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VDacDiemBanThan">
+          <Key>
+            <PropertyRef Name="MaSinhVien" />
+          </Key>
+          <Property Name="MaSinhVien" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TinhTrangHonNhan" Type="nvarchar" MaxLength="50" />
+          <Property Name="ChieuCao" Type="int" />
+          <Property Name="NhomMau" Type="nvarchar" MaxLength="50" />
+          <Property Name="ThanhPhanXuatThan" Type="nvarchar" MaxLength="50" />
+          <Property Name="DienUuTienGiaDinh" Type="nvarchar" MaxLength="50" />
+          <Property Name="TenDienUuTienBanThan" Type="nvarchar" MaxLength="50" />
+          <Property Name="NgayVaoDoan" Type="date" />
+          <Property Name="NoiKetNapDoan" Type="nvarchar" MaxLength="50" />
+          <Property Name="NgayVaoDang" Type="date" />
+          <Property Name="NoiKetNapDang" Type="nvarchar" MaxLength="50" />
+          <Property Name="NgayChinhThucVaoDang" Type="date" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UMS_HUSC.dbo.VNoiSinh' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VNoiSinh">
+          <Key>
+            <PropertyRef Name="MaSinhVien" />
+          </Key>
+          <Property Name="MaSinhVien" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TenQuocGia" Type="nvarchar" MaxLength="50" />
+          <Property Name="TenThanhPho" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UMS_HUSC.dbo.VQueQuan' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VQueQuan">
+          <Key>
+            <PropertyRef Name="MaSinhVien" />
+          </Key>
+          <Property Name="MaSinhVien" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TenQuocGia" Type="nvarchar" MaxLength="50" />
+          <Property Name="TenThanhPho" Type="nvarchar" MaxLength="50" />
+          <Property Name="TenQuanHuyen" Type="nvarchar" MaxLength="50" />
+          <Property Name="TenPhuongXa" Type="nvarchar" MaxLength="50" />
+          <Property Name="DiaChi" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UMS_HUSC.dbo.VThongTinCaNhan' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VThongTinCaNhan">
+          <Key>
+            <PropertyRef Name="MaSinhVien" />
+            <PropertyRef Name="HoTen" />
+          </Key>
+          <Property Name="MaSinhVien" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TenNganh" Type="nvarchar" MaxLength="50" />
+          <Property Name="KhoaHoc" Type="nvarchar" MaxLength="50" />
+          <Property Name="HoTen" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AnhDaiDien" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UMS_HUSC.dbo.VThongTinChung' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VThongTinChung">
+          <Key>
+            <PropertyRef Name="HoTen" />
+            <PropertyRef Name="MaSinhVien" />
+          </Key>
+          <Property Name="HoTen" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="GioiTinh" Type="bit" />
+          <Property Name="NgaySinh" Type="date" />
+          <Property Name="TenQuocGia" Type="nvarchar" MaxLength="50" />
+          <Property Name="TenDanToc" Type="nvarchar" MaxLength="50" />
+          <Property Name="SoCMND" Type="varchar" MaxLength="12" />
+          <Property Name="NoiCap" Type="nvarchar" MaxLength="50" />
+          <Property Name="NgayCap" Type="date" />
+          <Property Name="TenTonGiao" Type="nvarchar" MaxLength="50" />
+          <Property Name="AnhDaiDien" Type="varchar" MaxLength="50" />
+          <Property Name="MaSinhVien" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UMS_HUSC.dbo.VThongTinLienHe' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VThongTinLienHe">
+          <Key>
+            <PropertyRef Name="MaSinhVien" />
+          </Key>
+          <Property Name="MaSinhVien" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="DienThoai" Type="varchar" MaxLength="12" />
+          <Property Name="DiDong" Type="varchar" MaxLength="12" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="HinhThucCuTru" Type="int" />
+          <Property Name="TenKyTucXa" Type="nvarchar" MaxLength="50" />
+          <Property Name="TenQuocGia" Type="nvarchar" MaxLength="50" />
+          <Property Name="TenThanhPho" Type="nvarchar" MaxLength="50" />
+          <Property Name="TenQuanHuyen" Type="nvarchar" MaxLength="50" />
+          <Property Name="TenPhuongXa" Type="nvarchar" MaxLength="50" />
+          <Property Name="DiaChi" Type="nvarchar" MaxLength="50" />
+          <Property Name="NgayBatDauCuTru" Type="date" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UMS_HUSC.dbo.VThuongTru' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VThuongTru">
+          <Key>
+            <PropertyRef Name="MaSinhVien" />
+          </Key>
+          <Property Name="MaSinhVien" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TenQuocGia" Type="nvarchar" MaxLength="50" />
+          <Property Name="TenThanhPho" Type="nvarchar" MaxLength="50" />
+          <Property Name="TenQuanHuyen" Type="nvarchar" MaxLength="50" />
+          <Property Name="TenPhuongXa" Type="nvarchar" MaxLength="50" />
+          <Property Name="DiaChi" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_FIREBASE_SINHVIEN1">
+          <End Role="SINHVIEN" Type="Self.SINHVIEN" Multiplicity="0..1" />
+          <End Role="FIREBASE" Type="Self.FIREBASE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SINHVIEN">
+              <PropertyRef Name="MaSinhVien" />
+            </Principal>
+            <Dependent Role="FIREBASE">
+              <PropertyRef Name="MaSinhVien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LICHSUBANTHAN_SINHVIEN">
+          <End Role="SINHVIEN" Type="Self.SINHVIEN" Multiplicity="1" />
+          <End Role="LICHSUBANTHAN" Type="Self.LICHSUBANTHAN" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="SINHVIEN">
+              <PropertyRef Name="MaSinhVien" />
+            </Principal>
+            <Dependent Role="LICHSUBANTHAN">
+              <PropertyRef Name="MaSinhVien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="UMS_HUSCModelStoreContainer">
+          <EntitySet Name="FIREBASE" EntityType="Self.FIREBASE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SINHVIEN" EntityType="Self.SINHVIEN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="THONGBAO" EntityType="Self.THONGBAO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LICHSUBANTHAN" EntityType="Self.LICHSUBANTHAN" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [LICHSUBANTHAN].[MaSinhVien] AS [MaSinhVien], 
+    [LICHSUBANTHAN].[NamTotNghiepTHPT] AS [NamTotNghiepTHPT], 
+    [LICHSUBANTHAN].[XepLoaiTotNghiepTHPT] AS [XepLoaiTotNghiepTHPT], 
+    [LICHSUBANTHAN].[NoiTotNghiepTHPT] AS [NoiTotNghiepTHPT], 
+    [LICHSUBANTHAN].[XepLoaiHocTap10] AS [XepLoaiHocTap10], 
+    [LICHSUBANTHAN].[XepLoaiHocTap11] AS [XepLoaiHocTap11], 
+    [LICHSUBANTHAN].[XepLoaiHocTap12] AS [XepLoaiHocTap12], 
+    [LICHSUBANTHAN].[XepLoaiHanhKiem10] AS [XepLoaiHanhKiem10], 
+    [LICHSUBANTHAN].[XepLoaiHanhKiem11] AS [XepLoaiHanhKiem11], 
+    [LICHSUBANTHAN].[XepLoaiHanhKiem12] AS [XepLoaiHanhKiem12], 
+    [LICHSUBANTHAN].[TenLucLuongVuTrang] AS [TenLucLuongVuTrang], 
+    [LICHSUBANTHAN].[NgayBatDauLLVT] AS [NgayBatDauLLVT], 
+    [LICHSUBANTHAN].[NgayKetThucLLVT] AS [NgayKetThucLLVT], 
+    [LICHSUBANTHAN].[QuanHamLLVT] AS [QuanHamLLVT], 
+    [LICHSUBANTHAN].[NoiCongTacLLVT] AS [NoiCongTacLLVT]
+    FROM [dbo].[LICHSUBANTHAN] AS [LICHSUBANTHAN]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VDacDiemBanThan" EntityType="Self.VDacDiemBanThan" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VDacDiemBanThan].[MaSinhVien] AS [MaSinhVien], 
+    [VDacDiemBanThan].[TinhTrangHonNhan] AS [TinhTrangHonNhan], 
+    [VDacDiemBanThan].[ChieuCao] AS [ChieuCao], 
+    [VDacDiemBanThan].[NhomMau] AS [NhomMau], 
+    [VDacDiemBanThan].[ThanhPhanXuatThan] AS [ThanhPhanXuatThan], 
+    [VDacDiemBanThan].[DienUuTienGiaDinh] AS [DienUuTienGiaDinh], 
+    [VDacDiemBanThan].[TenDienUuTienBanThan] AS [TenDienUuTienBanThan], 
+    [VDacDiemBanThan].[NgayVaoDoan] AS [NgayVaoDoan], 
+    [VDacDiemBanThan].[NoiKetNapDoan] AS [NoiKetNapDoan], 
+    [VDacDiemBanThan].[NgayVaoDang] AS [NgayVaoDang], 
+    [VDacDiemBanThan].[NoiKetNapDang] AS [NoiKetNapDang], 
+    [VDacDiemBanThan].[NgayChinhThucVaoDang] AS [NgayChinhThucVaoDang]
+    FROM [dbo].[VDacDiemBanThan] AS [VDacDiemBanThan]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VNoiSinh" EntityType="Self.VNoiSinh" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VNoiSinh].[MaSinhVien] AS [MaSinhVien], 
+    [VNoiSinh].[TenQuocGia] AS [TenQuocGia], 
+    [VNoiSinh].[TenThanhPho] AS [TenThanhPho]
+    FROM [dbo].[VNoiSinh] AS [VNoiSinh]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VQueQuan" EntityType="Self.VQueQuan" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VQueQuan].[MaSinhVien] AS [MaSinhVien], 
+    [VQueQuan].[TenQuocGia] AS [TenQuocGia], 
+    [VQueQuan].[TenThanhPho] AS [TenThanhPho], 
+    [VQueQuan].[TenQuanHuyen] AS [TenQuanHuyen], 
+    [VQueQuan].[TenPhuongXa] AS [TenPhuongXa], 
+    [VQueQuan].[DiaChi] AS [DiaChi]
+    FROM [dbo].[VQueQuan] AS [VQueQuan]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VThongTinCaNhan" EntityType="Self.VThongTinCaNhan" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VThongTinCaNhan].[MaSinhVien] AS [MaSinhVien], 
+    [VThongTinCaNhan].[TenNganh] AS [TenNganh], 
+    [VThongTinCaNhan].[KhoaHoc] AS [KhoaHoc], 
+    [VThongTinCaNhan].[HoTen] AS [HoTen], 
+    [VThongTinCaNhan].[AnhDaiDien] AS [AnhDaiDien]
+    FROM [dbo].[VThongTinCaNhan] AS [VThongTinCaNhan]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VThongTinChung" EntityType="Self.VThongTinChung" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VThongTinChung].[HoTen] AS [HoTen], 
+    [VThongTinChung].[GioiTinh] AS [GioiTinh], 
+    [VThongTinChung].[NgaySinh] AS [NgaySinh], 
+    [VThongTinChung].[TenQuocGia] AS [TenQuocGia], 
+    [VThongTinChung].[TenDanToc] AS [TenDanToc], 
+    [VThongTinChung].[SoCMND] AS [SoCMND], 
+    [VThongTinChung].[NoiCap] AS [NoiCap], 
+    [VThongTinChung].[NgayCap] AS [NgayCap], 
+    [VThongTinChung].[TenTonGiao] AS [TenTonGiao], 
+    [VThongTinChung].[AnhDaiDien] AS [AnhDaiDien], 
+    [VThongTinChung].[MaSinhVien] AS [MaSinhVien]
+    FROM [dbo].[VThongTinChung] AS [VThongTinChung]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VThongTinLienHe" EntityType="Self.VThongTinLienHe" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VThongTinLienHe].[MaSinhVien] AS [MaSinhVien], 
+    [VThongTinLienHe].[DienThoai] AS [DienThoai], 
+    [VThongTinLienHe].[DiDong] AS [DiDong], 
+    [VThongTinLienHe].[Email] AS [Email], 
+    [VThongTinLienHe].[HinhThucCuTru] AS [HinhThucCuTru], 
+    [VThongTinLienHe].[TenKyTucXa] AS [TenKyTucXa], 
+    [VThongTinLienHe].[TenQuocGia] AS [TenQuocGia], 
+    [VThongTinLienHe].[TenThanhPho] AS [TenThanhPho], 
+    [VThongTinLienHe].[TenQuanHuyen] AS [TenQuanHuyen], 
+    [VThongTinLienHe].[TenPhuongXa] AS [TenPhuongXa], 
+    [VThongTinLienHe].[DiaChi] AS [DiaChi], 
+    [VThongTinLienHe].[NgayBatDauCuTru] AS [NgayBatDauCuTru]
+    FROM [dbo].[VThongTinLienHe] AS [VThongTinLienHe]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VThuongTru" EntityType="Self.VThuongTru" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VThuongTru].[MaSinhVien] AS [MaSinhVien], 
+    [VThuongTru].[TenQuocGia] AS [TenQuocGia], 
+    [VThuongTru].[TenThanhPho] AS [TenThanhPho], 
+    [VThuongTru].[TenQuanHuyen] AS [TenQuanHuyen], 
+    [VThuongTru].[TenPhuongXa] AS [TenPhuongXa], 
+    [VThuongTru].[DiaChi] AS [DiaChi]
+    FROM [dbo].[VThuongTru] AS [VThuongTru]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_FIREBASE_SINHVIEN1" Association="Self.FK_FIREBASE_SINHVIEN1">
+            <End Role="SINHVIEN" EntitySet="SINHVIEN" />
+            <End Role="FIREBASE" EntitySet="FIREBASE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LICHSUBANTHAN_SINHVIEN" Association="Self.FK_LICHSUBANTHAN_SINHVIEN">
+            <End Role="SINHVIEN" EntitySet="SINHVIEN" />
+            <End Role="LICHSUBANTHAN" EntitySet="LICHSUBANTHAN" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="UMS_HUSCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -26,10 +306,185 @@
           </Key>
           <Property Name="MaSinhVien" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="MatKhau" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="LICHSUBANTHAN" Relationship="UMS_HUSCModel.FK_LICHSUBANTHAN_SINHVIEN" FromRole="SINHVIEN" ToRole="LICHSUBANTHAN" />
+          <NavigationProperty Name="FIREBASEs" Relationship="UMS_HUSCModel.FK_FIREBASE_SINHVIEN1" FromRole="SINHVIEN" ToRole="FIREBASE" />
         </EntityType>
         <EntityContainer Name="UMS_HUSCEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="SINHVIENs" EntityType="Self.SINHVIEN" />
+          <EntitySet Name="VThongTinChungs" EntityType="UMS_HUSCModel.VThongTinChung" />
+          <EntitySet Name="VThongTinLienHes" EntityType="UMS_HUSCModel.VThongTinLienHe" />
+          <EntitySet Name="VDacDiemBanThans" EntityType="UMS_HUSCModel.VDacDiemBanThan" />
+          <EntitySet Name="VQueQuans" EntityType="UMS_HUSCModel.VQueQuan" />
+          <EntitySet Name="VThuongTrus" EntityType="UMS_HUSCModel.VThuongTru" />
+          <EntitySet Name="LICHSUBANTHANs" EntityType="UMS_HUSCModel.LICHSUBANTHAN" />
+          <AssociationSet Name="FK_LICHSUBANTHAN_SINHVIEN" Association="UMS_HUSCModel.FK_LICHSUBANTHAN_SINHVIEN">
+            <End Role="SINHVIEN" EntitySet="SINHVIENs" />
+            <End Role="LICHSUBANTHAN" EntitySet="LICHSUBANTHANs" />
+          </AssociationSet>
+          <EntitySet Name="VThongTinCaNhans" EntityType="UMS_HUSCModel.VThongTinCaNhan" />
+          <EntitySet Name="VNoiSinhs" EntityType="UMS_HUSCModel.VNoiSinh" />
+          <EntitySet Name="THONGBAOs" EntityType="UMS_HUSCModel.THONGBAO" />
+          <EntitySet Name="FIREBASEs" EntityType="UMS_HUSCModel.FIREBASE" />
+          <AssociationSet Name="FK_FIREBASE_SINHVIEN1" Association="UMS_HUSCModel.FK_FIREBASE_SINHVIEN1">
+            <End Role="SINHVIEN" EntitySet="SINHVIENs" />
+            <End Role="FIREBASE" EntitySet="FIREBASEs" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="VThongTinChung">
+          <Key>
+            <PropertyRef Name="HoTen" />
+            <PropertyRef Name="MaSinhVien" />
+          </Key>
+          <Property Name="HoTen" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GioiTinh" Type="Boolean" />
+          <Property Name="NgaySinh" Type="DateTime" Precision="0" />
+          <Property Name="TenQuocGia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TenDanToc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SoCMND" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="NoiCap" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NgayCap" Type="DateTime" Precision="0" />
+          <Property Name="TenTonGiao" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AnhDaiDien" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MaSinhVien" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="VThongTinLienHe">
+          <Key>
+            <PropertyRef Name="MaSinhVien" />
+          </Key>
+          <Property Name="MaSinhVien" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DienThoai" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="DiDong" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HinhThucCuTru" Type="Int32" />
+          <Property Name="TenKyTucXa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TenQuocGia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TenThanhPho" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TenQuanHuyen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TenPhuongXa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DiaChi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NgayBatDauCuTru" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="VDacDiemBanThan">
+          <Key>
+            <PropertyRef Name="MaSinhVien" />
+          </Key>
+          <Property Name="MaSinhVien" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TinhTrangHonNhan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ChieuCao" Type="Int32" />
+          <Property Name="NhomMau" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ThanhPhanXuatThan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DienUuTienGiaDinh" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TenDienUuTienBanThan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NgayVaoDoan" Type="DateTime" Precision="0" />
+          <Property Name="NoiKetNapDoan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NgayVaoDang" Type="DateTime" Precision="0" />
+          <Property Name="NoiKetNapDang" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NgayChinhThucVaoDang" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="VQueQuan">
+          <Key>
+            <PropertyRef Name="MaSinhVien" />
+          </Key>
+          <Property Name="MaSinhVien" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TenQuocGia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TenThanhPho" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TenQuanHuyen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TenPhuongXa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DiaChi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="VThuongTru">
+          <Key>
+            <PropertyRef Name="MaSinhVien" />
+          </Key>
+          <Property Name="MaSinhVien" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TenQuocGia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TenThanhPho" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TenQuanHuyen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TenPhuongXa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DiaChi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="LICHSUBANTHAN">
+          <Key>
+            <PropertyRef Name="MaSinhVien" />
+          </Key>
+          <Property Name="MaSinhVien" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NamTotNghiepTHPT" Type="Int32" />
+          <Property Name="XepLoaiTotNghiepTHPT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NoiTotNghiepTHPT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="XepLoaiHocTap10" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="XepLoaiHocTap11" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="XepLoaiHocTap12" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="XepLoaiHanhKiem10" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="XepLoaiHanhKiem11" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="XepLoaiHanhKiem12" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TenLucLuongVuTrang" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NgayBatDauLLVT" Type="DateTime" Precision="0" />
+          <Property Name="NgayKetThucLLVT" Type="DateTime" Precision="0" />
+          <Property Name="QuanHamLLVT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NoiCongTacLLVT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SINHVIEN" Relationship="UMS_HUSCModel.FK_LICHSUBANTHAN_SINHVIEN" FromRole="LICHSUBANTHAN" ToRole="SINHVIEN" />
+        </EntityType>
+        <Association Name="FK_LICHSUBANTHAN_SINHVIEN">
+          <End Type="UMS_HUSCModel.SINHVIEN" Role="SINHVIEN" Multiplicity="1" />
+          <End Type="UMS_HUSCModel.LICHSUBANTHAN" Role="LICHSUBANTHAN" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="SINHVIEN">
+              <PropertyRef Name="MaSinhVien" />
+            </Principal>
+            <Dependent Role="LICHSUBANTHAN">
+              <PropertyRef Name="MaSinhVien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="VThongTinCaNhan">
+          <Key>
+            <PropertyRef Name="MaSinhVien" />
+            <PropertyRef Name="HoTen" />
+          </Key>
+          <Property Name="MaSinhVien" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TenNganh" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KhoaHoc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HoTen" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AnhDaiDien" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="VNoiSinh">
+          <Key>
+            <PropertyRef Name="MaSinhVien" />
+          </Key>
+          <Property Name="MaSinhVien" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TenQuocGia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TenThanhPho" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="THONGBAO">
+          <Key>
+            <PropertyRef Name="MaThongBao" />
+          </Key>
+          <Property Name="MaThongBao" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TieuDe" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ThoiGianDang" Type="DateTime" Precision="3" />
+          <Property Name="NoiDung" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="FIREBASE">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Token" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MaSinhVien" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SINHVIEN" Relationship="UMS_HUSCModel.FK_FIREBASE_SINHVIEN1" FromRole="FIREBASE" ToRole="SINHVIEN" />
+        </EntityType>
+        <Association Name="FK_FIREBASE_SINHVIEN1">
+          <End Type="UMS_HUSCModel.SINHVIEN" Role="SINHVIEN" Multiplicity="0..1" />
+          <End Type="UMS_HUSCModel.FIREBASE" Role="FIREBASE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SINHVIEN">
+              <PropertyRef Name="MaSinhVien" />
+            </Principal>
+            <Dependent Role="FIREBASE">
+              <PropertyRef Name="MaSinhVien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -41,6 +496,143 @@
               <MappingFragment StoreEntitySet="SINHVIEN">
                 <ScalarProperty Name="MaSinhVien" ColumnName="MaSinhVien" />
                 <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VThongTinChungs">
+            <EntityTypeMapping TypeName="UMS_HUSCModel.VThongTinChung">
+              <MappingFragment StoreEntitySet="VThongTinChung">
+                <ScalarProperty Name="MaSinhVien" ColumnName="MaSinhVien" />
+                <ScalarProperty Name="AnhDaiDien" ColumnName="AnhDaiDien" />
+                <ScalarProperty Name="TenTonGiao" ColumnName="TenTonGiao" />
+                <ScalarProperty Name="NgayCap" ColumnName="NgayCap" />
+                <ScalarProperty Name="NoiCap" ColumnName="NoiCap" />
+                <ScalarProperty Name="SoCMND" ColumnName="SoCMND" />
+                <ScalarProperty Name="TenDanToc" ColumnName="TenDanToc" />
+                <ScalarProperty Name="TenQuocGia" ColumnName="TenQuocGia" />
+                <ScalarProperty Name="NgaySinh" ColumnName="NgaySinh" />
+                <ScalarProperty Name="GioiTinh" ColumnName="GioiTinh" />
+                <ScalarProperty Name="HoTen" ColumnName="HoTen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VThongTinLienHes">
+            <EntityTypeMapping TypeName="UMS_HUSCModel.VThongTinLienHe">
+              <MappingFragment StoreEntitySet="VThongTinLienHe">
+                <ScalarProperty Name="NgayBatDauCuTru" ColumnName="NgayBatDauCuTru" />
+                <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+                <ScalarProperty Name="TenPhuongXa" ColumnName="TenPhuongXa" />
+                <ScalarProperty Name="TenQuanHuyen" ColumnName="TenQuanHuyen" />
+                <ScalarProperty Name="TenThanhPho" ColumnName="TenThanhPho" />
+                <ScalarProperty Name="TenQuocGia" ColumnName="TenQuocGia" />
+                <ScalarProperty Name="TenKyTucXa" ColumnName="TenKyTucXa" />
+                <ScalarProperty Name="HinhThucCuTru" ColumnName="HinhThucCuTru" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DiDong" ColumnName="DiDong" />
+                <ScalarProperty Name="DienThoai" ColumnName="DienThoai" />
+                <ScalarProperty Name="MaSinhVien" ColumnName="MaSinhVien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VDacDiemBanThans">
+            <EntityTypeMapping TypeName="UMS_HUSCModel.VDacDiemBanThan">
+              <MappingFragment StoreEntitySet="VDacDiemBanThan">
+                <ScalarProperty Name="NgayChinhThucVaoDang" ColumnName="NgayChinhThucVaoDang" />
+                <ScalarProperty Name="NoiKetNapDang" ColumnName="NoiKetNapDang" />
+                <ScalarProperty Name="NgayVaoDang" ColumnName="NgayVaoDang" />
+                <ScalarProperty Name="NoiKetNapDoan" ColumnName="NoiKetNapDoan" />
+                <ScalarProperty Name="NgayVaoDoan" ColumnName="NgayVaoDoan" />
+                <ScalarProperty Name="TenDienUuTienBanThan" ColumnName="TenDienUuTienBanThan" />
+                <ScalarProperty Name="DienUuTienGiaDinh" ColumnName="DienUuTienGiaDinh" />
+                <ScalarProperty Name="ThanhPhanXuatThan" ColumnName="ThanhPhanXuatThan" />
+                <ScalarProperty Name="NhomMau" ColumnName="NhomMau" />
+                <ScalarProperty Name="ChieuCao" ColumnName="ChieuCao" />
+                <ScalarProperty Name="TinhTrangHonNhan" ColumnName="TinhTrangHonNhan" />
+                <ScalarProperty Name="MaSinhVien" ColumnName="MaSinhVien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VQueQuans">
+            <EntityTypeMapping TypeName="UMS_HUSCModel.VQueQuan">
+              <MappingFragment StoreEntitySet="VQueQuan">
+                <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+                <ScalarProperty Name="TenPhuongXa" ColumnName="TenPhuongXa" />
+                <ScalarProperty Name="TenQuanHuyen" ColumnName="TenQuanHuyen" />
+                <ScalarProperty Name="TenThanhPho" ColumnName="TenThanhPho" />
+                <ScalarProperty Name="TenQuocGia" ColumnName="TenQuocGia" />
+                <ScalarProperty Name="MaSinhVien" ColumnName="MaSinhVien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VThuongTrus">
+            <EntityTypeMapping TypeName="UMS_HUSCModel.VThuongTru">
+              <MappingFragment StoreEntitySet="VThuongTru">
+                <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+                <ScalarProperty Name="TenPhuongXa" ColumnName="TenPhuongXa" />
+                <ScalarProperty Name="TenQuanHuyen" ColumnName="TenQuanHuyen" />
+                <ScalarProperty Name="TenThanhPho" ColumnName="TenThanhPho" />
+                <ScalarProperty Name="TenQuocGia" ColumnName="TenQuocGia" />
+                <ScalarProperty Name="MaSinhVien" ColumnName="MaSinhVien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LICHSUBANTHANs">
+            <EntityTypeMapping TypeName="UMS_HUSCModel.LICHSUBANTHAN">
+              <MappingFragment StoreEntitySet="LICHSUBANTHAN">
+                <ScalarProperty Name="NoiCongTacLLVT" ColumnName="NoiCongTacLLVT" />
+                <ScalarProperty Name="QuanHamLLVT" ColumnName="QuanHamLLVT" />
+                <ScalarProperty Name="NgayKetThucLLVT" ColumnName="NgayKetThucLLVT" />
+                <ScalarProperty Name="NgayBatDauLLVT" ColumnName="NgayBatDauLLVT" />
+                <ScalarProperty Name="TenLucLuongVuTrang" ColumnName="TenLucLuongVuTrang" />
+                <ScalarProperty Name="XepLoaiHanhKiem12" ColumnName="XepLoaiHanhKiem12" />
+                <ScalarProperty Name="XepLoaiHanhKiem11" ColumnName="XepLoaiHanhKiem11" />
+                <ScalarProperty Name="XepLoaiHanhKiem10" ColumnName="XepLoaiHanhKiem10" />
+                <ScalarProperty Name="XepLoaiHocTap12" ColumnName="XepLoaiHocTap12" />
+                <ScalarProperty Name="XepLoaiHocTap11" ColumnName="XepLoaiHocTap11" />
+                <ScalarProperty Name="XepLoaiHocTap10" ColumnName="XepLoaiHocTap10" />
+                <ScalarProperty Name="NoiTotNghiepTHPT" ColumnName="NoiTotNghiepTHPT" />
+                <ScalarProperty Name="XepLoaiTotNghiepTHPT" ColumnName="XepLoaiTotNghiepTHPT" />
+                <ScalarProperty Name="NamTotNghiepTHPT" ColumnName="NamTotNghiepTHPT" />
+                <ScalarProperty Name="MaSinhVien" ColumnName="MaSinhVien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VThongTinCaNhans">
+            <EntityTypeMapping TypeName="UMS_HUSCModel.VThongTinCaNhan">
+              <MappingFragment StoreEntitySet="VThongTinCaNhan">
+                <ScalarProperty Name="AnhDaiDien" ColumnName="AnhDaiDien" />
+                <ScalarProperty Name="HoTen" ColumnName="HoTen" />
+                <ScalarProperty Name="KhoaHoc" ColumnName="KhoaHoc" />
+                <ScalarProperty Name="TenNganh" ColumnName="TenNganh" />
+                <ScalarProperty Name="MaSinhVien" ColumnName="MaSinhVien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VNoiSinhs">
+            <EntityTypeMapping TypeName="UMS_HUSCModel.VNoiSinh">
+              <MappingFragment StoreEntitySet="VNoiSinh">
+                <ScalarProperty Name="TenThanhPho" ColumnName="TenThanhPho" />
+                <ScalarProperty Name="TenQuocGia" ColumnName="TenQuocGia" />
+                <ScalarProperty Name="MaSinhVien" ColumnName="MaSinhVien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="THONGBAOs">
+            <EntityTypeMapping TypeName="UMS_HUSCModel.THONGBAO">
+              <MappingFragment StoreEntitySet="THONGBAO">
+                <ScalarProperty Name="NoiDung" ColumnName="NoiDung" />
+                <ScalarProperty Name="ThoiGianDang" ColumnName="ThoiGianDang" />
+                <ScalarProperty Name="TieuDe" ColumnName="TieuDe" />
+                <ScalarProperty Name="MaThongBao" ColumnName="MaThongBao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FIREBASEs">
+            <EntityTypeMapping TypeName="UMS_HUSCModel.FIREBASE">
+              <MappingFragment StoreEntitySet="FIREBASE">
+                <ScalarProperty Name="MaSinhVien" ColumnName="MaSinhVien" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
