@@ -220,6 +220,7 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\NewsPushNotification.cs" />
     <Compile Include="ViewModels\VLyLichCaNhan.cs" />
     <Compile Include="ViewModels\ThongTinChung.cs" />
   </ItemGroup>

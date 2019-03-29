@@ -1,19 +1,23 @@
-﻿using System;
+﻿using Microsoft.Ajax.Utilities;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Web;
 using System.Web.Http;
 using UMS_HUSC_WEB_API.Daos;
 using UMS_HUSC_WEB_API.Models;
+using UMS_HUSC_WEB_API.ViewModels;
 
 namespace UMS_HUSC_WEB_API.Controllers
 {
     public class FCMController : ApiController
     {
-        private const string SERVER_KEY= "AAAA47Pl2e0:APA91bHr-LTCt3PdHBeP-YaNHy4ytNf8GLcr6KJRcBCSN0zV7B1h3VoCpCDU_p7ctUd2cTRwfz6IdSBXXHT7Y0c3qFQ7zOD-VMipSDGNG8jr5YaOD1_WU1v6aSxe1IxHjUT6FPBnbk4o";
+        private const string SERVER_KEY = "AAAA47Pl2e0:APA91bHr-LTCt3PdHBeP-YaNHy4ytNf8GLcr6KJRcBCSN0zV7B1h3VoCpCDU_p7ctUd2cTRwfz6IdSBXXHT7Y0c3qFQ7zOD-VMipSDGNG8jr5YaOD1_WU1v6aSxe1IxHjUT6FPBnbk4o";
         private const string SENDER_ID = "977975761389";
 
         public const string MESSAGE_NOTIFICATION = "message_notification";
@@ -33,10 +37,18 @@ namespace UMS_HUSC_WEB_API.Controllers
 
             else if (order.Equals("save"))
             {
-                var result = FireBaseDao.AddFireBase(maSinhVien, token);
-                if (result)
-                    return Ok("Save token success");
-                return NotFound();
+                try
+                {
+                    var result = FireBaseDao.AddFireBase(maSinhVien, token);
+
+                    if (result) return Ok("Save token success");
+
+                    return BadRequest("Token for this device/account is exist !");
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message + "\r" + ex.StackTrace);
+                }
             }
             else if (order.Equals("delete"))
             {
@@ -50,30 +62,32 @@ namespace UMS_HUSC_WEB_API.Controllers
                 return NotFound();
             }
         }
-        
+
         public string CreateNewsNotification(THONGBAO tHONGBAO)
         {
-            string title = tHONGBAO.TieuDe;
-            string body = tHONGBAO.NoiDung;
+            int id = tHONGBAO.MaThongBao;
+            string title = "Thông báo mới từ phòng đào tạo";
+            string body = HttpUtility.HtmlDecode(tHONGBAO.TieuDe).Replace("\r\n", "");
             string postTime = tHONGBAO.ThoiGianDang.Value.ToString();
 
             string[] arrRegid = FireBaseDao.GetAllFireBase().Select(x => x.Token).Distinct().ToArray();
-            string RegArr = string.Empty;
-            RegArr = string.Join("\",\"", arrRegid);
-            
-            string postData = 
-                "{ \"registration_ids\": [ \"" + RegArr + "\" ]" +
-                ",\"data\": {" +
-                    "\"type\": \"" + NEWS_NOTIFICATION + "\"" +
-                    ",\"body\": \"" + body + "\"" +
-                    ",\"title\": \"" + title + "\"" +
-                    ",\"postTime\":\"" + postTime + 
-                "\"}" +
-                ",\"notification\": {" +
-                    ",\"body\": \"" + body + "\"" +
-                    ",\"title\": \"" + title + "\"" +
-                    "}" +
-                "}";
+
+            NewsPushNotification notification = new NewsPushNotification()
+            {
+                registration_ids = arrRegid,
+                notification = new Notification()
+                {
+                    title = title,
+                    body = body
+                },
+                data = new Data()
+                {
+                    id = id,
+                    type = NEWS_NOTIFICATION,
+                    postTime = postTime
+                }
+            };
+            string postData = JsonConvert.SerializeObject(notification);
             return postData;
         }
 

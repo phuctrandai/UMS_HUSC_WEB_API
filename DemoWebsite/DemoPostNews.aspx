@@ -55,7 +55,7 @@
             <asp:Label ID="lblLoi" runat="server"/>
 
             <br /> <br />
-            <asp:Label ID="lblDecode" runat="server"/>
+            <asp:Label ID="lblTinGuiDi" runat="server"/>
         </div>
     </form>
 

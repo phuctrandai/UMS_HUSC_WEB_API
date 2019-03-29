@@ -15,11 +15,37 @@ namespace UMS_HUSC_WEB_API.Daos
             List<THONGBAO> listThongBao = db.THONGBAOs.OrderByDescending(v => v.ThoiGianDang).ToList();
             listThongBao.ForEach(x => {
                 string temp = HttpUtility.HtmlDecode(x.NoiDung);
-                x.NoiDung = temp.Replace("\"", "'").Replace("\r\n", "");
-                Console.WriteLine(x.NoiDung);
+                x.NoiDung = temp.Replace("\r\n", "")
+                                .Replace("style=\"", "style='")
+                                .Replace("href=\"", "href='")
+                                .Replace("\">", "'>")
+                                .Replace(";\"", ";'")
+                                .Replace("\"", "&quot;");
+
+                temp = HttpUtility.HtmlDecode(x.TieuDe).Replace("\r\n", "");
+                x.TieuDe = temp;
             });
 
             return listThongBao;
+        }
+
+        public static THONGBAO GetThongBaoTheoId(int id)
+        {
+            UMS_HUSCEntities db = new UMS_HUSCEntities();
+            var current = db.THONGBAOs.FirstOrDefault(t => t.MaThongBao.Equals(id));
+            if (current != null)
+            {
+                string temp = HttpUtility.HtmlDecode(current.NoiDung);
+                current.NoiDung = temp.Replace("\r\n", "")
+                                .Replace("style=\"", "style='")
+                                .Replace("href=\"", "href='")
+                                .Replace("\">", "'>")
+                                .Replace(";\"", ";'")
+                                .Replace("\"", "&quot;");
+                temp = HttpUtility.HtmlDecode(current.TieuDe).Replace("\r\n", "");
+                current.TieuDe = temp;
+            }
+            return current;
         }
 
         public static List<THONGBAO> GetThongBaoTheoSoTrang(int soTrang, int soDongMoiTrang)
@@ -40,6 +66,12 @@ namespace UMS_HUSC_WEB_API.Daos
         {
             UMS_HUSCEntities db = new UMS_HUSCEntities();
             return db.THONGBAOs.Count();
+        }
+
+        public static int GetMaxId()
+        {
+            UMS_HUSCEntities db = new UMS_HUSCEntities();
+            return db.THONGBAOs.Max(t => t.MaThongBao);
         }
     }
 }

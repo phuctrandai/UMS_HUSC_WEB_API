@@ -12,6 +12,7 @@ namespace UMS_HUSC_WEB_API.Controllers
     public class ThongBaoController : ApiController
     {
         private const string ORDER_TAT_CA_THONG_BAO = "tatca";
+        private const string ORDER_NOI_DUNG_THONG_BAO = "noidung";
 
         [HttpGet]
         public IHttpActionResult Get()
@@ -20,7 +21,7 @@ namespace UMS_HUSC_WEB_API.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult Get(string order, string maSinhVien, string matKhau)
+        public IHttpActionResult GetTatCaThongBao(string order, string maSinhVien, string matKhau)
         {
             if (string.IsNullOrEmpty(order) || string.IsNullOrEmpty(maSinhVien) || string.IsNullOrEmpty(matKhau))
                 return NotFound();
@@ -36,12 +37,30 @@ namespace UMS_HUSC_WEB_API.Controllers
                     case ORDER_TAT_CA_THONG_BAO: // Load tat ca thong bao moi nhat
                         var listThongBao = ThongBaoDao.GetAllThongBao();
                         return Ok(listThongBao);
-
+                    
                     default:
                         break;
                 }
             }
             return NotFound();
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetThongBaoTheoId(string order, string maSinhVien, string matKhau, int id)
+        {
+            if (string.IsNullOrEmpty(order) || string.IsNullOrEmpty(maSinhVien) || string.IsNullOrEmpty(matKhau))
+                return BadRequest("Tham số truyền vào không hợp lệ !");
+
+            if (!order.ToLower().Equals(ORDER_NOI_DUNG_THONG_BAO))
+                return BadRequest("Tham số truyền vào không hợp lệ !");
+
+            var sv = SinhVienDao.GetSinhVien(maSinhVien, matKhau);
+            if (sv == null) return BadRequest("Thong tin sinh vien khong hop le !");
+
+            var tb = ThongBaoDao.GetThongBaoTheoId(id);
+            if (tb == null) return BadRequest("Mã thông báo không tồn tại !");
+
+            return Ok(tb);
         }
 
         [HttpGet]

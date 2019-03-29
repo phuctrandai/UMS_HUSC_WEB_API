@@ -67,12 +67,12 @@ namespace DemoWebsite {
         protected global::System.Web.UI.WebControls.Label lblLoi;
         
         /// <summary>
-        /// lblDecode control.
+        /// lblTinGuiDi control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDecode;
+        protected global::System.Web.UI.WebControls.Label lblTinGuiDi;
     }
 }
