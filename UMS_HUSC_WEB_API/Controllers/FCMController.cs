@@ -75,13 +75,10 @@ namespace UMS_HUSC_WEB_API.Controllers
             NewsPushNotification notification = new NewsPushNotification()
             {
                 registration_ids = arrRegid,
-                notification = new Notification()
-                {
-                    title = title,
-                    body = body
-                },
                 data = new Data()
                 {
+                    title = title,
+                    body = body,
                     id = id,
                     type = NEWS_NOTIFICATION,
                     postTime = postTime

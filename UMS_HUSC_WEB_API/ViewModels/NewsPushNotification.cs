@@ -9,11 +9,13 @@ namespace UMS_HUSC_WEB_API.ViewModels
     {
         public string[] registration_ids { get; set; }
         public Data data { get; set; }
-        public Notification notification { get; set; }
+        //public Notification notification { get; set; }
     }
 
     public class Data
     {
+        public string title { get; set; }
+        public string body { get; set; }
         public string type { get; set; }
         public int id { get; set; }
         public string postTime { get; set; }
