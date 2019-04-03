@@ -1,0 +1,72 @@
+﻿@model UMS_HUSC_WEB_API.ViewModels.DemoKetQua
+    @{
+        ViewBag.Title = "Demo Gửi Tin Nhắn";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    <br />
+    <br />
+    <center>
+        <h2>Demo Gửi Tin Nhắn</h2>
+        <label id="lblKetQua">@{ if (Model != null) { Write(Model.KetQua); } }</label>
+    </center>
+    @using (Html.BeginForm("DemoPostMessage", "Demo", FormMethod.Post))
+    {
+    <div>
+        <p><b><i>Người gửi</i></b></p>
+        <select class="select2 form-control" required style="width: 100%" id="txtMaNguoiNguoi" name="txtMaNguoiNguoi"></select>
+        <br />
+        <br />
+
+        <p><b><i>Người nhận</i></b></p>
+        <select class="select2 form-control" required style="width: 100%" id="txtNguoiNhan" name="txtNguoiNhan[]" multiple="multiple"></select>
+        <br />
+        <br />
+
+        <p><b><i>Nhập tiêu đề tin nhắn</i></b></p>
+        <input type="text" id="txtTieuDe" required class="form-control" name="txtTieuDe" />
+        <br />
+
+        <p><b><i>Nhập nội dung tin nhắn</i></b></p>
+        <textarea id="txtNoiDung" required class="form-control" name="txtNoiDung"></textarea>
+        <br />
+
+        <input type="submit" class="btn btn-danger" id="btnDangThongBao" />
+        <br />
+        <br />
+        <label id="lblLoi">
+            @{ if (Model != null && Model.PhanHoi != null) { Write(Model.PhanHoi); } }
+        </label>
+
+        <br /> <br />
+        <label id="lblTinGuiDi">
+            @{ if (Model != null && Model.TinGuiDi != null) { Write(Model.TinGuiDi); } }
+        </label>
+    </div>
+    }
+
+    <script>
+        $(document).ready(function () {
+            $(".select2").select2({
+                placeholder: "Vui lòng nhập ít nhất 2 ký tự để tìm kiếm",
+                allowClear: true,
+                minimumInputLength: 2,
+                ajax: {
+                    url: '/Demo/DemoSelect2Search',
+                    type: 'post',
+                    data: function (params) {
+                        return {
+                            q: params.term // search term
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: data.items
+                        };
+                    }
+                },
+                escapeMarkup: function (markup) { return markup; },
+                width: 'resolve'
+            });
+        });
+    </script>
+

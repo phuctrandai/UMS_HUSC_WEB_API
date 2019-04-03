@@ -11,7 +11,6 @@ namespace UMS_HUSC_WEB_API.Controllers
 {
     public class ThongBaoController : ApiController
     {
-        private const string ORDER_TAT_CA_THONG_BAO = "tatca";
         private const string ORDER_NOI_DUNG_THONG_BAO = "noidung";
 
         [HttpGet]
@@ -19,32 +18,7 @@ namespace UMS_HUSC_WEB_API.Controllers
         {
             return Ok("Controller run ok");
         }
-
-        [HttpGet]
-        public IHttpActionResult GetTatCaThongBao(string order, string maSinhVien, string matKhau)
-        {
-            if (string.IsNullOrEmpty(order) || string.IsNullOrEmpty(maSinhVien) || string.IsNullOrEmpty(matKhau))
-                return NotFound();
-
-            if (!string.IsNullOrEmpty(order))
-            {
-                var current = SinhVienDao.GetSinhVien(maSinhVien, matKhau);
-
-                if (current == null) return NotFound();
-
-                switch (order.ToLower())
-                {
-                    case ORDER_TAT_CA_THONG_BAO: // Load tat ca thong bao moi nhat
-                        var listThongBao = ThongBaoDao.GetAllThongBao();
-                        return Ok(listThongBao);
-                    
-                    default:
-                        break;
-                }
-            }
-            return NotFound();
-        }
-
+        
         [HttpGet]
         public IHttpActionResult GetThongBaoTheoId(string order, string maSinhVien, string matKhau, int id)
         {
@@ -73,8 +47,9 @@ namespace UMS_HUSC_WEB_API.Controllers
             var current = SinhVienDao.GetSinhVien(maSinhVien, matKhau);
             if (current == null) return BadRequest("Thong tin sinh vien khong hop le !");
 
-            var temp = ThongBaoDao.GetSoDong() % soDongMoiTrang;
-            var subTongSoTrang = ThongBaoDao.GetSoDong() / soDongMoiTrang;
+            var soDong = ThongBaoDao.GetSoDong();
+            var temp = soDong % soDongMoiTrang;
+            var subTongSoTrang = soDong / soDongMoiTrang;
             var tongSoTrang = temp == 0 ? subTongSoTrang : subTongSoTrang + 1;
             if (soTrang > tongSoTrang) return Ok(new List<THONGBAO>());
 

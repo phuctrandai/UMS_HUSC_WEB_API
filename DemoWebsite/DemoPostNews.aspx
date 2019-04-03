@@ -26,7 +26,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a runat="server" href="~/DemoPostNews">Demo Đăng Thông Báo</a></li>
-                    <li><a runat="server" href="~/Contact">Contact</a></li>
+                    <li><a runat="server" href="~/DemoSendMessage">Demo Gửi Tin Nhắn</a></li>
                 </ul>
             </div>
         </div>
@@ -58,8 +58,8 @@
             <asp:Label ID="lblTinGuiDi" runat="server"/>
         </div>
     </form>
+    <script src="Scripts/jquery-3.3.1.js"></script>
 
     <script src="Scripts/bootstrap.js"></script>
-    <script src="Scripts/jquery-3.3.1.js"></script>
 </body>
 </html>

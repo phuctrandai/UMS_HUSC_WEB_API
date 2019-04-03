@@ -72,7 +72,7 @@ namespace UMS_HUSC_WEB_API.Controllers
 
             string[] arrRegid = FireBaseDao.GetAllFireBase().Select(x => x.Token).Distinct().ToArray();
 
-            NewsPushNotification notification = new NewsPushNotification()
+            PushNotification notification = new PushNotification()
             {
                 registration_ids = arrRegid,
                 data = new Data()
@@ -82,6 +82,32 @@ namespace UMS_HUSC_WEB_API.Controllers
                     id = id,
                     type = NEWS_NOTIFICATION,
                     postTime = postTime
+                }
+            };
+            string postData = JsonConvert.SerializeObject(notification);
+            return postData;
+        }
+
+        public string CreateMessageNotification(TINNHAN tinNhan)
+        {
+            int id = tinNhan.MaTinNhan;
+            string title = HttpUtility.HtmlDecode(tinNhan.TieuDe).Replace("\r\n", "");
+            string sender = tinNhan.HoTenNguoiGui;
+            string sendTime = tinNhan.ThoiDiemGui.ToString();
+
+            var danhSachMaNguoiNhan = tinNhan.NGUOINHANs.Select(n => n.MaNguoiNhan).ToList();
+            string[] arrRegid = FireBaseDao.GetFireBaseTokenById(danhSachMaNguoiNhan).ToArray();
+
+            PushNotification notification = new PushNotification()
+            {
+                registration_ids = arrRegid,
+                data = new Data()
+                {
+                    title = sender,
+                    body = title,
+                    id = id,
+                    type = MESSAGE_NOTIFICATION,
+                    postTime = sendTime
                 }
             };
             string postData = JsonConvert.SerializeObject(notification);

@@ -57,6 +57,18 @@ namespace UMS_HUSC_WEB_API.Daos
             return db.FIREBASEs.ToList();
         }
 
+        public static List<string> GetFireBaseTokenById(List<string> idList)
+        {
+            UMS_HUSCEntities db = new UMS_HUSCEntities();
+            List<string> list = new List<string>();
+            idList.ForEach(x => {
+                var fireBases = db.FIREBASEs.Where(f => f.MaSinhVien.Equals(x)).ToList();
+            if (fireBases != null)
+                fireBases.ForEach(f => { list.Add(f.Token); });
+            });
+            return list;
+        }
+
         public static FIREBASE GetFireBaseByToken(string token)
         {
             UMS_HUSCEntities db = new UMS_HUSCEntities();

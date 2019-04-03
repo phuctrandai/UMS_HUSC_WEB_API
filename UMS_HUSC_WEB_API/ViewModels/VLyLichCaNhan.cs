@@ -1,5 +1,5 @@
 ﻿using UMS_HUSC_WEB_API.Models;
-using UMS_HUSC_WEB_API.ViewModel;
+using UMS_HUSC_WEB_API.ViewModels;
 
 namespace UMS_HUSC_WEB_API.ViewModels
 {

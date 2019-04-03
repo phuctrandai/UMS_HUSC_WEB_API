@@ -5,7 +5,7 @@ using System.Web;
 
 namespace UMS_HUSC_WEB_API.ViewModels
 {
-    public class NewsPushNotification
+    public class PushNotification
     {
         public string[] registration_ids { get; set; }
         public Data data { get; set; }

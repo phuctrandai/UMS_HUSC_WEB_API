@@ -118,6 +118,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\Site.css" />
     <Content Include="DemoPostNews.aspx" />
+    <Content Include="DemoSendMessage.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
@@ -274,6 +275,13 @@
     </Compile>
     <Compile Include="DemoPostNews.aspx.designer.cs">
       <DependentUpon>DemoPostNews.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DemoSendMessage.aspx.cs">
+      <DependentUpon>DemoSendMessage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DemoSendMessage.aspx.designer.cs">
+      <DependentUpon>DemoSendMessage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

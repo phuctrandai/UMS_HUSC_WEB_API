@@ -36,5 +36,7 @@ namespace UMS_HUSC_WEB_API.Models
         public virtual DbSet<VNoiSinh> VNoiSinhs { get; set; }
         public virtual DbSet<THONGBAO> THONGBAOs { get; set; }
         public virtual DbSet<FIREBASE> FIREBASEs { get; set; }
+        public virtual DbSet<NGUOINHAN> NGUOINHANs { get; set; }
+        public virtual DbSet<TINNHAN> TINNHANs { get; set; }
     }
 }

@@ -10,8 +10,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Token" Type="nvarchar(max)" />
-          <Property Name="MaSinhVien" Type="varchar" MaxLength="10" />
+          <Property Name="Token" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="MaSinhVien" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'UMS_HUSC.dbo.LICHSUBANTHAN' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -35,6 +35,17 @@ warning 6002: The table/view 'UMS_HUSC.dbo.LICHSUBANTHAN' does not have a primar
           <Property Name="QuanHamLLVT" Type="nvarchar" MaxLength="50" />
           <Property Name="NoiCongTacLLVT" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="NGUOINHAN">
+          <Key>
+            <PropertyRef Name="MaTinNhan" />
+            <PropertyRef Name="MaNguoiNhan" />
+          </Key>
+          <Property Name="MaTinNhan" Type="int" Nullable="false" />
+          <Property Name="MaNguoiNhan" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="ThoiDiemXem" Type="datetime" />
+          <Property Name="HoTen" Type="nvarchar" MaxLength="50" />
+          <Property Name="DaXoa" Type="bit" />
+        </EntityType>
         <EntityType Name="SINHVIEN">
           <Key>
             <PropertyRef Name="MaSinhVien" />
@@ -47,9 +58,20 @@ warning 6002: The table/view 'UMS_HUSC.dbo.LICHSUBANTHAN' does not have a primar
             <PropertyRef Name="MaThongBao" />
           </Key>
           <Property Name="MaThongBao" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TieuDe" Type="nvarchar" MaxLength="500" />
+          <Property Name="TieuDe" Type="nvarchar(max)" />
           <Property Name="ThoiGianDang" Type="datetime" />
           <Property Name="NoiDung" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="TINNHAN">
+          <Key>
+            <PropertyRef Name="MaTinNhan" />
+          </Key>
+          <Property Name="MaTinNhan" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaNguoiGui" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="ThoiDiemGui" Type="datetime" Nullable="false" />
+          <Property Name="TieuDe" Type="nvarchar(max)" />
+          <Property Name="NoiDung" Type="nvarchar(max)" />
+          <Property Name="HoTenNguoiGui" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'UMS_HUSC.dbo.VDacDiemBanThan' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -158,7 +180,7 @@ warning 6002: The table/view 'UMS_HUSC.dbo.VThuongTru' does not have a primary k
           <Property Name="DiaChi" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_FIREBASE_SINHVIEN1">
-          <End Role="SINHVIEN" Type="Self.SINHVIEN" Multiplicity="0..1" />
+          <End Role="SINHVIEN" Type="Self.SINHVIEN" Multiplicity="1" />
           <End Role="FIREBASE" Type="Self.FIREBASE" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SINHVIEN">
@@ -181,10 +203,24 @@ warning 6002: The table/view 'UMS_HUSC.dbo.VThuongTru' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_NGUOINHAN_TINNHAN">
+          <End Role="TINNHAN" Type="Self.TINNHAN" Multiplicity="1" />
+          <End Role="NGUOINHAN" Type="Self.NGUOINHAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TINNHAN">
+              <PropertyRef Name="MaTinNhan" />
+            </Principal>
+            <Dependent Role="NGUOINHAN">
+              <PropertyRef Name="MaTinNhan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="UMS_HUSCModelStoreContainer">
           <EntitySet Name="FIREBASE" EntityType="Self.FIREBASE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NGUOINHAN" EntityType="Self.NGUOINHAN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SINHVIEN" EntityType="Self.SINHVIEN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="THONGBAO" EntityType="Self.THONGBAO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TINNHAN" EntityType="Self.TINNHAN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LICHSUBANTHAN" EntityType="Self.LICHSUBANTHAN" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [LICHSUBANTHAN].[MaSinhVien] AS [MaSinhVien], 
@@ -295,6 +331,10 @@ warning 6002: The table/view 'UMS_HUSC.dbo.VThuongTru' does not have a primary k
             <End Role="SINHVIEN" EntitySet="SINHVIEN" />
             <End Role="LICHSUBANTHAN" EntitySet="LICHSUBANTHAN" />
           </AssociationSet>
+          <AssociationSet Name="FK_NGUOINHAN_TINNHAN" Association="Self.FK_NGUOINHAN_TINNHAN">
+            <End Role="TINNHAN" EntitySet="TINNHAN" />
+            <End Role="NGUOINHAN" EntitySet="NGUOINHAN" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -328,6 +368,12 @@ warning 6002: The table/view 'UMS_HUSC.dbo.VThuongTru' does not have a primary k
           <AssociationSet Name="FK_FIREBASE_SINHVIEN1" Association="UMS_HUSCModel.FK_FIREBASE_SINHVIEN1">
             <End Role="SINHVIEN" EntitySet="SINHVIENs" />
             <End Role="FIREBASE" EntitySet="FIREBASEs" />
+          </AssociationSet>
+          <EntitySet Name="NGUOINHANs" EntityType="UMS_HUSCModel.NGUOINHAN" />
+          <EntitySet Name="TINNHANs" EntityType="UMS_HUSCModel.TINNHAN" />
+          <AssociationSet Name="FK_NGUOINHAN_TINNHAN" Association="UMS_HUSCModel.FK_NGUOINHAN_TINNHAN">
+            <End Role="TINNHAN" EntitySet="TINNHANs" />
+            <End Role="NGUOINHAN" EntitySet="NGUOINHANs" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="VThongTinChung">
@@ -460,7 +506,7 @@ warning 6002: The table/view 'UMS_HUSC.dbo.VThuongTru' does not have a primary k
             <PropertyRef Name="MaThongBao" />
           </Key>
           <Property Name="MaThongBao" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TieuDe" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="TieuDe" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ThoiGianDang" Type="DateTime" Precision="3" />
           <Property Name="NoiDung" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
@@ -469,12 +515,12 @@ warning 6002: The table/view 'UMS_HUSC.dbo.VThuongTru' does not have a primary k
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Token" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MaSinhVien" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Token" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MaSinhVien" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="SINHVIEN" Relationship="UMS_HUSCModel.FK_FIREBASE_SINHVIEN1" FromRole="FIREBASE" ToRole="SINHVIEN" />
         </EntityType>
         <Association Name="FK_FIREBASE_SINHVIEN1">
-          <End Type="UMS_HUSCModel.SINHVIEN" Role="SINHVIEN" Multiplicity="0..1" />
+          <End Type="UMS_HUSCModel.SINHVIEN" Role="SINHVIEN" Multiplicity="1" />
           <End Type="UMS_HUSCModel.FIREBASE" Role="FIREBASE" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SINHVIEN">
@@ -482,6 +528,42 @@ warning 6002: The table/view 'UMS_HUSC.dbo.VThuongTru' does not have a primary k
             </Principal>
             <Dependent Role="FIREBASE">
               <PropertyRef Name="MaSinhVien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="NGUOINHAN">
+          <Key>
+            <PropertyRef Name="MaTinNhan" />
+            <PropertyRef Name="MaNguoiNhan" />
+          </Key>
+          <Property Name="MaTinNhan" Type="Int32" Nullable="false" />
+          <Property Name="MaNguoiNhan" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ThoiDiemXem" Type="DateTime" Precision="3" />
+          <Property Name="HoTen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DaXoa" Type="Boolean" />
+          <NavigationProperty Name="TINNHAN" Relationship="UMS_HUSCModel.FK_NGUOINHAN_TINNHAN" FromRole="NGUOINHAN" ToRole="TINNHAN" />
+        </EntityType>
+        <EntityType Name="TINNHAN">
+          <Key>
+            <PropertyRef Name="MaTinNhan" />
+          </Key>
+          <Property Name="MaTinNhan" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaNguoiGui" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ThoiDiemGui" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TieuDe" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NoiDung" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="HoTenNguoiGui" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NGUOINHANs" Relationship="UMS_HUSCModel.FK_NGUOINHAN_TINNHAN" FromRole="TINNHAN" ToRole="NGUOINHAN" />
+        </EntityType>
+        <Association Name="FK_NGUOINHAN_TINNHAN">
+          <End Type="UMS_HUSCModel.TINNHAN" Role="TINNHAN" Multiplicity="1" />
+          <End Type="UMS_HUSCModel.NGUOINHAN" Role="NGUOINHAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TINNHAN">
+              <PropertyRef Name="MaTinNhan" />
+            </Principal>
+            <Dependent Role="NGUOINHAN">
+              <PropertyRef Name="MaTinNhan" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -636,7 +718,30 @@ warning 6002: The table/view 'UMS_HUSC.dbo.VThuongTru' does not have a primary k
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="NGUOINHANs">
+            <EntityTypeMapping TypeName="UMS_HUSCModel.NGUOINHAN">
+              <MappingFragment StoreEntitySet="NGUOINHAN">
+                <ScalarProperty Name="DaXoa" ColumnName="DaXoa" />
+                <ScalarProperty Name="HoTen" ColumnName="HoTen" />
+                <ScalarProperty Name="ThoiDiemXem" ColumnName="ThoiDiemXem" />
+                <ScalarProperty Name="MaNguoiNhan" ColumnName="MaNguoiNhan" />
+                <ScalarProperty Name="MaTinNhan" ColumnName="MaTinNhan" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TINNHANs">
+            <EntityTypeMapping TypeName="UMS_HUSCModel.TINNHAN">
+              <MappingFragment StoreEntitySet="TINNHAN">
+                <ScalarProperty Name="HoTenNguoiGui" ColumnName="HoTenNguoiGui" />
+                <ScalarProperty Name="NoiDung" ColumnName="NoiDung" />
+                <ScalarProperty Name="TieuDe" ColumnName="TieuDe" />
+                <ScalarProperty Name="ThoiDiemGui" ColumnName="ThoiDiemGui" />
+                <ScalarProperty Name="MaNguoiGui" ColumnName="MaNguoiGui" />
+                <ScalarProperty Name="MaTinNhan" ColumnName="MaTinNhan" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

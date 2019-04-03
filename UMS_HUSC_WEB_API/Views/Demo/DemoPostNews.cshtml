@@ -1,0 +1,40 @@
+﻿@model UMS_HUSC_WEB_API.ViewModels.DemoKetQua
+@{
+    ViewBag.Title = "Đăng thông báo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<br />
+<br />
+<br />
+<center>
+    <h2>Demo Đăng Thông Báo</h2>
+    <label id="lblKetQua" class="text-success">
+        @{ if (Model != null && Model.KetQua != null) { Write(Model.KetQua); } }
+    </label>
+</center>
+<br />
+<br />
+<form method="post" action="/Demo/DemoPostNews">
+    <div>
+        <p><b><i>Nhập tiêu đề thông báo</i></b></p>
+        <input type="text" id="txtTieuDe" class="form-control" name="txtTieuDe" />
+        <br />
+
+        <p><b><i>Nhập nội dung thông báo</i></b></p>
+        <textarea id="txtNoiDung" class="form-control" name="txtNoiDung"></textarea>
+        <br />
+
+        <input type="submit" class="btn btn-danger" id="btnDangThongBao" />
+        <br />
+        <br />
+        <label id="lblLoi">
+            @{ if (Model != null && Model.PhanHoi != null) { Write(Model.PhanHoi); } }
+        </label>
+
+        <br /> <br />
+        <label id="lblTinGuiDi">
+            @{ if (Model != null && Model.TinGuiDi != null) { Write(Model.TinGuiDi); } }
+        </label>
+    </div>
+</form>

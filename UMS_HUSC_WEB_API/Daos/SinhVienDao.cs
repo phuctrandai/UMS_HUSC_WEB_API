@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using UMS_HUSC_WEB_API.Models;
-using UMS_HUSC_WEB_API.ViewModel;
 using UMS_HUSC_WEB_API.ViewModels;
 
 namespace UMS_HUSC_WEB_API.Daos
@@ -98,6 +97,12 @@ namespace UMS_HUSC_WEB_API.Daos
             var current = db.LICHSUBANTHANs.FirstOrDefault(v => v.MaSinhVien.Equals(maSinhVien));
             current.SINHVIEN = null;
             return current;
+        }
+
+        public static List<VThongTinChung> GetHoTenVaMaSinhVien()
+        {
+            UMS_HUSCEntities db = new UMS_HUSCEntities();
+            return db.VThongTinChungs.ToList();
         }
     }
 }
