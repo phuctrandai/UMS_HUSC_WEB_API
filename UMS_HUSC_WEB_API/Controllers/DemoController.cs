@@ -85,11 +85,9 @@ namespace UMS_HUSC_WEB_API.Controllers
                     MaTinNhan = TinNhanDao.GetMaxMaTinNhan() + 1, // tu dong tang
                     TieuDe = tieuDe,
                     NoiDung = noiDung,
-                    MaNguoiGui = maNguoiGui,
-                    HoTenNguoiGui = dsHoTenVaMaSinhVien.FirstOrDefault(d => d.MaSinhVien.Equals(maNguoiGui)).HoTen,
                     ThoiDiemGui = thoiDiemGui,
                 };
-                
+
                 // Lay danh sach thong tin nguoi nhan
                 var danhSachNguoiNhan = new List<NGUOINHAN>();
                 danhSachMaNguoiNhan.ForEach(m => danhSachNguoiNhan.Add(
@@ -98,23 +96,41 @@ namespace UMS_HUSC_WEB_API.Controllers
                         MaTinNhan = tinNhan.MaTinNhan,
                         MaNguoiNhan = m.ToString(),
                         DaXoa = false,
-                        HoTen = dsHoTenVaMaSinhVien.FirstOrDefault(d => d.MaSinhVien.Equals(m.ToString())).HoTen,
+                        HoTenNguoiNhan = dsHoTenVaMaSinhVien.FirstOrDefault(d => d.MaSinhVien.Equals(m.ToString())).HoTen,
                         ThoiDiemXem = null,
-                        TINNHAN = tinNhan
+                        TINNHAN = tinNhan,
+                        SINHVIEN = null
                     }
                 ));
+
+                //// Nguoi gui
+                var nguoiGui = new List<NGUOIGUI>
+                {
+                    new NGUOIGUI()
+                    {
+                        MaNguoiGui = maNguoiGui,
+                        DaXoa = false,
+                        MaTinNhan = tinNhan.MaTinNhan,
+                        HoTenNguoiGui = dsHoTenVaMaSinhVien.FirstOrDefault(d => d.MaSinhVien.Equals(maNguoiGui)).HoTen,
+                        TINNHAN = tinNhan,
+                        SINHVIEN = null
+                    }
+                };
+
                 tinNhan.NGUOINHANs = danhSachNguoiNhan;
+                tinNhan.NGUOIGUIs = nguoiGui;
                 TinNhanDao.AddTinNhan(tinNhan);
-                
+
                 // Thong bao den client app
                 FCMController fcm = new FCMController();
                 string message = fcm.CreateMessageNotification(tinNhan);
+                demo.TinGuiDi = message;
+
                 string response = fcm.SendMessage(message);
+                demo.PhanHoi = response;
 
                 // Hien thi ket qua thanh cong
                 demo.KetQua = "Them thanh cong !!!";
-                demo.PhanHoi = response;
-                demo.TinGuiDi = message;
             }
             catch (Exception ex)
             {

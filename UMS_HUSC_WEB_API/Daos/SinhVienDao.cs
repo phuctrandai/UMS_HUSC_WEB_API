@@ -24,6 +24,19 @@ namespace UMS_HUSC_WEB_API.Daos
                 && sv.MatKhau.Equals(matKhau));
         }
 
+        public static void DoiMatKhau(string maSinhVien, string matKhau)
+        {
+            UMS_HUSCEntities db = new UMS_HUSCEntities();
+            var current = db.SINHVIENs.FirstOrDefault(
+                sv => sv.MaSinhVien.ToLower().Equals(maSinhVien.ToLower())
+                && sv.MatKhau.Equals(matKhau));
+            if (current != null)
+            {
+                current.MatKhau = matKhau;
+                db.SaveChanges();
+            }
+        }
+
         public static VLyLichCaNhan GetLyLichCaNhan(string maSinhVien)
         {
             var current = new VLyLichCaNhan

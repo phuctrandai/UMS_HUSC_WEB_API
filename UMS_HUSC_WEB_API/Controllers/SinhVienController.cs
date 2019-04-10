@@ -14,6 +14,7 @@ namespace UMS_HUSC_WEB_API.Controllers
     public class SinhVienController : ApiController
     {
         private const string ORDER_LOGIN = "dangnhap";
+        private const string ORDER_CHANGE_PASS = "doimatkhau";
         private const string ORDER_GET_CV = "lylichcanhan";
         private const string ORDER_GET_RECEIVED_MESSAGE = "tinnhandanhan";
         private const string ORDER_GET_SENT_MESSAGE = "tinnhandagui";
@@ -47,6 +48,11 @@ namespace UMS_HUSC_WEB_API.Controllers
                         if (lyLich != null)
                             return Ok(lyLich);
                         break;
+
+                    case ORDER_CHANGE_PASS:
+                        SinhVienDao.DoiMatKhau(maSinhVien, matKhau);
+                        return Ok();
+                        
                     default:
                         break;
                 }
@@ -54,8 +60,9 @@ namespace UMS_HUSC_WEB_API.Controllers
             return NotFound();
         }
 
+        // GET: api/SinhVien/order=...?masinhvien=...&matkhau=...&sotrang=...&sodongmoitrang=...
         [HttpGet]
-        public IHttpActionResult GetTinNhanDaNhanTheoTrang(string order, string maSinhVien, string matKhau, int soTrang, int soDongMoiTrang)
+        public IHttpActionResult GetTinNhanTheoTrang(string order, string maSinhVien, string matKhau, int soTrang, int soDongMoiTrang)
         {
             if (string.IsNullOrEmpty(order) || string.IsNullOrEmpty(maSinhVien) || string.IsNullOrEmpty(matKhau)
                 || soTrang < 1 || soDongMoiTrang < 1)
@@ -76,8 +83,10 @@ namespace UMS_HUSC_WEB_API.Controllers
                     if (soTrang > tongSoTrang)
                         return Ok(listTinNhan);
                     else
-                        listTinNhan = TinNhanDao.GetTinNhanDaNhanTheoSoTrang(maSinhVien, soTrang, soDongMoiTrang);
-                    break;
+                    {
+                        var list = TinNhanDao.GetTinNhanDaNhanTheoSoTrang(maSinhVien, soTrang, soDongMoiTrang);
+                        return Ok(list);
+                    }
 
                 case ORDER_GET_SENT_MESSAGE:
                     soDong = TinNhanDao.GetTongTinNhanDaGui(maSinhVien);
@@ -87,8 +96,23 @@ namespace UMS_HUSC_WEB_API.Controllers
                     if (soTrang > tongSoTrang)
                         return Ok(listTinNhan);
                     else
-                        listTinNhan = TinNhanDao.GetTinNhanDaGuiTheoSoTrang(maSinhVien, soTrang, soDongMoiTrang);
-                    break;
+                    {
+                        var list = TinNhanDao.GetTinNhanDaGuiTheoSoTrang(maSinhVien, soTrang, soDongMoiTrang);
+                        return Ok(list);
+                    }
+
+                case ORDER_GET_DELETED_MESSAGE:
+                    soDong = TinNhanDao.GetTongTinNhanDaXoa(maSinhVien);
+                    temp = soDong % soDongMoiTrang;
+                    subTongSoTrang = soDong / soDongMoiTrang;
+                    tongSoTrang = temp == 0 ? subTongSoTrang : subTongSoTrang + 1;
+                    if (soTrang > tongSoTrang)
+                        return Ok(listTinNhan);
+                    else
+                    {
+                        var list = TinNhanDao.GetTinNhanDaXoaTheoSoTrang(maSinhVien, soTrang, soDongMoiTrang);
+                        return Ok(list);
+                    }
 
                 default:
                     break;
@@ -108,7 +132,7 @@ namespace UMS_HUSC_WEB_API.Controllers
             var sv = SinhVienDao.GetSinhVien(maSinhVien, matKhau);
             if (sv == null) return BadRequest("Thông tin sinh viên không hợp lệ !");
 
-            var tn = TinNhanDao.GetTinNhanTheoId(id, maSinhVien);
+            var tn = TinNhanDao.GetTinNhanTheoId(id);
             if (tn == null) return BadRequest("Mã tin nhắn không tồn tại !");
 
             return Ok(tn);

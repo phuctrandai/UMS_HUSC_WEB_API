@@ -92,11 +92,13 @@ namespace UMS_HUSC_WEB_API.Controllers
         {
             int id = tinNhan.MaTinNhan;
             string title = HttpUtility.HtmlDecode(tinNhan.TieuDe).Replace("\r\n", "");
-            string sender = tinNhan.HoTenNguoiGui;
+            string sender = tinNhan.NGUOIGUIs.ElementAt(0).HoTenNguoiGui;
             string sendTime = tinNhan.ThoiDiemGui.ToString();
 
             var danhSachMaNguoiNhan = tinNhan.NGUOINHANs.Select(n => n.MaNguoiNhan).ToList();
             string[] arrRegid = FireBaseDao.GetFireBaseTokenById(danhSachMaNguoiNhan).ToArray();
+
+            if (arrRegid.Length == 0) return "";
 
             PushNotification notification = new PushNotification()
             {
@@ -116,6 +118,8 @@ namespace UMS_HUSC_WEB_API.Controllers
 
         public string SendMessage(string postData)
         {
+            if (string.IsNullOrEmpty(postData)) return "Tham số truyền vào rỗng";
+
             WebRequest tRequest;
             //thiết lập FCM send
             tRequest = WebRequest.Create("https://fcm.googleapis.com/fcm/send");

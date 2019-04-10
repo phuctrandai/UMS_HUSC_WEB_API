@@ -18,6 +18,8 @@ namespace UMS_HUSC_WEB_API.Models
         public SINHVIEN()
         {
             this.FIREBASEs = new HashSet<FIREBASE>();
+            this.NGUOIGUIs = new HashSet<NGUOIGUI>();
+            this.NGUOINHANs = new HashSet<NGUOINHAN>();
         }
     
         public string MaSinhVien { get; set; }
@@ -26,5 +28,9 @@ namespace UMS_HUSC_WEB_API.Models
         public virtual LICHSUBANTHAN LICHSUBANTHAN { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FIREBASE> FIREBASEs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NGUOIGUI> NGUOIGUIs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NGUOINHAN> NGUOINHANs { get; set; }
     }
 }

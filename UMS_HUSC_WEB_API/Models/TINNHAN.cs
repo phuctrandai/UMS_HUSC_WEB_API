@@ -17,16 +17,17 @@ namespace UMS_HUSC_WEB_API.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TINNHAN()
         {
+            this.NGUOIGUIs = new HashSet<NGUOIGUI>();
             this.NGUOINHANs = new HashSet<NGUOINHAN>();
         }
     
         public int MaTinNhan { get; set; }
-        public string MaNguoiGui { get; set; }
         public System.DateTime ThoiDiemGui { get; set; }
         public string TieuDe { get; set; }
         public string NoiDung { get; set; }
-        public string HoTenNguoiGui { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NGUOIGUI> NGUOIGUIs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NGUOINHAN> NGUOINHANs { get; set; }
     }
