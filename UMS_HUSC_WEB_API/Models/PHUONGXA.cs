@@ -12,12 +12,12 @@ namespace UMS_HUSC_WEB_API.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class VNoiSinh
+    public partial class PHUONGXA
     {
-        public string MaSinhVien { get; set; }
-        public string TenQuocGia { get; set; }
-        public string TenThanhPho { get; set; }
-        public Nullable<int> ThanhPho { get; set; }
-        public Nullable<int> QuocGia { get; set; }
+        public int MaPhuongXa { get; set; }
+        public string TenPhuongXa { get; set; }
+        public Nullable<int> MaQuanHuyen { get; set; }
+    
+        public virtual QUANHUYEN QUANHUYEN { get; set; }
     }
 }

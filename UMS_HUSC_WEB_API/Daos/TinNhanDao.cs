@@ -49,7 +49,7 @@ namespace UMS_HUSC_WEB_API.Daos
         public static List<TinNhan> GetTinNhanDaNhanTheoSoTrang(string maNguoiNhan, int soTrang, int soDongMoiTrang)
         {
             var skipRow = (soTrang - 1) * soDongMoiTrang;
-            var list = GetAllTinNhanDaNhan(maNguoiNhan).Skip(skipRow).Take(soDongMoiTrang).ToList();
+            var list = GetAllTinNhanDaNhan(maNguoiNhan).Skip(skipRow).Take(soDongMoiTrang).OrderByDescending(t => t.ThoiDiemGui).ToList();
 
             return list;
         }
@@ -58,10 +58,10 @@ namespace UMS_HUSC_WEB_API.Daos
         {
             using (UMS_HUSCEntities db = new UMS_HUSCEntities())
             {
-                return db.VTinNhans.Where(t => t.MaNguoiNhan.Equals(maNguoiNhan)).Count();
+                return db.VTinNhanDaNhans.Where(t => t.MaNguoiNhan.Equals(maNguoiNhan)).Count();
             }
         }
-
+            
         public static List<TinNhan> GetTinNhanNhanDaXoa(string maNguoiNhan)
         {
             using (var db = new UMS_HUSCEntities())
@@ -141,7 +141,7 @@ namespace UMS_HUSC_WEB_API.Daos
         public static List<TinNhan> GetTinNhanDaGuiTheoSoTrang(string maNguoiGui, int soTrang, int soDongMoiTrang)
         {
             var skipRow = (soTrang - 1) * soDongMoiTrang;
-            var list = GetAllTinNhanDaGui(maNguoiGui).Skip(skipRow).Take(soDongMoiTrang).ToList();
+            var list = GetAllTinNhanDaGui(maNguoiGui).Skip(skipRow).Take(soDongMoiTrang).OrderByDescending(t => t.ThoiDiemGui).ToList();
             return list;
         }
 
@@ -149,7 +149,7 @@ namespace UMS_HUSC_WEB_API.Daos
         {
             using (UMS_HUSCEntities db = new UMS_HUSCEntities())
             {
-                return db.VTinNhans.Where(t => t.MaNguoiGui.Equals(maNguoiGui)).Count();
+                return db.VTinNhanDaGuis.Where(t => t.MaNguoiGui.Equals(maNguoiGui)).Count();
             }
         }
 
@@ -208,7 +208,7 @@ namespace UMS_HUSC_WEB_API.Daos
         public static List<TinNhan> GetTinNhanDaXoaTheoSoTrang(string maTaiKhoan, int soTrang, int soDongMoiTrang)
         {
             var skipRow = (soTrang - 1) * soDongMoiTrang;
-            var list = GetAllTinNhanDaXoa(maTaiKhoan).Skip(skipRow).Take(soDongMoiTrang).ToList();
+            var list = GetAllTinNhanDaXoa(maTaiKhoan).Skip(skipRow).Take(soDongMoiTrang).OrderByDescending(t => t.ThoiDiemGui).ToList();
 
             return list;
         }
@@ -239,7 +239,8 @@ namespace UMS_HUSC_WEB_API.Daos
                                     .Replace(";\"", ";'")
                                     .Replace("\"", "&quot;");
                 tn.TieuDe = HttpUtility.HtmlDecode(tn.TieuDe).Replace("\r\n", "");
-                return new TinNhan() {
+                return new TinNhan()
+                {
                     MaTinNhan = tn.MaTinNhan,
                     MaNguoiGui = tn.NGUOIGUIs.ElementAt(0).MaNguoiGui,
                     HoTenNguoiGui = tn.NGUOIGUIs.ElementAt(0).HoTenNguoiGui,
@@ -260,17 +261,86 @@ namespace UMS_HUSC_WEB_API.Daos
             }
         }
 
+        public static bool AttempDeleteTinNhan(int id, string maSinhVien)
+        {
+            using (var db = new UMS_HUSCEntities())
+            {
+                var current = db.TINNHANs.FirstOrDefault(t => t.MaTinNhan.Equals(id));
+                if (current != null)
+                {
+                    var nguoiGui = current.NGUOIGUIs.FirstOrDefault(n => n.MaNguoiGui.Equals(maSinhVien));
+
+                    if (nguoiGui != null) // sinh vien nay la nguoi gui tin nhan
+                    {
+                        nguoiGui.DaXoa = true;
+                    }
+                    else
+                    {
+                        var nguoiNhan = current.NGUOINHANs.FirstOrDefault(n => n.MaNguoiNhan.Equals(maSinhVien));
+                        if (nguoiNhan != null) nguoiNhan.DaXoa = true;
+                    }
+                    db.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public static bool UpdateThoiDiemXem(int id, string maNguoiNhan)
+        {
+            using (var db = new UMS_HUSCEntities())
+            {
+                var tinNhan = db.TINNHANs.FirstOrDefault(t => t.MaTinNhan.Equals(id));
+                if (tinNhan != null)
+                {
+                    var nguoiNhan = tinNhan.NGUOINHANs.FirstOrDefault(n => n.MaNguoiNhan.Equals(maNguoiNhan));
+                    if (nguoiNhan != null && nguoiNhan.ThoiDiemXem == null)
+                    {
+                        nguoiNhan.ThoiDiemXem = DateTime.Now;
+                        db.SaveChanges();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
+
+        public static bool ForeverDelete(int id, string maSinhVien)
+        {
+            using (var db = new UMS_HUSCEntities())
+            {
+                var current = db.TINNHANs.FirstOrDefault(t => t.MaTinNhan.Equals(id));
+                if (current != null)
+                {
+                    var nguoiGui = current.NGUOIGUIs.FirstOrDefault(n => n.MaNguoiGui.Equals(maSinhVien));
+
+                    if (nguoiGui.MaNguoiGui.Equals(maSinhVien)) // sinh vien nay la nguoi gui tin nhan
+                    {
+                        db.NGUOIGUIs.Remove(nguoiGui);
+                    }
+                    else
+                    {
+                        var nguoiNhan = current.NGUOINHANs.FirstOrDefault(n => n.MaNguoiNhan.Equals(maSinhVien));
+                        db.NGUOINHANs.Remove(nguoiNhan);
+                    }
+                    db.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+        }
+
         public static int GetMaxMaTinNhan()
         {
             UMS_HUSCEntities db = new UMS_HUSCEntities();
             return db.TINNHANs.Max(t => t.MaTinNhan);
         }
 
-        public static List<TinNhan.NguoiNhan> GetAllNguoiNhan(int maTinNhan)
+        public static List<TinNhan.NguoiNhan> GetAllNguoiNhan(int id)
         {
             using (var db = new UMS_HUSCEntities())
             {
-                var nguoiNhans = db.NGUOINHANs.Where(n => n.MaTinNhan.Equals(maTinNhan))
+                var nguoiNhans = db.NGUOINHANs.Where(n => n.MaTinNhan.Equals(id))
                     .Select(n => new TinNhan.NguoiNhan()
                     {
                         MaNguoiNhan = n.MaNguoiNhan,
@@ -281,5 +351,6 @@ namespace UMS_HUSC_WEB_API.Daos
                 return nguoiNhans;
             }
         }
+
     }
 }

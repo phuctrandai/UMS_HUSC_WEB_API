@@ -20,7 +20,7 @@ namespace UMS_HUSC_WEB_API
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{order}",
+                routeTemplate: "api/{controller}/{action}/{order}",
                 defaults: new { order = RouteParameter.Optional }
             );
         }

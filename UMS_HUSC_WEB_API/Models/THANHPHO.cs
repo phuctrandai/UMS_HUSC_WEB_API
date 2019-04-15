@@ -12,27 +12,23 @@ namespace UMS_HUSC_WEB_API.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class SINHVIEN
+    public partial class THANHPHO
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SINHVIEN()
+        public THANHPHO()
         {
-            this.FIREBASEs = new HashSet<FIREBASE>();
-            this.NGUOIGUIs = new HashSet<NGUOIGUI>();
-            this.NGUOINHANs = new HashSet<NGUOINHAN>();
+            this.QUANHUYENs = new HashSet<QUANHUYEN>();
+            this.NOISINHs = new HashSet<NOISINH>();
         }
     
-        public string MaSinhVien { get; set; }
-        public string MatKhau { get; set; }
+        public int MaThanhPho { get; set; }
+        public string TenThanhPho { get; set; }
+        public Nullable<int> MaQuocGia { get; set; }
     
-        public virtual LICHSUBANTHAN LICHSUBANTHAN { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FIREBASE> FIREBASEs { get; set; }
+        public virtual ICollection<QUANHUYEN> QUANHUYENs { get; set; }
+        public virtual QUOCGIA QUOCGIA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NGUOIGUI> NGUOIGUIs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NGUOINHAN> NGUOINHANs { get; set; }
-        public virtual NOISINH NOISINH { get; set; }
-        public virtual THONGTINCHUNG THONGTINCHUNG { get; set; }
+        public virtual ICollection<NOISINH> NOISINHs { get; set; }
     }
 }

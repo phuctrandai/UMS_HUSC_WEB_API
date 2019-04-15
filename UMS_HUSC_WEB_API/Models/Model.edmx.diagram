@@ -4,31 +4,54 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="545ab24350f24a5e869fe90475b74dbc" Name="Diagram1" DisplayType="true" ZoomLevel="86">
-        <EntityTypeShape EntityType="UMS_HUSCModel.SINHVIEN" Width="1.5" PointX="0.75" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="UMS_HUSCModel.VThongTinChung" Width="1.5" PointX="8.625" PointY="0.5" />
-        <EntityTypeShape EntityType="UMS_HUSCModel.VThongTinLienHe" Width="1.5" PointX="13.75" PointY="3" />
-        <EntityTypeShape EntityType="UMS_HUSCModel.VDacDiemBanThan" Width="1.5" PointX="13.75" PointY="7.125" />
-        <EntityTypeShape EntityType="UMS_HUSCModel.VQueQuan" Width="1.5" PointX="11.125" PointY="7.125" />
-        <EntityTypeShape EntityType="UMS_HUSCModel.VThuongTru" Width="1.5" PointX="11.125" PointY="3.875" />
-        <EntityTypeShape EntityType="UMS_HUSCModel.LICHSUBANTHAN" Width="1.5" PointX="3" PointY="1" />
+      <Diagram DiagramId="545ab24350f24a5e869fe90475b74dbc" Name="Diagram1" DisplayType="true" ZoomLevel="61">
+        <EntityTypeShape EntityType="UMS_HUSCModel.SINHVIEN" Width="1.5" PointX="1.5" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.VThongTinChung" Width="1.5" PointX="17.625" PointY="0.5" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.VThongTinLienHe" Width="1.5" PointX="15.875" PointY="0.5" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.VDacDiemBanThan" Width="1.5" PointX="15.875" PointY="4" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.VQueQuan" Width="1.5" PointX="14.125" PointY="2.875" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.VThuongTru" Width="1.5" PointX="14.125" PointY="0.5" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.LICHSUBANTHAN" Width="1.5" PointX="4.25" PointY="0.5" />
         <AssociationConnector Association="UMS_HUSCModel.FK_LICHSUBANTHAN_SINHVIEN" />
-        <EntityTypeShape EntityType="UMS_HUSCModel.VThongTinCaNhan" Width="1.5" PointX="8.625" PointY="4.125" />
-        <EntityTypeShape EntityType="UMS_HUSCModel.VNoiSinh" Width="1.5" PointX="8.625" PointY="7.125" />
-        <EntityTypeShape EntityType="UMS_HUSCModel.THONGBAO" Width="1.5" PointX="6" PointY="5.375" />
-        <EntityTypeShape EntityType="UMS_HUSCModel.FIREBASE" Width="3" PointX="0.75" PointY="6" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.VThongTinCaNhan" Width="1.5" PointX="20.125" PointY="2.875" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.VNoiSinh" Width="1.5" PointX="20.125" PointY="5.25" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.THONGBAO" Width="1.5" PointX="20.125" PointY="0.5" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.FIREBASE" Width="3" PointX="0.5" PointY="0.5" />
         <AssociationConnector Association="UMS_HUSCModel.FK_FIREBASE_SINHVIEN1" />
-        <EntityTypeShape EntityType="UMS_HUSCModel.VTinNhanDaGui" Width="1.5" PointX="3.875" PointY="13.5" />
-        <EntityTypeShape EntityType="UMS_HUSCModel.VTinNhanDaNhan" Width="1.5" PointX="9" PointY="12.125" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.VTinNhanDaGui" Width="1.5" PointX="4.875" PointY="13.625" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.VTinNhanDaNhan" Width="1.5" PointX="3.25" PointY="13.625" />
         <EntityTypeShape EntityType="UMS_HUSCModel.NGUOIGUI" Width="1.5" PointX="0.875" PointY="10" />
-        <EntityTypeShape EntityType="UMS_HUSCModel.NGUOINHAN" Width="1.5" PointX="6.625" PointY="12.25" />
-        <EntityTypeShape EntityType="UMS_HUSCModel.TINNHAN" Width="1.5" PointX="3.5" PointY="10.375" />
-        <EntityTypeShape EntityType="UMS_HUSCModel.VTinNhan" Width="1.5" PointX="1.5" PointY="12.75" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.NGUOINHAN" Width="1.5" PointX="4.875" PointY="10" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.TINNHAN" Width="1.5" PointX="2.875" PointY="10" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.VTinNhan" Width="1.5" PointX="1.5" PointY="13.625" />
         <AssociationConnector Association="UMS_HUSCModel.FK_NGUOIGUI_SINHVIEN" />
         <AssociationConnector Association="UMS_HUSCModel.FK_NGUOIGUI_TINNHAN" />
-        <AssociationConnector Association="UMS_HUSCModel.FK_NGUOINHAN_SINHVIEN" />
+        <AssociationConnector Association="UMS_HUSCModel.FK_NGUOINHAN_SINHVIEN" ManuallyRouted="true" >
+          <ConnectorPoint PointX="2.625" PointY="6.4321907552083326" />
+          <ConnectorPoint PointX="2.625" PointY="12.299988606770834" />
+          <ConnectorPoint PointX="4.875" PointY="12.299988606770834" />
+        </AssociationConnector>
         <AssociationConnector Association="UMS_HUSCModel.FK_NGUOINHAN_TINNHAN" />
-      </Diagram>
+        <EntityTypeShape EntityType="UMS_HUSCModel.VLichSuBanThan" Width="1.5" PointX="17.625" PointY="4.5" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.DANTOC" Width="1.5" PointX="7" PointY="0.5" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.TONGIAO" Width="1.5" PointX="7" PointY="2.5" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.PHUONGXA" Width="1.5" PointX="13" PointY="6.625" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.QUANHUYEN" Width="1.5" PointX="10.875" PointY="6.625" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.QUOCGIA" Width="1.5" PointX="6.375" PointY="6.625" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.THANHPHO" Width="1.5" PointX="8.625" PointY="6.625" />
+        <AssociationConnector Association="UMS_HUSCModel.FK_PHUONGXA_QUANHUYEN" />
+        <AssociationConnector Association="UMS_HUSCModel.FK_QUANHUYEN_THANHPHO" />
+        <AssociationConnector Association="UMS_HUSCModel.FK_City_Nation" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.NOISINH" Width="1.5" PointX="4" PointY="5.5" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.THONGTINCHUNG" Width="1.5" PointX="9.25" PointY="0.5" />
+        <AssociationConnector Association="UMS_HUSCModel.FK_GeneralInfo_People" />
+        <AssociationConnector Association="UMS_HUSCModel.FK_NOISINH_SINHVIEN" />
+        <AssociationConnector Association="UMS_HUSCModel.FK_PlaceOfBirth_City" />
+        <AssociationConnector Association="UMS_HUSCModel.FK_PlaceOfBirth_Nation" />
+        <AssociationConnector Association="UMS_HUSCModel.FK_GeneralInfo_Nation" />
+        <AssociationConnector Association="UMS_HUSCModel.FK_THONGTINCHUNG_SINHVIEN" />
+        <AssociationConnector Association="UMS_HUSCModel.FK_GeneralInfo_Religion" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

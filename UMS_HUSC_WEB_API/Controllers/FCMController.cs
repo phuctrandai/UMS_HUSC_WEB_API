@@ -30,12 +30,12 @@ namespace UMS_HUSC_WEB_API.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult Post(string order, string maSinhVien, string token)
+        public IHttpActionResult Excute(string order, string maSinhVien, string token)
         {
             if (string.IsNullOrEmpty(order))
                 return NotFound();
 
-            else if (order.Equals("save"))
+            else if (order.ToLower().Equals("save"))
             {
                 try
                 {
@@ -50,7 +50,7 @@ namespace UMS_HUSC_WEB_API.Controllers
                     return BadRequest(ex.Message + "\r" + ex.StackTrace);
                 }
             }
-            else if (order.Equals("delete"))
+            else if (order.ToLower().Equals("delete"))
             {
                 var result = FireBaseDao.DeleteFireBase(maSinhVien, token);
                 if (result)
@@ -118,7 +118,7 @@ namespace UMS_HUSC_WEB_API.Controllers
 
         public string SendMessage(string postData)
         {
-            if (string.IsNullOrEmpty(postData)) return "Tham số truyền vào rỗng";
+            if (string.IsNullOrEmpty(postData)) return "FCM Send Mesage: Tham số truyền vào rỗng";
 
             WebRequest tRequest;
             //thiết lập FCM send

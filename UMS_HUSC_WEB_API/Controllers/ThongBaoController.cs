@@ -20,12 +20,9 @@ namespace UMS_HUSC_WEB_API.Controllers
         }
         
         [HttpGet]
-        public IHttpActionResult GetThongBaoTheoId(string order, string maSinhVien, string matKhau, int id)
+        public IHttpActionResult ChiTiet(string maSinhVien, string matKhau, int id)
         {
-            if (string.IsNullOrEmpty(order) || string.IsNullOrEmpty(maSinhVien) || string.IsNullOrEmpty(matKhau))
-                return BadRequest("Tham số truyền vào không hợp lệ !");
-
-            if (!order.ToLower().Equals(ORDER_NOI_DUNG_THONG_BAO))
+            if (string.IsNullOrEmpty(maSinhVien) || string.IsNullOrEmpty(matKhau))
                 return BadRequest("Tham số truyền vào không hợp lệ !");
 
             var sv = SinhVienDao.GetSinhVien(maSinhVien, matKhau);
@@ -38,22 +35,22 @@ namespace UMS_HUSC_WEB_API.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult GetThongBaoTheoSoTrang(string maSinhVien, string matKhau, int soTrang, int soDongMoiTrang)
+        public IHttpActionResult DanhSach(string maSinhVien, string matKhau, int soTrang, int soDong)
         {
             if (string.IsNullOrEmpty(maSinhVien) || string.IsNullOrEmpty(matKhau)
-                || soTrang < 1 || soDongMoiTrang < 1)
+                || soTrang < 1 || soDong < 1)
                 return BadRequest("Tham số truyền vào không hợp lệ !");
 
             var current = SinhVienDao.GetSinhVien(maSinhVien, matKhau);
             if (current == null) return BadRequest("Thong tin sinh vien khong hop le !");
 
-            var soDong = ThongBaoDao.GetSoDong();
-            var temp = soDong % soDongMoiTrang;
-            var subTongSoTrang = soDong / soDongMoiTrang;
+            var soDongTong = ThongBaoDao.GetSoDong();
+            var temp = soDongTong % soDong;
+            var subTongSoTrang = soDongTong / soDong;
             var tongSoTrang = temp == 0 ? subTongSoTrang : subTongSoTrang + 1;
             if (soTrang > tongSoTrang) return Ok(new List<THONGBAO>());
 
-            var listThongBao = ThongBaoDao.GetThongBaoTheoSoTrang(soTrang, soDongMoiTrang);
+            var listThongBao = ThongBaoDao.GetThongBaoTheoSoTrang(soTrang, soDong);
             return Ok(listThongBao);
         }
     }

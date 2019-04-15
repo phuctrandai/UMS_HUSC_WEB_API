@@ -163,6 +163,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DemoController.cs" />
+    <Compile Include="Controllers\DungChungController.cs" />
     <Compile Include="Controllers\FCMController.cs" />
     <Compile Include="Controllers\SinhVienController.cs" />
     <Compile Include="Controllers\ThongBaoController.cs" />
@@ -172,6 +173,9 @@
     <Compile Include="Daos\TinNhanDao.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DANTOC.cs">
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FIREBASE.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -200,16 +204,40 @@
     <Compile Include="Models\NGUOINHAN.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\NOISINH.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PHUONGXA.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QUANHUYEN.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QUOCGIA.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SINHVIEN.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\THANHPHO.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\THONGBAO.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\THONGTINCHUNG.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TINNHAN.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TONGIAO.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\VDacDiemBanThan.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VLichSuBanThan.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VNoiSinh.cs">
@@ -240,10 +268,16 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\DanToc.cs" />
     <Compile Include="ViewModels\DemoKetQua.cs" />
+    <Compile Include="ViewModels\PhuongXa.cs" />
     <Compile Include="ViewModels\PushNotification.cs" />
+    <Compile Include="ViewModels\QuanHuyen.cs" />
+    <Compile Include="ViewModels\QuocGia.cs" />
     <Compile Include="ViewModels\Select2Model.cs" />
+    <Compile Include="ViewModels\ThanhPho.cs" />
     <Compile Include="ViewModels\TinNhan.cs" />
+    <Compile Include="ViewModels\TonGiao.cs" />
     <Compile Include="ViewModels\VLyLichCaNhan.cs" />
     <Compile Include="ViewModels\ThongTinChung.cs" />
   </ItemGroup>
