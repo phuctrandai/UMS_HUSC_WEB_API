@@ -44,7 +44,7 @@ namespace UMS_HUSC_WEB_API.Controllers
             DemoKetQua demo = new DemoKetQua();
             try
             {
-                //ThongBaoDao.AddThongBao(thongBao);
+                ThongBaoDao.AddThongBao(thongBao);
                 thongBao.MaThongBao = ThongBaoDao.GetMaxId();
 
                 // Thong bao den client app

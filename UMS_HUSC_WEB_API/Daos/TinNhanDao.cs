@@ -312,16 +312,17 @@ namespace UMS_HUSC_WEB_API.Daos
                 var current = db.TINNHANs.FirstOrDefault(t => t.MaTinNhan.Equals(id));
                 if (current != null)
                 {
-                    var nguoiGui = current.NGUOIGUIs.FirstOrDefault(n => n.MaNguoiGui.Equals(maSinhVien));
+                    var nguoiGui = db.NGUOIGUIs.FirstOrDefault(n => n.MaNguoiGui.Equals(maSinhVien) && n.MaTinNhan.Equals(id));
 
-                    if (nguoiGui.MaNguoiGui.Equals(maSinhVien)) // sinh vien nay la nguoi gui tin nhan
+                    if (nguoiGui != null) // sinh vien nay la nguoi gui tin nhan
                     {
                         db.NGUOIGUIs.Remove(nguoiGui);
                     }
                     else
                     {
-                        var nguoiNhan = current.NGUOINHANs.FirstOrDefault(n => n.MaNguoiNhan.Equals(maSinhVien));
-                        db.NGUOINHANs.Remove(nguoiNhan);
+                        var nguoiNhan = db.NGUOINHANs.FirstOrDefault(n => n.MaNguoiNhan.Equals(maSinhVien) && n.MaTinNhan.Equals(id));
+                        if (nguoiNhan != null)
+                            db.NGUOINHANs.Remove(nguoiNhan);
                     }
                     db.SaveChanges();
                     return true;
