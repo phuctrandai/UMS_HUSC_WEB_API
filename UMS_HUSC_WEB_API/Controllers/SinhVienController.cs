@@ -24,7 +24,7 @@ namespace UMS_HUSC_WEB_API.Controllers
 
         // GET: api/SinhVien/TaiKhoan/order=...?masinhvien=...&matkhau...
         [HttpGet]
-        public IHttpActionResult TaiKhoan(string order, string maSinhVien, string matKhau)
+        public IHttpActionResult TaiKhoan(string order, string maSinhVien, string matKhau, string matKhauMoi = "")
         {
             if (string.IsNullOrEmpty(order) || string.IsNullOrEmpty(maSinhVien) || string.IsNullOrEmpty(matKhau))
                 return BadRequest("Tham số truyền vào không hợp lệ !!!");
@@ -32,9 +32,9 @@ namespace UMS_HUSC_WEB_API.Controllers
             if (!string.IsNullOrEmpty(order))
             {
                 // Kiem tra thong tin dang nhap
-                var current = SinhVienDao.GetSinhVien(maSinhVien, matKhau);
+                var current = SinhVienDao.TonTaiSinhVien(maSinhVien, matKhau);
 
-                if (current == null) return BadRequest("Thông tin sinh viên không đúng !!!");
+                if (current == false) return BadRequest("Thông tin sinh viên không đúng !!!");
 
                 switch (order.ToLower())
                 {
@@ -51,8 +51,11 @@ namespace UMS_HUSC_WEB_API.Controllers
                         break;
 
                     case ORDER_CHANGE_PASS:
-                        SinhVienDao.DoiMatKhau(maSinhVien, matKhau);
-                        return Ok();
+                        var result = SinhVienDao.DoiMatKhau(maSinhVien, matKhau, matKhauMoi);
+                        if (result)
+                            return Ok();
+
+                        return BadRequest("Đổi mật khẩu không thành công");
                         
                     default:
                         break;
@@ -68,8 +71,8 @@ namespace UMS_HUSC_WEB_API.Controllers
             if (string.IsNullOrEmpty(order) || string.IsNullOrEmpty(maSinhVien) || string.IsNullOrEmpty(matKhau))
                 return BadRequest("Tham số truyền vào không hợp lệ !");
 
-            var current = SinhVienDao.GetSinhVien(maSinhVien, matKhau);
-            if (current == null)
+            var current = SinhVienDao.TonTaiSinhVien(maSinhVien, matKhau);
+            if (current == false)
                 return BadRequest("Thông tin sinh viên không hợp lệ !");
 
             var listTinNhan = new List<TINNHAN>();
@@ -127,14 +130,15 @@ namespace UMS_HUSC_WEB_API.Controllers
             if (string.IsNullOrEmpty(order) || string.IsNullOrEmpty(maSinhVien) || string.IsNullOrEmpty(matKhau))
                 return BadRequest("Tham số truyền vào không hợp lệ !");
 
-            var sv = SinhVienDao.GetSinhVien(maSinhVien, matKhau);
-            if (sv == null) return BadRequest("Thông tin sinh viên không hợp lệ !");
+            var sv = SinhVienDao.TonTaiSinhVien(maSinhVien, matKhau);
+            if (sv == false) return BadRequest("Thông tin sinh viên không hợp lệ !");
 
             switch (order.ToLower())
             {
                 case ORDER_GET_BODY_MESSAGE:
-                    var tn = TinNhanDao.GetTinNhanTheoId(id);
                     var ud = TinNhanDao.UpdateThoiDiemXem(id, maSinhVien);
+                    var tn = TinNhanDao.GetTinNhanTheoId(id);
+
                     if (tn == null || ud == false)
                         return BadRequest("Mã tin nhắn không tồn tại !");
                     else
@@ -170,9 +174,9 @@ namespace UMS_HUSC_WEB_API.Controllers
             if (!SinhVienDao.TonTaiSinhVien(maSinhVien, matKhau))
                 return BadRequest("Thông tin người gửi không đúng");
 
-            var danhSachHoTen = SinhVienDao.GetHoTenVaMaSinhVien();
-            var hoTenNguoiGui = string.IsNullOrEmpty(tinNhan.HoTenNguoiGui) ?
-                danhSachHoTen.FirstOrDefault(i => i.MaSinhVien.Equals(tinNhan.MaNguoiGui)).HoTen : tinNhan.HoTenNguoiGui;
+            //var hoTenNguoiGui = string.IsNullOrEmpty(tinNhan.HoTenNguoiGui) ?
+            //    danhSachHoTen.FirstOrDefault(i => i.MaSinhVien.Equals(tinNhan.MaNguoiGui)).HoTen : tinNhan.HoTenNguoiGui;
+            var hoTenNguoiGui = tinNhan.HoTenNguoiGui;
             var maxMaTinNhan = TinNhanDao.GetMaxMaTinNhan() + 1;
 
             TINNHAN newTinNhan = new TINNHAN()
@@ -188,9 +192,9 @@ namespace UMS_HUSC_WEB_API.Controllers
                 MaTinNhan = maxMaTinNhan,
                 MaNguoiGui = tinNhan.MaNguoiGui,
                 HoTenNguoiGui = hoTenNguoiGui,
-                SINHVIEN = null,
                 TINNHAN = newTinNhan,
-                DaXoa = false
+                TrangThai = TinNhanDao.TINNHAN_CHUA_XOA,
+                TAIKHOAN = null
             };
 
             var nguoiNhans = new List<NGUOINHAN>();
@@ -200,12 +204,12 @@ namespace UMS_HUSC_WEB_API.Controllers
                 NGUOINHAN nguoiNhan = new NGUOINHAN()
                 {
                     MaTinNhan = maxMaTinNhan,
-                    HoTenNguoiNhan = danhSachHoTen.FirstOrDefault(t => t.MaSinhVien.Equals(item.MaNguoiNhan)).HoTen,
-                    DaXoa = false,
-                    MaNguoiNhan = item.MaNguoiNhan,
+                    HoTenNguoiNhan = SinhVienDao.GetHoTenTheoTaiKhoan(item.MaNguoiNhan),
                     ThoiDiemXem = null,
-                    SINHVIEN = null,
-                    TINNHAN = newTinNhan
+                    TINNHAN = newTinNhan, 
+                    TAIKHOAN = null,
+                    TrangThai = TinNhanDao.TINNHAN_CHUA_XOA,
+                    MaNguoiNhan = item.MaNguoiNhan
                 };
                 nguoiNhans.Add(nguoiNhan);
             }
@@ -237,10 +241,25 @@ namespace UMS_HUSC_WEB_API.Controllers
             if (!SinhVienDao.TonTaiSinhVien(maSinhVien, matKhau) || (!maSinhVien.ToLower().Equals(thongTinChung.MaSinhVien.ToLower())))
                 return BadRequest("Thông tin người dùng không đúng");
 
-            if (SinhVienDao.UpdateThongTinChung(ref thongTinChung))
+            if (SinhVienDao.UpdateThongTinChung(thongTinChung))
                 return Ok(SinhVienDao.GetThongTinChung(maSinhVien));
 
             return BadRequest("Cập nhật không thành công");
+        }
+
+        [HttpPost]
+        public IHttpActionResult UpdateThongTinLienHe(string maSinhVien, string matKhau, VLyLichCaNhan lyLichCaNhan)
+        {
+            if (lyLichCaNhan == null || string.IsNullOrEmpty(maSinhVien) || string.IsNullOrEmpty(matKhau))
+                return BadRequest("Thông tin người dùng không được rỗng");
+
+            if (!SinhVienDao.TonTaiSinhVien(maSinhVien, matKhau))
+                return BadRequest("Thông tin người dùng không đúng");
+
+            SinhVienDao.UpDateThongTinLienHe(maSinhVien, lyLichCaNhan.ThongTinLienHe);
+            SinhVienDao.UpdateThongTinThuongTru(maSinhVien, lyLichCaNhan.ThuongTru);
+            SinhVienDao.UpdateQueQuan(maSinhVien, lyLichCaNhan.QueQuan);
+            return Ok(SinhVienDao.GetLyLichCaNhan(maSinhVien));
         }
     }
 }

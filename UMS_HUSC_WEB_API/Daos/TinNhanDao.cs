@@ -9,14 +9,18 @@ namespace UMS_HUSC_WEB_API.Daos
 {
     public static class TinNhanDao
     {
+        public static readonly int TINNHAN_CHUA_XOA = 0;
+        public static readonly int TINNHAN_TAM_XOA = 1;
+        public static readonly int TINNHAN_XOA_HAN = 2;
+
         #region Tin nhan da nhan
-        public static List<TinNhan> GetAllTinNhanDaNhan(string maNguoiNhan)
+        public static List<TinNhan> GetAllTinNhanDaNhan(string maSinhVien)
         {
             using (var db = new UMS_HUSCEntities())
             {
                 var list = new List<TinNhan>();
-
-                var tinDaNhan = db.VTinNhanDaNhans.Where(n => n.MaNguoiNhan.Equals(maNguoiNhan) && n.DaXoa.Equals(false)).ToList();
+                var maTaiKhoan = SinhVienDao.GetMaTaiKhoan(maSinhVien);
+                var tinDaNhan = db.VTinNhanDaNhans.Where(n => n.MaNguoiNhan == maTaiKhoan && n.TrangThai == TINNHAN_CHUA_XOA).ToList();
 
                 foreach (var item in tinDaNhan)
                 {
@@ -54,21 +58,22 @@ namespace UMS_HUSC_WEB_API.Daos
             return list;
         }
 
-        public static long GetTongTinNhanDaNhan(string maNguoiNhan)
+        public static long GetTongTinNhanDaNhan(string maSinhVien)
         {
             using (UMS_HUSCEntities db = new UMS_HUSCEntities())
             {
-                return db.VTinNhanDaNhans.Where(t => t.MaNguoiNhan.Equals(maNguoiNhan)).Count();
+                var maTaiKhoan = SinhVienDao.GetMaTaiKhoan(maSinhVien);
+                return db.VTinNhanDaNhans.Where(t => t.MaNguoiNhan.Equals(maTaiKhoan)).Count();
             }
         }
             
-        public static List<TinNhan> GetTinNhanNhanDaXoa(string maNguoiNhan)
+        public static List<TinNhan> GetTinNhanNhanDaXoa(string maSinhVien)
         {
             using (var db = new UMS_HUSCEntities())
             {
                 var list = new List<TinNhan>();
-
-                var tinDaNhan = db.VTinNhanDaNhans.Where(n => n.MaNguoiNhan.Equals(maNguoiNhan) && n.DaXoa.Equals(true)).ToList();
+                var maTaiKhoan = SinhVienDao.GetMaTaiKhoan(maSinhVien);
+                var tinDaNhan = db.VTinNhanDaNhans.Where(n => n.MaNguoiNhan == maTaiKhoan && n.TrangThai == TINNHAN_TAM_XOA).ToList();
 
                 foreach (var item in tinDaNhan)
                 {
@@ -102,13 +107,13 @@ namespace UMS_HUSC_WEB_API.Daos
 
         #region Tin nhan da gui
 
-        public static List<TinNhan> GetAllTinNhanDaGui(string maNguoiGui)
+        public static List<TinNhan> GetAllTinNhanDaGui(string maSinhVien)
         {
             using (var db = new UMS_HUSCEntities())
             {
                 var list = new List<TinNhan>();
-
-                var tinDaGui = db.VTinNhanDaGuis.Where(n => n.MaNguoiGui.Equals(maNguoiGui) && n.DaXoa.Equals(false)).ToList();
+                var maTaiKhoan = SinhVienDao.GetMaTaiKhoan(maSinhVien);
+                var tinDaGui = db.VTinNhanDaGuis.Where(n => n.MaNguoiGui == maTaiKhoan && n.TrangThai == TINNHAN_CHUA_XOA).ToList();
 
                 foreach (var item in tinDaGui)
                 {
@@ -145,21 +150,22 @@ namespace UMS_HUSC_WEB_API.Daos
             return list;
         }
 
-        public static long GetTongTinNhanDaGui(string maNguoiGui)
+        public static long GetTongTinNhanDaGui(string maSinhVien)
         {
             using (UMS_HUSCEntities db = new UMS_HUSCEntities())
             {
-                return db.VTinNhanDaGuis.Where(t => t.MaNguoiGui.Equals(maNguoiGui)).Count();
+                var maTaiKhoan = SinhVienDao.GetMaTaiKhoan(maSinhVien);
+                return db.VTinNhanDaGuis.Where(t => t.MaNguoiGui == maTaiKhoan).Count();
             }
         }
 
-        public static List<TinNhan> GetTinNhanGuiDaXoa(string maNguoiGui)
+        public static List<TinNhan> GetTinNhanGuiDaXoa(string maSinhVien)
         {
             using (var db = new UMS_HUSCEntities())
             {
                 var list = new List<TinNhan>();
-
-                var tinDaGui = db.VTinNhanDaGuis.Where(n => n.MaNguoiGui.Equals(maNguoiGui) && n.DaXoa.Equals(true)).ToList();
+                var maTaiKhoan = SinhVienDao.GetMaTaiKhoan(maSinhVien);
+                var tinDaGui = db.VTinNhanDaGuis.Where(n => n.MaNguoiGui == maTaiKhoan && n.TrangThai == TINNHAN_TAM_XOA).ToList();
 
                 foreach (var item in tinDaGui)
                 {
@@ -192,12 +198,12 @@ namespace UMS_HUSC_WEB_API.Daos
         #endregion
 
         #region Tin nhan da xoa
-        public static List<TinNhan> GetAllTinNhanDaXoa(string maTaiKhoan)
+        public static List<TinNhan> GetAllTinNhanDaXoa(string maSinhVien)
         {
             var list = new List<TinNhan>();
-
-            var tinNhanNhanDaXoa = GetTinNhanNhanDaXoa(maTaiKhoan);
-            var tinNhanGuiDaXoa = GetTinNhanGuiDaXoa(maTaiKhoan);
+            
+            var tinNhanNhanDaXoa = GetTinNhanNhanDaXoa(maSinhVien);
+            var tinNhanGuiDaXoa = GetTinNhanGuiDaXoa(maSinhVien);
 
             list.AddRange(tinNhanNhanDaXoa);
             list.AddRange(tinNhanGuiDaXoa);
@@ -205,19 +211,19 @@ namespace UMS_HUSC_WEB_API.Daos
             return list;
         }
 
-        public static List<TinNhan> GetTinNhanDaXoaTheoSoTrang(string maTaiKhoan, int soTrang, int soDongMoiTrang)
+        public static List<TinNhan> GetTinNhanDaXoaTheoSoTrang(string maSinhVien, int soTrang, int soDongMoiTrang)
         {
             var skipRow = (soTrang - 1) * soDongMoiTrang;
-            var list = GetAllTinNhanDaXoa(maTaiKhoan).Skip(skipRow).Take(soDongMoiTrang).OrderByDescending(t => t.ThoiDiemGui).ToList();
+            var list = GetAllTinNhanDaXoa(maSinhVien).Skip(skipRow).Take(soDongMoiTrang).OrderByDescending(t => t.ThoiDiemGui).ToList();
 
             return list;
         }
 
-        public static long GetTongTinNhanDaXoa(string maTaiKhoan)
+        public static long GetTongTinNhanDaXoa(string maSinhVien)
         {
             using (UMS_HUSCEntities db = new UMS_HUSCEntities())
             {
-                return GetAllTinNhanDaXoa(maTaiKhoan).Count();
+                return GetAllTinNhanDaXoa(maSinhVien).Count();
             }
         }
 
@@ -265,19 +271,20 @@ namespace UMS_HUSC_WEB_API.Daos
         {
             using (var db = new UMS_HUSCEntities())
             {
-                var current = db.TINNHANs.FirstOrDefault(t => t.MaTinNhan.Equals(id));
+                var current = db.TINNHANs.FirstOrDefault(t => t.MaTinNhan == id);
                 if (current != null)
                 {
-                    var nguoiGui = current.NGUOIGUIs.FirstOrDefault(n => n.MaNguoiGui.Equals(maSinhVien));
+                    var maTaiKhoan = SinhVienDao.GetMaTaiKhoan(maSinhVien);
+                    var nguoiGui = current.NGUOIGUIs.FirstOrDefault(n => n.MaNguoiGui == maTaiKhoan);
 
                     if (nguoiGui != null) // sinh vien nay la nguoi gui tin nhan
                     {
-                        nguoiGui.DaXoa = true;
+                        nguoiGui.TrangThai = TINNHAN_TAM_XOA;
                     }
                     else
                     {
-                        var nguoiNhan = current.NGUOINHANs.FirstOrDefault(n => n.MaNguoiNhan.Equals(maSinhVien));
-                        if (nguoiNhan != null) nguoiNhan.DaXoa = true;
+                        var nguoiNhan = current.NGUOINHANs.FirstOrDefault(n => n.MaNguoiNhan == maTaiKhoan);
+                        if (nguoiNhan != null) nguoiNhan.TrangThai = TINNHAN_TAM_XOA;
                     }
                     db.SaveChanges();
                     return true;
@@ -286,20 +293,22 @@ namespace UMS_HUSC_WEB_API.Daos
             }
         }
 
-        public static bool UpdateThoiDiemXem(int id, string maNguoiNhan)
+        public static bool UpdateThoiDiemXem(int id, string maSinhVien)
         {
             using (var db = new UMS_HUSCEntities())
             {
-                var tinNhan = db.TINNHANs.FirstOrDefault(t => t.MaTinNhan.Equals(id));
+                var tinNhan = db.TINNHANs.FirstOrDefault(t => t.MaTinNhan == id);
                 if (tinNhan != null)
                 {
-                    var nguoiNhan = tinNhan.NGUOINHANs.FirstOrDefault(n => n.MaNguoiNhan.Equals(maNguoiNhan));
+                    var maTaiKhoan = SinhVienDao.GetMaTaiKhoan(maSinhVien);
+                    var nguoiNhan = db.NGUOINHANs.FirstOrDefault(n => n.MaNguoiNhan == maTaiKhoan && n.MaTinNhan == id);
+                    var nguoiGui = db.NGUOIGUIs.FirstOrDefault(n => n.MaNguoiGui == maTaiKhoan && n.MaTinNhan == id);
                     if (nguoiNhan != null && nguoiNhan.ThoiDiemXem == null)
                     {
                         nguoiNhan.ThoiDiemXem = DateTime.Now;
                         db.SaveChanges();
-                        return true;
                     }
+                    return (nguoiNhan != null) || (nguoiGui != null);
                 }
                 return false;
             }
@@ -309,20 +318,21 @@ namespace UMS_HUSC_WEB_API.Daos
         {
             using (var db = new UMS_HUSCEntities())
             {
-                var current = db.TINNHANs.FirstOrDefault(t => t.MaTinNhan.Equals(id));
+                var current = db.TINNHANs.FirstOrDefault(t => t.MaTinNhan == id);
                 if (current != null)
                 {
-                    var nguoiGui = db.NGUOIGUIs.FirstOrDefault(n => n.MaNguoiGui.Equals(maSinhVien) && n.MaTinNhan.Equals(id));
+                    var maTaiKhoan = SinhVienDao.GetMaTaiKhoan(maSinhVien);
+                    var nguoiGui = db.NGUOIGUIs.FirstOrDefault(n => n.MaNguoiGui == maTaiKhoan && n.MaTinNhan == id);
 
                     if (nguoiGui != null) // sinh vien nay la nguoi gui tin nhan
                     {
-                        db.NGUOIGUIs.Remove(nguoiGui);
+                        nguoiGui.TrangThai = TINNHAN_XOA_HAN;
                     }
                     else
                     {
-                        var nguoiNhan = db.NGUOINHANs.FirstOrDefault(n => n.MaNguoiNhan.Equals(maSinhVien) && n.MaTinNhan.Equals(id));
+                        var nguoiNhan = db.NGUOINHANs.FirstOrDefault(n => n.MaNguoiNhan == maTaiKhoan && n.MaTinNhan == id);
                         if (nguoiNhan != null)
-                            db.NGUOINHANs.Remove(nguoiNhan);
+                            nguoiNhan.TrangThai = TINNHAN_XOA_HAN;
                     }
                     db.SaveChanges();
                     return true;
@@ -333,15 +343,17 @@ namespace UMS_HUSC_WEB_API.Daos
 
         public static int GetMaxMaTinNhan()
         {
-            UMS_HUSCEntities db = new UMS_HUSCEntities();
-            return db.TINNHANs.Max(t => t.MaTinNhan);
+            using (var db = new UMS_HUSCEntities())
+            {
+                return db.TINNHANs.Max(t => t.MaTinNhan);
+            }
         }
 
         public static List<TinNhan.NguoiNhan> GetAllNguoiNhan(int id)
         {
             using (var db = new UMS_HUSCEntities())
             {
-                var nguoiNhans = db.NGUOINHANs.Where(n => n.MaTinNhan.Equals(id))
+                var nguoiNhans = db.NGUOINHANs.Where(n => n.MaTinNhan == id)
                     .Select(n => new TinNhan.NguoiNhan()
                     {
                         MaNguoiNhan = n.MaNguoiNhan,

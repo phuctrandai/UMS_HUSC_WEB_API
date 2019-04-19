@@ -19,5 +19,6 @@ namespace UMS_HUSC_WEB_API.Models
         public string KhoaHoc { get; set; }
         public string HoTen { get; set; }
         public string AnhDaiDien { get; set; }
+        public int MaTaiKhoan { get; set; }
     }
 }

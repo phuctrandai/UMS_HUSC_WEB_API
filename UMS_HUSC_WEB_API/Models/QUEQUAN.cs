@@ -12,17 +12,19 @@ namespace UMS_HUSC_WEB_API.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class VQueQuan
+    public partial class QUEQUAN
     {
         public string MaSinhVien { get; set; }
-        public string TenQuocGia { get; set; }
-        public string TenThanhPho { get; set; }
-        public string TenQuanHuyen { get; set; }
-        public string TenPhuongXa { get; set; }
+        public Nullable<int> QuocGia { get; set; }
+        public Nullable<int> ThanhPho { get; set; }
+        public Nullable<int> QuanHuyen { get; set; }
+        public Nullable<int> PhuongXa { get; set; }
         public string DiaChi { get; set; }
-        public Nullable<int> MaQuocGia { get; set; }
-        public Nullable<int> MaThanhPho { get; set; }
-        public Nullable<int> MaQuanHuyen { get; set; }
-        public Nullable<int> MaPhuongXa { get; set; }
+    
+        public virtual PHUONGXA PHUONGXA1 { get; set; }
+        public virtual QUANHUYEN QUANHUYEN1 { get; set; }
+        public virtual QUOCGIA QUOCGIA1 { get; set; }
+        public virtual SINHVIEN SINHVIEN { get; set; }
+        public virtual THANHPHO THANHPHO1 { get; set; }
     }
 }

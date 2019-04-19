@@ -15,12 +15,12 @@ namespace UMS_HUSC_WEB_API.Models
     public partial class NGUOINHAN
     {
         public int MaTinNhan { get; set; }
-        public string MaNguoiNhan { get; set; }
+        public int MaNguoiNhan { get; set; }
         public Nullable<System.DateTime> ThoiDiemXem { get; set; }
         public string HoTenNguoiNhan { get; set; }
-        public bool DaXoa { get; set; }
+        public int TrangThai { get; set; }
     
-        public virtual SINHVIEN SINHVIEN { get; set; }
+        public virtual TAIKHOAN TAIKHOAN { get; set; }
         public virtual TINNHAN TINNHAN { get; set; }
     }
 }

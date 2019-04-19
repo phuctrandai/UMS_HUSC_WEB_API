@@ -180,6 +180,12 @@
     <Compile Include="Models\FIREBASE.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GIANGVIEN.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\KYTUCXA.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\LICHSUBANTHAN.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -213,10 +219,16 @@
     <Compile Include="Models\QUANHUYEN.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\QUEQUAN.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\QUOCGIA.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SINHVIEN.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TAIKHOAN.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\THANHPHO.cs">
@@ -226,6 +238,12 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\THONGTINCHUNG.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\THONGTINLIENHE.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\THUONGTRU.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TINNHAN.cs">
@@ -270,6 +288,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\DanToc.cs" />
     <Compile Include="ViewModels\DemoKetQua.cs" />
+    <Compile Include="ViewModels\KyTucXa.cs" />
     <Compile Include="ViewModels\PhuongXa.cs" />
     <Compile Include="ViewModels\PushNotification.cs" />
     <Compile Include="ViewModels\QuanHuyen.cs" />

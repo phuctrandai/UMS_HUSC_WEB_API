@@ -20,5 +20,9 @@ namespace UMS_HUSC_WEB_API.Models
         public string TenQuanHuyen { get; set; }
         public string TenPhuongXa { get; set; }
         public string DiaChi { get; set; }
+        public Nullable<int> MaQuocGia { get; set; }
+        public Nullable<int> MaThanhPho { get; set; }
+        public Nullable<int> MaQuanHuyen { get; set; }
+        public Nullable<int> MaPhuongXa { get; set; }
     }
 }

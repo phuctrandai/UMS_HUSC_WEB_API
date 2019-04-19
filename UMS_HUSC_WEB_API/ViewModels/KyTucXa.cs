@@ -5,9 +5,9 @@ using System.Web;
 
 namespace UMS_HUSC_WEB_API.ViewModels
 {
-    public class Select2Model
+    public class KyTucXa
     {
-        public int id { get; set; }
-        public string text { get; set; }
+        public int MaKyTucXa { get; set; }
+        public string TenKyTucXa { get; set; }
     }
 }

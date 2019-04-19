@@ -18,8 +18,8 @@ namespace UMS_HUSC_WEB_API.Models
         public string TieuDe { get; set; }
         public string NoiDung { get; set; }
         public System.DateTime ThoiDiemGui { get; set; }
-        public string MaNguoiGui { get; set; }
+        public int MaNguoiGui { get; set; }
         public string HoTenNguoiGui { get; set; }
-        public bool DaXoa { get; set; }
+        public int TrangThai { get; set; }
     }
 }

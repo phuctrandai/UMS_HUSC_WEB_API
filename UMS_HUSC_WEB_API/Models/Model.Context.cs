@@ -25,23 +25,16 @@ namespace UMS_HUSC_WEB_API.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<SINHVIEN> SINHVIENs { get; set; }
         public virtual DbSet<VThongTinChung> VThongTinChungs { get; set; }
         public virtual DbSet<VThongTinLienHe> VThongTinLienHes { get; set; }
         public virtual DbSet<VDacDiemBanThan> VDacDiemBanThans { get; set; }
         public virtual DbSet<VQueQuan> VQueQuans { get; set; }
         public virtual DbSet<VThuongTru> VThuongTrus { get; set; }
         public virtual DbSet<LICHSUBANTHAN> LICHSUBANTHANs { get; set; }
-        public virtual DbSet<VThongTinCaNhan> VThongTinCaNhans { get; set; }
         public virtual DbSet<VNoiSinh> VNoiSinhs { get; set; }
         public virtual DbSet<THONGBAO> THONGBAOs { get; set; }
         public virtual DbSet<FIREBASE> FIREBASEs { get; set; }
-        public virtual DbSet<VTinNhanDaGui> VTinNhanDaGuis { get; set; }
-        public virtual DbSet<VTinNhanDaNhan> VTinNhanDaNhans { get; set; }
-        public virtual DbSet<NGUOIGUI> NGUOIGUIs { get; set; }
-        public virtual DbSet<NGUOINHAN> NGUOINHANs { get; set; }
         public virtual DbSet<TINNHAN> TINNHANs { get; set; }
-        public virtual DbSet<VTinNhan> VTinNhans { get; set; }
         public virtual DbSet<VLichSuBanThan> VLichSuBanThans { get; set; }
         public virtual DbSet<DANTOC> DANTOCs { get; set; }
         public virtual DbSet<TONGIAO> TONGIAOs { get; set; }
@@ -51,5 +44,18 @@ namespace UMS_HUSC_WEB_API.Models
         public virtual DbSet<THANHPHO> THANHPHOes { get; set; }
         public virtual DbSet<NOISINH> NOISINHs { get; set; }
         public virtual DbSet<THONGTINCHUNG> THONGTINCHUNGs { get; set; }
+        public virtual DbSet<GIANGVIEN> GIANGVIENs { get; set; }
+        public virtual DbSet<NGUOIGUI> NGUOIGUIs { get; set; }
+        public virtual DbSet<NGUOINHAN> NGUOINHANs { get; set; }
+        public virtual DbSet<SINHVIEN> SINHVIENs { get; set; }
+        public virtual DbSet<TAIKHOAN> TAIKHOANs { get; set; }
+        public virtual DbSet<VTinNhanDaNhan> VTinNhanDaNhans { get; set; }
+        public virtual DbSet<VTinNhan> VTinNhans { get; set; }
+        public virtual DbSet<VTinNhanDaGui> VTinNhanDaGuis { get; set; }
+        public virtual DbSet<VThongTinCaNhan> VThongTinCaNhans { get; set; }
+        public virtual DbSet<QUEQUAN> QUEQUANs { get; set; }
+        public virtual DbSet<THONGTINLIENHE> THONGTINLIENHEs { get; set; }
+        public virtual DbSet<THUONGTRU> THUONGTRUs { get; set; }
+        public virtual DbSet<KYTUCXA> KYTUCXAs { get; set; }
     }
 }

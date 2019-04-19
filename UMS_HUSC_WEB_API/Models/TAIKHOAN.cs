@@ -12,32 +12,27 @@ namespace UMS_HUSC_WEB_API.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class THANHPHO
+    public partial class TAIKHOAN
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public THANHPHO()
+        public TAIKHOAN()
         {
-            this.QUANHUYENs = new HashSet<QUANHUYEN>();
-            this.NOISINHs = new HashSet<NOISINH>();
-            this.QUEQUANs = new HashSet<QUEQUAN>();
-            this.THONGTINLIENHEs = new HashSet<THONGTINLIENHE>();
-            this.THUONGTRUs = new HashSet<THUONGTRU>();
+            this.GIANGVIENs = new HashSet<GIANGVIEN>();
+            this.NGUOIGUIs = new HashSet<NGUOIGUI>();
+            this.NGUOINHANs = new HashSet<NGUOINHAN>();
+            this.SINHVIENs = new HashSet<SINHVIEN>();
         }
     
-        public int MaThanhPho { get; set; }
-        public string TenThanhPho { get; set; }
-        public Nullable<int> MaQuocGia { get; set; }
+        public int MaTaiKhoan { get; set; }
+        public string MatKhau { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<QUANHUYEN> QUANHUYENs { get; set; }
-        public virtual QUOCGIA QUOCGIA { get; set; }
+        public virtual ICollection<GIANGVIEN> GIANGVIENs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NOISINH> NOISINHs { get; set; }
+        public virtual ICollection<NGUOIGUI> NGUOIGUIs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<QUEQUAN> QUEQUANs { get; set; }
+        public virtual ICollection<NGUOINHAN> NGUOINHANs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<THONGTINLIENHE> THONGTINLIENHEs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<THUONGTRU> THUONGTRUs { get; set; }
+        public virtual ICollection<SINHVIEN> SINHVIENs { get; set; }
     }
 }

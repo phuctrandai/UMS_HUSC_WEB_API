@@ -11,8 +11,6 @@ namespace UMS_HUSC_WEB_API.Controllers
 {
     public class DemoController : Controller
     {
-        private static List<VThongTinChung> dsHoTenVaMaSinhVien = SinhVienDao.GetHoTenVaMaSinhVien();
-
         [HttpGet]
         public ActionResult DemoPostNews(DemoKetQua demo)
         {
@@ -94,12 +92,12 @@ namespace UMS_HUSC_WEB_API.Controllers
                     new NGUOINHAN()
                     {
                         MaTinNhan = tinNhan.MaTinNhan,
-                        MaNguoiNhan = m.ToString(),
-                        DaXoa = false,
-                        HoTenNguoiNhan = dsHoTenVaMaSinhVien.FirstOrDefault(d => d.MaSinhVien.Equals(m.ToString())).HoTen,
+                        MaNguoiNhan = int.Parse(m),
+                        TrangThai = TinNhanDao.TINNHAN_CHUA_XOA,
+                        HoTenNguoiNhan = SinhVienDao.GetHoTenTheoTaiKhoan(int.Parse(m)),
                         ThoiDiemXem = null,
                         TINNHAN = tinNhan,
-                        SINHVIEN = null
+                        TAIKHOAN = null
                     }
                 ));
 
@@ -108,12 +106,12 @@ namespace UMS_HUSC_WEB_API.Controllers
                 {
                     new NGUOIGUI()
                     {
-                        MaNguoiGui = maNguoiGui,
-                        DaXoa = false,
+                        MaNguoiGui = int.Parse(maNguoiGui),
+                        TrangThai = TinNhanDao.TINNHAN_CHUA_XOA,
                         MaTinNhan = tinNhan.MaTinNhan,
-                        HoTenNguoiGui = dsHoTenVaMaSinhVien.FirstOrDefault(d => d.MaSinhVien.Equals(maNguoiGui)).HoTen,
+                        HoTenNguoiGui = SinhVienDao.GetHoTenTheoTaiKhoan(int.Parse(maNguoiGui)),
                         TINNHAN = tinNhan,
-                        SINHVIEN = null
+                        TAIKHOAN = null
                     }
                 };
 
@@ -147,8 +145,7 @@ namespace UMS_HUSC_WEB_API.Controllers
 
             if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
             {
-                list = dsHoTenVaMaSinhVien.Where(s => s.HoTen.ToLower().Contains(q.ToLower().Trim()))
-                                    .Select(s => new Select2Model() { id = s.MaSinhVien, text = s.HoTen }).ToList();
+                list = SinhVienDao.GetMaTaiKhoanVaHoTen().Where(s => s.text.ToLower().Contains(q.ToLower().Trim())).ToList();
             }
 
             return Json(new { items = list }, JsonRequestBehavior.AllowGet);

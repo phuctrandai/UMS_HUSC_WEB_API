@@ -18,6 +18,9 @@ namespace UMS_HUSC_WEB_API.Models
         public QUANHUYEN()
         {
             this.PHUONGXAs = new HashSet<PHUONGXA>();
+            this.QUEQUANs = new HashSet<QUEQUAN>();
+            this.THONGTINLIENHEs = new HashSet<THONGTINLIENHE>();
+            this.THUONGTRUs = new HashSet<THUONGTRU>();
         }
     
         public int MaQuanHuyen { get; set; }
@@ -27,5 +30,11 @@ namespace UMS_HUSC_WEB_API.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PHUONGXA> PHUONGXAs { get; set; }
         public virtual THANHPHO THANHPHO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<QUEQUAN> QUEQUANs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<THONGTINLIENHE> THONGTINLIENHEs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<THUONGTRU> THUONGTRUs { get; set; }
     }
 }

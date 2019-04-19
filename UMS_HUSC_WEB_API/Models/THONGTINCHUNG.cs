@@ -28,7 +28,7 @@ namespace UMS_HUSC_WEB_API.Models
     
         public virtual DANTOC DANTOC1 { get; set; }
         public virtual QUOCGIA QUOCGIA { get; set; }
-        public virtual SINHVIEN SINHVIEN { get; set; }
         public virtual TONGIAO TONGIAO1 { get; set; }
+        public virtual SINHVIEN SINHVIEN { get; set; }
     }
 }

@@ -12,25 +12,18 @@ namespace UMS_HUSC_WEB_API.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class SINHVIEN
+    public partial class KYTUCXA
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SINHVIEN()
+        public KYTUCXA()
         {
-            this.FIREBASEs = new HashSet<FIREBASE>();
+            this.THONGTINLIENHEs = new HashSet<THONGTINLIENHE>();
         }
     
-        public string MaSinhVien { get; set; }
-        public Nullable<int> MaTaiKhoan { get; set; }
+        public int MaKyTucXa { get; set; }
+        public string TenKyTucXa { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FIREBASE> FIREBASEs { get; set; }
-        public virtual NOISINH NOISINH { get; set; }
-        public virtual LICHSUBANTHAN LICHSUBANTHAN { get; set; }
-        public virtual TAIKHOAN TAIKHOAN { get; set; }
-        public virtual THONGTINCHUNG THONGTINCHUNG { get; set; }
-        public virtual QUEQUAN QUEQUAN { get; set; }
-        public virtual THONGTINLIENHE THONGTINLIENHE { get; set; }
-        public virtual THUONGTRU THUONGTRU { get; set; }
+        public virtual ICollection<THONGTINLIENHE> THONGTINLIENHEs { get; set; }
     }
 }

@@ -25,8 +25,8 @@ namespace UMS_HUSC_WEB_API.Controllers
             if (string.IsNullOrEmpty(maSinhVien) || string.IsNullOrEmpty(matKhau))
                 return BadRequest("Tham số truyền vào không hợp lệ !");
 
-            var sv = SinhVienDao.GetSinhVien(maSinhVien, matKhau);
-            if (sv == null) return BadRequest("Thong tin sinh vien khong hop le !");
+            var sv = SinhVienDao.TonTaiSinhVien(maSinhVien, matKhau);
+            if (sv == false) return BadRequest("Thong tin sinh vien khong hop le !");
 
             var tb = ThongBaoDao.GetThongBaoTheoId(id);
             if (tb == null) return BadRequest("Mã thông báo không tồn tại !");
@@ -41,8 +41,8 @@ namespace UMS_HUSC_WEB_API.Controllers
                 || soTrang < 1 || soDong < 1)
                 return BadRequest("Tham số truyền vào không hợp lệ !");
 
-            var current = SinhVienDao.GetSinhVien(maSinhVien, matKhau);
-            if (current == null) return BadRequest("Thong tin sinh vien khong hop le !");
+            var current = SinhVienDao.TonTaiSinhVien(maSinhVien, matKhau);
+            if (current == false) return BadRequest("Thong tin sinh vien khong hop le !");
 
             var soDongTong = ThongBaoDao.GetSoDong();
             var temp = soDongTong % soDong;

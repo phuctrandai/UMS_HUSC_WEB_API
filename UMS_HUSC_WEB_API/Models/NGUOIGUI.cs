@@ -14,12 +14,12 @@ namespace UMS_HUSC_WEB_API.Models
     
     public partial class NGUOIGUI
     {
-        public string MaNguoiGui { get; set; }
+        public int MaNguoiGui { get; set; }
         public string HoTenNguoiGui { get; set; }
-        public bool DaXoa { get; set; }
+        public int TrangThai { get; set; }
         public int MaTinNhan { get; set; }
     
-        public virtual SINHVIEN SINHVIEN { get; set; }
+        public virtual TAIKHOAN TAIKHOAN { get; set; }
         public virtual TINNHAN TINNHAN { get; set; }
     }
 }

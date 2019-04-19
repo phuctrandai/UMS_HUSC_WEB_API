@@ -40,6 +40,9 @@ namespace UMS_HUSC_WEB_API.Controllers
                     case "tongiao":
                         return Ok(db.TONGIAOs.Select(t => new TonGiao() { MaTonGiao = t.MaTonGiao, TenTonGiao = t.TenTonGiao }).ToArray());
 
+                    case "kytucxa":
+                        return Ok(db.KYTUCXAs.Select(k => new KyTucXa() { MaKyTucXa = k.MaKyTucXa, TenKyTucXa = k.TenKyTucXa }).ToArray());
+
                     default:
                         return NotFound();
                 }

@@ -96,9 +96,9 @@ namespace UMS_HUSC_WEB_API.Controllers
             string sendTime = tinNhan.ThoiDiemGui.ToString();
 
             var danhSachMaNguoiNhan = tinNhan.NGUOINHANs.Select(n => n.MaNguoiNhan).ToList();
-            string[] arrRegid = FireBaseDao.GetFireBaseTokenById(danhSachMaNguoiNhan).ToArray();
+            var arrRegid = FireBaseDao.GetFireBaseTokenById(danhSachMaNguoiNhan);
 
-            if (arrRegid.Length == 0) return "";
+            if (arrRegid.Length == 0) return null;
 
             PushNotification notification = new PushNotification()
             {
@@ -118,7 +118,7 @@ namespace UMS_HUSC_WEB_API.Controllers
 
         public string SendMessage(string postData)
         {
-            if (string.IsNullOrEmpty(postData)) return "FCM Send Mesage: Tham số truyền vào rỗng";
+            if (string.IsNullOrEmpty(postData)) return "FCM Send Mesage: Tham số truyền vào rỗng, không gửi được thông báo đến client";
 
             WebRequest tRequest;
             //thiết lập FCM send

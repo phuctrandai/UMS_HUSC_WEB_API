@@ -14,10 +14,24 @@ namespace UMS_HUSC_WEB_API.Models
     
     public partial class PHUONGXA
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public PHUONGXA()
+        {
+            this.QUEQUANs = new HashSet<QUEQUAN>();
+            this.THONGTINLIENHEs = new HashSet<THONGTINLIENHE>();
+            this.THUONGTRUs = new HashSet<THUONGTRU>();
+        }
+    
         public int MaPhuongXa { get; set; }
         public string TenPhuongXa { get; set; }
         public Nullable<int> MaQuanHuyen { get; set; }
     
         public virtual QUANHUYEN QUANHUYEN { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<QUEQUAN> QUEQUANs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<THONGTINLIENHE> THONGTINLIENHEs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<THUONGTRU> THUONGTRUs { get; set; }
     }
 }

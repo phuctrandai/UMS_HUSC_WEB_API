@@ -12,24 +12,26 @@ namespace UMS_HUSC_WEB_API.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class VThongTinLienHe
+    public partial class THONGTINLIENHE
     {
         public string MaSinhVien { get; set; }
         public string DienThoai { get; set; }
         public string DiDong { get; set; }
         public string Email { get; set; }
         public Nullable<int> HinhThucCuTru { get; set; }
-        public string TenKyTucXa { get; set; }
-        public string TenQuocGia { get; set; }
-        public string TenThanhPho { get; set; }
-        public string TenQuanHuyen { get; set; }
-        public string TenPhuongXa { get; set; }
+        public Nullable<int> KyTucXa { get; set; }
+        public Nullable<int> QuocGia { get; set; }
+        public Nullable<int> ThanhPho { get; set; }
+        public Nullable<int> QuanHuyen { get; set; }
+        public Nullable<int> PhuongXa { get; set; }
         public string DiaChi { get; set; }
         public Nullable<System.DateTime> NgayBatDauCuTru { get; set; }
-        public Nullable<int> MaQuocGia { get; set; }
-        public Nullable<int> MaThanhPho { get; set; }
-        public Nullable<int> MaQuanHuyen { get; set; }
-        public Nullable<int> MaPhuongXa { get; set; }
-        public Nullable<int> MaKyTucXa { get; set; }
+    
+        public virtual PHUONGXA PHUONGXA1 { get; set; }
+        public virtual QUANHUYEN QUANHUYEN1 { get; set; }
+        public virtual QUOCGIA QUOCGIA1 { get; set; }
+        public virtual SINHVIEN SINHVIEN { get; set; }
+        public virtual THANHPHO THANHPHO1 { get; set; }
+        public virtual KYTUCXA KYTUCXA1 { get; set; }
     }
 }

@@ -20,6 +20,9 @@ namespace UMS_HUSC_WEB_API.Models
             this.THANHPHOes = new HashSet<THANHPHO>();
             this.NOISINHs = new HashSet<NOISINH>();
             this.THONGTINCHUNGs = new HashSet<THONGTINCHUNG>();
+            this.QUEQUANs = new HashSet<QUEQUAN>();
+            this.THONGTINLIENHEs = new HashSet<THONGTINLIENHE>();
+            this.THUONGTRUs = new HashSet<THUONGTRU>();
         }
     
         public int MaQuocGia { get; set; }
@@ -31,5 +34,11 @@ namespace UMS_HUSC_WEB_API.Models
         public virtual ICollection<NOISINH> NOISINHs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<THONGTINCHUNG> THONGTINCHUNGs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<QUEQUAN> QUEQUANs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<THONGTINLIENHE> THONGTINLIENHEs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<THUONGTRU> THUONGTRUs { get; set; }
     }
 }

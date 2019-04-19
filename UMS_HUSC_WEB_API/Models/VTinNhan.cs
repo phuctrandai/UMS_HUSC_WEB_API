@@ -15,15 +15,15 @@ namespace UMS_HUSC_WEB_API.Models
     public partial class VTinNhan
     {
         public int MaTinNhan { get; set; }
-        public string MaNguoiNhan { get; set; }
-        public string HoTenNguoiNhan { get; set; }
-        public string MaNguoiGui { get; set; }
-        public string HoTenNguoiGui { get; set; }
         public string TieuDe { get; set; }
         public string NoiDung { get; set; }
         public System.DateTime ThoiDiemGui { get; set; }
-        public bool NguoiGuiDaXoa { get; set; }
+        public int MaNguoiGui { get; set; }
+        public string HoTenNguoiGui { get; set; }
+        public int NguoiGuiTrangThai { get; set; }
+        public int MaNguoiNhan { get; set; }
+        public string HoTenNguoiNhan { get; set; }
         public Nullable<System.DateTime> ThoiDiemXem { get; set; }
-        public bool NguoiNhanDaXoa { get; set; }
+        public int NguoiNhanTrangThai { get; set; }
     }
 }
