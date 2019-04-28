@@ -294,6 +294,7 @@
     <Compile Include="ViewModels\QuanHuyen.cs" />
     <Compile Include="ViewModels\QuocGia.cs" />
     <Compile Include="ViewModels\Select2Model.cs" />
+    <Compile Include="ViewModels\TaiKhoan.cs" />
     <Compile Include="ViewModels\ThanhPho.cs" />
     <Compile Include="ViewModels\TinNhan.cs" />
     <Compile Include="ViewModels\TonGiao.cs" />

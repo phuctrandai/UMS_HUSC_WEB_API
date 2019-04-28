@@ -53,7 +53,7 @@ namespace UMS_HUSC_WEB_API.Daos
         public static List<TinNhan> GetTinNhanDaNhanTheoSoTrang(string maNguoiNhan, int soTrang, int soDongMoiTrang)
         {
             var skipRow = (soTrang - 1) * soDongMoiTrang;
-            var list = GetAllTinNhanDaNhan(maNguoiNhan).Skip(skipRow).Take(soDongMoiTrang).OrderByDescending(t => t.ThoiDiemGui).ToList();
+            var list = GetAllTinNhanDaNhan(maNguoiNhan).OrderByDescending(t => t.ThoiDiemGui).Skip(skipRow).Take(soDongMoiTrang).ToList();
 
             return list;
         }
@@ -103,6 +103,19 @@ namespace UMS_HUSC_WEB_API.Daos
             }
         }
 
+        public static List<TinNhan> SearchTinNhanDaNhan(string maNguoiNhan, string keyword, int soTrang, int soDong)
+        {
+            using(var db = new UMS_HUSCEntities())
+            {
+                var skipRow = (soTrang - 1) * soDong;
+                var keywordLower = keyword.ToLower();
+                var all = GetAllTinNhanDaNhan(maNguoiNhan);
+                var result = all.Where(t => t.TieuDe.ToLower().Contains(keywordLower) ||
+                                t.HoTenNguoiGui.ToLower().Contains(keywordLower));
+
+                return result.OrderByDescending(t => t.ThoiDiemGui).Skip(skipRow).Take(soDong).ToList();
+            }
+        }
         #endregion
 
         #region Tin nhan da gui
@@ -146,7 +159,7 @@ namespace UMS_HUSC_WEB_API.Daos
         public static List<TinNhan> GetTinNhanDaGuiTheoSoTrang(string maNguoiGui, int soTrang, int soDongMoiTrang)
         {
             var skipRow = (soTrang - 1) * soDongMoiTrang;
-            var list = GetAllTinNhanDaGui(maNguoiGui).Skip(skipRow).Take(soDongMoiTrang).OrderByDescending(t => t.ThoiDiemGui).ToList();
+            var list = GetAllTinNhanDaGui(maNguoiGui).OrderByDescending(t => t.ThoiDiemGui).Skip(skipRow).Take(soDongMoiTrang).ToList();
             return list;
         }
 
@@ -195,6 +208,19 @@ namespace UMS_HUSC_WEB_API.Daos
             }
         }
 
+        public static List<TinNhan> SearchTinNhanDaGui(string maNguoiGui, string keyword, int soTrang, int soDong)
+        {
+            using (var db = new UMS_HUSCEntities())
+            {
+                var skipRow = (soTrang - 1) * soDong;
+                var keywordLower = keyword.ToLower();
+                var all = GetAllTinNhanDaGui(maNguoiGui);
+                var result = all.Where(t => t.TieuDe.ToLower().Contains(keywordLower)
+                                || t.HoTenNguoiGui.ToLower().Contains(keywordLower));
+
+                return result.OrderByDescending(t => t.ThoiDiemGui).Skip(skipRow).Take(soDong).ToList();
+            }
+        }
         #endregion
 
         #region Tin nhan da xoa
@@ -214,7 +240,7 @@ namespace UMS_HUSC_WEB_API.Daos
         public static List<TinNhan> GetTinNhanDaXoaTheoSoTrang(string maSinhVien, int soTrang, int soDongMoiTrang)
         {
             var skipRow = (soTrang - 1) * soDongMoiTrang;
-            var list = GetAllTinNhanDaXoa(maSinhVien).Skip(skipRow).Take(soDongMoiTrang).OrderByDescending(t => t.ThoiDiemGui).ToList();
+            var list = GetAllTinNhanDaXoa(maSinhVien).OrderByDescending(t => t.ThoiDiemGui).Skip(skipRow).Take(soDongMoiTrang).ToList();
 
             return list;
         }
@@ -227,6 +253,19 @@ namespace UMS_HUSC_WEB_API.Daos
             }
         }
 
+        public static List<TinNhan> SearchTinNhanDaXoa(string maSinhVien, string keyword, int soTrang, int soDong)
+        {
+            using (var db = new UMS_HUSCEntities())
+            {
+                var skipRow = (soTrang - 1) * soDong;
+                var keywordLower = keyword.ToLower();
+                var all = GetAllTinNhanDaXoa(maSinhVien);
+                var result = all.Where(t => t.TieuDe.ToLower().Contains(keywordLower) ||
+                                t.HoTenNguoiGui.ToLower().Contains(keywordLower));
+
+                return result.OrderByDescending(t => t.ThoiDiemGui).Skip(skipRow).Take(soDong).ToList();
+            }
+        }
         #endregion
 
         public static TinNhan GetTinNhanTheoId(int id)
@@ -302,13 +341,13 @@ namespace UMS_HUSC_WEB_API.Daos
                 {
                     var maTaiKhoan = SinhVienDao.GetMaTaiKhoan(maSinhVien);
                     var nguoiNhan = db.NGUOINHANs.FirstOrDefault(n => n.MaNguoiNhan == maTaiKhoan && n.MaTinNhan == id);
-                    var nguoiGui = db.NGUOIGUIs.FirstOrDefault(n => n.MaNguoiGui == maTaiKhoan && n.MaTinNhan == id);
+                    //var nguoiGui = db.NGUOIGUIs.FirstOrDefault(n => n.MaNguoiGui == maTaiKhoan && n.MaTinNhan == id);
                     if (nguoiNhan != null && nguoiNhan.ThoiDiemXem == null)
                     {
                         nguoiNhan.ThoiDiemXem = DateTime.Now;
                         db.SaveChanges();
                     }
-                    return (nguoiNhan != null) || (nguoiGui != null);
+                    return (nguoiNhan != null) /*|| (nguoiGui != null)*/;
                 }
                 return false;
             }
@@ -333,6 +372,33 @@ namespace UMS_HUSC_WEB_API.Daos
                         var nguoiNhan = db.NGUOINHANs.FirstOrDefault(n => n.MaNguoiNhan == maTaiKhoan && n.MaTinNhan == id);
                         if (nguoiNhan != null)
                             nguoiNhan.TrangThai = TINNHAN_XOA_HAN;
+                    }
+                    db.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public static bool RestoreTinNhan(int id, string maSinhVien)
+        {
+            using (var db = new UMS_HUSCEntities())
+            {
+                var current = db.TINNHANs.FirstOrDefault(t => t.MaTinNhan == id);
+                if (current != null)
+                {
+                    var maTaiKhoan = SinhVienDao.GetMaTaiKhoan(maSinhVien);
+                    var nguoiGui = db.NGUOIGUIs.FirstOrDefault(n => n.MaNguoiGui == maTaiKhoan && n.MaTinNhan == id);
+
+                    if (nguoiGui != null) // sinh vien nay la nguoi gui tin nhan
+                    {
+                        nguoiGui.TrangThai = TINNHAN_CHUA_XOA;
+                    }
+                    else
+                    {
+                        var nguoiNhan = db.NGUOINHANs.FirstOrDefault(n => n.MaNguoiNhan == maTaiKhoan && n.MaTinNhan == id);
+                        if (nguoiNhan != null)
+                            nguoiNhan.TrangThai = TINNHAN_CHUA_XOA;
                     }
                     db.SaveChanges();
                     return true;

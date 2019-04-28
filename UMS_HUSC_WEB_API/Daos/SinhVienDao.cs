@@ -399,5 +399,32 @@ namespace UMS_HUSC_WEB_API.Daos
                 return sinhviens;
             }
         }
+
+        public static List<TaiKhoan> GetMaTaiKhoanVaHoTen(string nameQuery, int soTrang, int soDong)
+        {
+            using (var db = new UMS_HUSCEntities())
+            {
+                var sinhViens = db.VThongTinCaNhans.Where(s => s.HoTen.ToLower().Trim().Contains(nameQuery.ToLower().Trim()))
+                    .Select(s => new TaiKhoan()
+                    {
+                        MaTaiKhoan = s.MaTaiKhoan,
+                        HoTen = s.HoTen,
+                        MaSinhVien = s.MaSinhVien
+                    }).ToList();
+
+                var giangViens = db.GIANGVIENs.Where(g => g.HoVaTen.ToLower().Trim().Contains(nameQuery.ToLower().Trim()))
+                    .Select(g => new TaiKhoan()
+                    {
+                        MaTaiKhoan = g.MaTaiKhoan.Value,
+                        HoTen = g.HoVaTen,
+                        MaSinhVien = ""
+                    }).ToList();
+                sinhViens.AddRange(giangViens);
+
+                var skipRow = (soTrang - 1) * soDong;
+
+                return sinhViens.Skip(skipRow).Take(soDong).ToList();
+            }
+        }
     }
 }

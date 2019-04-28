@@ -21,8 +21,12 @@ namespace UMS_HUSC_WEB_API.Controllers
         private const string ORDER_ATTEMP_DELETE_MESSAGE = "xoatamthoi";
         private const string ORDER_UPDATE_SEEN_TIME = "capnhatthoidiemxem";
         private const string ORDER_FOREVER_DELETE_MESSAGE = "xoavinhvien";
+        private const string ORDER_RESTORE_MESSAGE = "khoiphuc";
+        private const string ORDER_SEARCH_RECEIVED_MESSAGE = "timkiemdanhan";
+        private const string ORDER_SEARCH_SENT_MESSAGE = "timkiemdagui";
+        private const string ORDER_SEARCH_DELETED_MESSAGE = "timkiemdaxoa";
 
-        // GET: api/SinhVien/TaiKhoan/order=...?masinhvien=...&matkhau...
+        // GET: api/SinhVien/[Action]/[order]?...
         [HttpGet]
         public IHttpActionResult TaiKhoan(string order, string maSinhVien, string matKhau, string matKhauMoi = "")
         {
@@ -56,7 +60,7 @@ namespace UMS_HUSC_WEB_API.Controllers
                             return Ok();
 
                         return BadRequest("Đổi mật khẩu không thành công");
-                        
+
                     default:
                         break;
                 }
@@ -64,7 +68,15 @@ namespace UMS_HUSC_WEB_API.Controllers
             return NotFound();
         }
 
-        // GET: api/SinhVien/TinNhan/order=...?masinhvien=...&matkhau=...&sotrang=...&sodong=...
+        [HttpGet]
+        public IHttpActionResult TaiKhoan(string order, int soTrang = 1, int soDong = 1)
+        {
+            if (string.IsNullOrEmpty(order))
+                return Ok();
+            else
+                return Ok(SinhVienDao.GetMaTaiKhoanVaHoTen(order, soTrang, soDong));
+        }
+
         [HttpGet]
         public IHttpActionResult TinNhan(string order, string maSinhVien, string matKhau, int soTrang = 0, int soDong = 1)
         {
@@ -77,7 +89,7 @@ namespace UMS_HUSC_WEB_API.Controllers
 
             var listTinNhan = new List<TINNHAN>();
 
-            switch(order.ToLower())
+            switch (order.ToLower())
             {
                 case ORDER_GET_RECEIVED_MESSAGE:
                     var soDongTong = TinNhanDao.GetTongTinNhanDaNhan(maSinhVien);
@@ -162,9 +174,74 @@ namespace UMS_HUSC_WEB_API.Controllers
 
                     return BadRequest("Cập nhật thời điểm xem không thành công, kiểm tra lại mã tin nhắn và mã người nhận !");
 
+                case ORDER_RESTORE_MESSAGE:
+                    var resultRestore = TinNhanDao.RestoreTinNhan(id, maSinhVien);
+                    if (resultRestore) return Ok();
+
+                    return BadRequest("Khôi phục không thành công, kiểm tra lại mã tin nhắn !");
+
                 default:
                     break;
             }
+            return NotFound();
+        }
+
+        [HttpGet]
+        public IHttpActionResult TinNhan(string order, string maSinhVien, string matKhau, string tuKhoa, int soTrang, int soDong)
+        {
+            if (string.IsNullOrEmpty(order) || string.IsNullOrEmpty(maSinhVien) || string.IsNullOrEmpty(matKhau))
+                return BadRequest("Tham số truyền vào không hợp lệ !");
+
+            var current = SinhVienDao.TonTaiSinhVien(maSinhVien, matKhau);
+            if (current == false)
+                return BadRequest("Thông tin sinh viên không hợp lệ !");
+
+            var listTinNhan = new List<TINNHAN>();
+
+            switch(order.ToLower())
+            {
+                case ORDER_SEARCH_RECEIVED_MESSAGE:
+                    var soDongTong = TinNhanDao.GetTongTinNhanDaNhan(maSinhVien);
+                    var temp = soDongTong % soDong;
+                    var subTongSoTrang = soDongTong / soDong;
+                    var tongSoTrang = temp == 0 ? subTongSoTrang : subTongSoTrang + 1;
+                    if (soTrang > tongSoTrang)
+                        return Ok(listTinNhan);
+                    else
+                    {
+                        var list = TinNhanDao.SearchTinNhanDaNhan(maSinhVien, tuKhoa, soTrang, soDong);
+                        return Ok(list);
+                    }
+
+                case ORDER_SEARCH_SENT_MESSAGE:
+                    soDongTong = TinNhanDao.GetTongTinNhanDaGui(maSinhVien);
+                    temp = soDongTong % soDong;
+                    subTongSoTrang = soDongTong / soDong;
+                    tongSoTrang = temp == 0 ? subTongSoTrang : subTongSoTrang + 1;
+                    if (soTrang > tongSoTrang)
+                        return Ok(listTinNhan);
+                    else
+                    {
+                        var list = TinNhanDao.SearchTinNhanDaGui(maSinhVien, tuKhoa, soTrang, soDong);
+                        return Ok(list);
+                    }
+
+                case ORDER_SEARCH_DELETED_MESSAGE:
+                    soDongTong = TinNhanDao.GetTongTinNhanDaXoa(maSinhVien);
+                    temp = soDongTong % soDong;
+                    subTongSoTrang = soDongTong / soDong;
+                    tongSoTrang = temp == 0 ? subTongSoTrang : subTongSoTrang + 1;
+                    if (soTrang > tongSoTrang)
+                        return Ok(listTinNhan);
+                    else
+                    {
+                        var list = TinNhanDao.SearchTinNhanDaXoa(maSinhVien, tuKhoa, soTrang, soDong);
+                        return Ok(list);
+                    }
+
+                default: break;
+            }
+
             return NotFound();
         }
 
@@ -173,9 +250,7 @@ namespace UMS_HUSC_WEB_API.Controllers
         {
             if (!SinhVienDao.TonTaiSinhVien(maSinhVien, matKhau))
                 return BadRequest("Thông tin người gửi không đúng");
-
-            //var hoTenNguoiGui = string.IsNullOrEmpty(tinNhan.HoTenNguoiGui) ?
-            //    danhSachHoTen.FirstOrDefault(i => i.MaSinhVien.Equals(tinNhan.MaNguoiGui)).HoTen : tinNhan.HoTenNguoiGui;
+            
             var hoTenNguoiGui = tinNhan.HoTenNguoiGui;
             var maxMaTinNhan = TinNhanDao.GetMaxMaTinNhan() + 1;
 
@@ -206,7 +281,7 @@ namespace UMS_HUSC_WEB_API.Controllers
                     MaTinNhan = maxMaTinNhan,
                     HoTenNguoiNhan = SinhVienDao.GetHoTenTheoTaiKhoan(item.MaNguoiNhan),
                     ThoiDiemXem = null,
-                    TINNHAN = newTinNhan, 
+                    TINNHAN = newTinNhan,
                     TAIKHOAN = null,
                     TrangThai = TinNhanDao.TINNHAN_CHUA_XOA,
                     MaNguoiNhan = item.MaNguoiNhan
