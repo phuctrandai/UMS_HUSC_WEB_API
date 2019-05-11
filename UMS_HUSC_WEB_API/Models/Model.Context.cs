@@ -27,7 +27,6 @@ namespace UMS_HUSC_WEB_API.Models
     
         public virtual DbSet<VThongTinChung> VThongTinChungs { get; set; }
         public virtual DbSet<VThongTinLienHe> VThongTinLienHes { get; set; }
-        public virtual DbSet<VDacDiemBanThan> VDacDiemBanThans { get; set; }
         public virtual DbSet<VQueQuan> VQueQuans { get; set; }
         public virtual DbSet<VThuongTru> VThuongTrus { get; set; }
         public virtual DbSet<LICHSUBANTHAN> LICHSUBANTHANs { get; set; }
@@ -57,5 +56,15 @@ namespace UMS_HUSC_WEB_API.Models
         public virtual DbSet<THONGTINLIENHE> THONGTINLIENHEs { get; set; }
         public virtual DbSet<THUONGTRU> THUONGTRUs { get; set; }
         public virtual DbSet<KYTUCXA> KYTUCXAs { get; set; }
+        public virtual DbSet<HOCPHAN> HOCPHANs { get; set; }
+        public virtual DbSet<PHONGHOC> PHONGHOCs { get; set; }
+        public virtual DbSet<LOPHOCPHAN> LOPHOCPHANs { get; set; }
+        public virtual DbSet<VHocKy> VHocKies { get; set; }
+        public virtual DbSet<LICHHOC> LICHHOCs { get; set; }
+        public virtual DbSet<THOIKHOABIEU> THOIKHOABIEUx { get; set; }
+        public virtual DbSet<DANGKYTHEOHOC> DANGKYTHEOHOCs { get; set; }
+        public virtual DbSet<VThoiKhoaBieu> VThoiKhoaBieux { get; set; }
+        public virtual DbSet<VDacDiemBanThan> VDacDiemBanThans { get; set; }
+        public virtual DbSet<DACDIEMBANTHAN> DACDIEMBANTHANs { get; set; }
     }
 }

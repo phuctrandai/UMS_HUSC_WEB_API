@@ -168,11 +168,18 @@
     <Compile Include="Controllers\SinhVienController.cs" />
     <Compile Include="Controllers\ThongBaoController.cs" />
     <Compile Include="Daos\FireBaseDao.cs" />
+    <Compile Include="Daos\LopHocPhanDao.cs" />
     <Compile Include="Daos\SinhVienDao.cs" />
     <Compile Include="Daos\ThongBaoDao.cs" />
     <Compile Include="Daos\TinNhanDao.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DACDIEMBANTHAN.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DANGKYTHEOHOC.cs">
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DANTOC.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -183,10 +190,19 @@
     <Compile Include="Models\GIANGVIEN.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\HOCPHAN.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\KYTUCXA.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\LICHHOC.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\LICHSUBANTHAN.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LOPHOCPHAN.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Model.Context.cs">
@@ -213,6 +229,9 @@
     <Compile Include="Models\NOISINH.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PHONGHOC.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PHUONGXA.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -232,6 +251,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\THANHPHO.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\THOIKHOABIEU.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\THONGBAO.cs">
@@ -255,6 +277,9 @@
     <Compile Include="Models\VDacDiemBanThan.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\VHocKy.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\VLichSuBanThan.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -262,6 +287,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VQueQuan.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VThoiKhoaBieu.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VThongTinCaNhan.cs">
@@ -287,15 +315,20 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\DanToc.cs" />
-    <Compile Include="ViewModels\DemoKetQua.cs" />
+    <Compile Include="ViewModels\Demo\DemoAddSchedule.cs" />
+    <Compile Include="ViewModels\Demo\DemoKetQua.cs" />
+    <Compile Include="ViewModels\Demo\DemoPostClass.cs" />
+    <Compile Include="ViewModels\Demo\DemoSubSchedule.cs" />
     <Compile Include="ViewModels\KyTucXa.cs" />
     <Compile Include="ViewModels\PhuongXa.cs" />
     <Compile Include="ViewModels\PushNotification.cs" />
     <Compile Include="ViewModels\QuanHuyen.cs" />
     <Compile Include="ViewModels\QuocGia.cs" />
-    <Compile Include="ViewModels\Select2Model.cs" />
+    <Compile Include="ViewModels\Demo\Select2Model.cs" />
     <Compile Include="ViewModels\TaiKhoan.cs" />
     <Compile Include="ViewModels\ThanhPho.cs" />
+    <Compile Include="ViewModels\ThoiKhoaBieu.cs" />
+    <Compile Include="ViewModels\ThongTinCaNhan.cs" />
     <Compile Include="ViewModels\TinNhan.cs" />
     <Compile Include="ViewModels\TonGiao.cs" />
     <Compile Include="ViewModels\VLyLichCaNhan.cs" />
@@ -462,6 +495,12 @@
     <Content Include="Scripts\tinymce\skins\ui\oxide\fonts\tinymce-mobile.woff" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Demo\DemoPostMessage.cshtml" />
+    <Content Include="Views\Demo\DemoPostClass.cshtml" />
+    <Content Include="Views\Demo\DemoSignUpClassFirst.cshtml" />
+    <Content Include="Views\Demo\DemoSignUpClassSecond.cshtml" />
+    <Content Include="Views\Demo\DemoAddScheduleFirst.cshtml" />
+    <Content Include="Views\Demo\DemoSubScheduleFirst.cshtml" />
+    <Content Include="Views\Demo\DemoSubScheduleSecond.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

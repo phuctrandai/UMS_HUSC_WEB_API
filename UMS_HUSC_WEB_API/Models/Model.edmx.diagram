@@ -7,7 +7,6 @@
       <Diagram DiagramId="545ab24350f24a5e869fe90475b74dbc" Name="Diagram1" DisplayType="true" ZoomLevel="69">
         <EntityTypeShape EntityType="UMS_HUSCModel.VThongTinChung" Width="1.5" PointX="17.875" PointY="0.5" />
         <EntityTypeShape EntityType="UMS_HUSCModel.VThongTinLienHe" Width="1.5" PointX="16.25" PointY="0.5" />
-        <EntityTypeShape EntityType="UMS_HUSCModel.VDacDiemBanThan" Width="1.5" PointX="16.25" PointY="4.875" />
         <EntityTypeShape EntityType="UMS_HUSCModel.VQueQuan" Width="1.5" PointX="14.625" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="UMS_HUSCModel.VThuongTru" Width="1.5" PointX="14.625" PointY="0.5" />
         <EntityTypeShape EntityType="UMS_HUSCModel.LICHSUBANTHAN" Width="1.5" PointX="4.25" PointY="0.5" />
@@ -71,6 +70,24 @@
         <AssociationConnector Association="UMS_HUSCModel.FK_THUONGTRU_THANHPHO" />
         <EntityTypeShape EntityType="UMS_HUSCModel.KYTUCXA" Width="1.5" PointX="9.375" PointY="13.375" />
         <AssociationConnector Association="UMS_HUSCModel.FK_THONGTINLIENHE_KYTUCXA" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.HOCPHAN" Width="1.5" PointX="12.625" PointY="15.875" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.PHONGHOC" Width="1.5" PointX="17.125" PointY="13.625" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.LOPHOCPHAN" Width="1.5" PointX="14.875" PointY="9.5" />
+        <AssociationConnector Association="UMS_HUSCModel.FK_LOPHOCPHAN_GIANGVIEN" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.VHocKy" Width="1.5" PointX="10.75" PointY="15.875" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.LICHHOC" Width="1.5" PointX="14.75" PointY="14.125" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.THOIKHOABIEU" Width="1.5" PointX="17.125" PointY="9.5" />
+        <AssociationConnector Association="UMS_HUSCModel.FK_LICHHOC_LOPHOCPHAN" />
+        <AssociationConnector Association="UMS_HUSCModel.FK_THOIKHOABIEU_LOPHOCPHAN1" />
+        <AssociationConnector Association="UMS_HUSCModel.FK_THOIKHOABIEU_PHONGHOC" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.DANGKYTHEOHOC" Width="1.5" PointX="12.5" PointY="12.375" />
+        <AssociationConnector Association="UMS_HUSCModel.FK_DANGKYTHEOHOC_LOPHOCPHAN1" />
+        <AssociationConnector Association="UMS_HUSCModel.FK_DANGKYTHEOHOC_SINHVIEN" />
+        <AssociationConnector Association="UMS_HUSCModel.FK_LICHHOC_PHONGHOC" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.VThoiKhoaBieu" Width="1.5" PointX="7.75" PointY="16.25" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.VDacDiemBanThan" Width="1.5" PointX="0.75" PointY="17.75" />
+        <EntityTypeShape EntityType="UMS_HUSCModel.DACDIEMBANTHAN" Width="1.5" PointX="6.5" PointY="20.875" />
+        <AssociationConnector Association="UMS_HUSCModel.FK_DACDIEMBANTHAN_SINHVIEN1" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

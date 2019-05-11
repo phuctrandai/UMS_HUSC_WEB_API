@@ -1,0 +1,31 @@
+﻿@model UMS_HUSC_WEB_API.ViewModels.Demo.DemoSubSchedule
+@{
+    ViewBag.Title = "DemoSubScheduleSecond";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<br />
+<center>
+    <h2>Demo Set Nghỉ Học</h2>
+</center>
+<div class="" style="width: 50%; margin: 0 auto">
+    @using (Html.BeginForm("DemoAddScheduleSecond", "Demo", FormMethod.Post))
+    {
+        <div class="form-group">
+            <label>Lớp học phần:</label>
+            <select class="form-control" name="maLopHocPhan" required>
+                @foreach (var item in Model.LichHocs)
+                {
+                    <option value="@item.MaLopHocPhan">
+                        @{ Write(string.Format("{0}", item.TenLopHocPhan)); }
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Submit" class="btn btn-success" style="width: 100%" />
+        </div>
+    }
+</div>

@@ -336,5 +336,77 @@ namespace UMS_HUSC_WEB_API.Controllers
             SinhVienDao.UpdateQueQuan(maSinhVien, lyLichCaNhan.QueQuan);
             return Ok(SinhVienDao.GetLyLichCaNhan(maSinhVien));
         }
+        
+        [HttpPost]
+        public IHttpActionResult UpdateDacDiemBanThan(string maSinhVien, string matKhau, VDacDiemBanThan dacDiemBanThan)
+        {
+            if (dacDiemBanThan == null || string.IsNullOrEmpty(maSinhVien) || string.IsNullOrEmpty(matKhau))
+                return BadRequest("Thông tin người dùng không được rỗng");
+
+            if (!SinhVienDao.TonTaiSinhVien(maSinhVien, matKhau))
+                return BadRequest("Thông tin người dùng không đúng");
+
+            SinhVienDao.UpdateDacDiemBanThan(dacDiemBanThan);
+            return Ok(SinhVienDao.GetDacDiemBanThan(maSinhVien));
+        }
+
+        [HttpGet]
+        public IHttpActionResult HocKy(string order, string maSinhVien, string matKhau, int maHocKy = 0)
+        {
+            if (string.IsNullOrEmpty(order) || string.IsNullOrEmpty(maSinhVien) || string.IsNullOrEmpty(matKhau))
+                return BadRequest("Thông tin người dùng không được rỗng");
+
+            if (!SinhVienDao.TonTaiSinhVien(maSinhVien, matKhau))
+                return BadRequest("Thông tin người dùng không đúng");
+
+            using (var db = new UMS_HUSCEntities())
+            {
+                switch (order.ToLower())
+                {
+                    case "danhsach":
+                        var hocKys = db.VHocKies.OrderByDescending(i => i.MaHocKy).ToArray();
+                        return Ok(hocKys);
+
+                    case "tacnghiep":
+                        var hocKy = db.VHocKies.FirstOrDefault(i => i.MaHocKy == maHocKy);
+                        if (hocKy != null)
+                        {
+                            var sinhVien = db.SINHVIENs.FirstOrDefault(s => s.MaSinhVien.Equals(maSinhVien));
+                            if (sinhVien != null)
+                            {
+                                sinhVien.HocKyTacNghiep = hocKy.MaHocKy;
+                                db.SaveChanges();
+                                return ThoiKhoaBieu(maSinhVien, matKhau, hocKy.MaHocKy);
+                            }
+                        }
+                        return BadRequest("Mã học kỳ không tồn tại");
+
+                    case "dongbo":
+                        var hocKyHienTai = db.SINHVIENs.FirstOrDefault(s => s.MaSinhVien.Equals(maSinhVien)).HocKyTacNghiep;
+                        if (maHocKy == hocKyHienTai)
+                            return Ok(true);
+
+                        else
+                            return Ok(hocKyHienTai);
+
+                    default:
+                        return BadRequest("Tham số không hợp lệ");
+                }
+            }
+        }
+
+        [HttpGet]
+        public IHttpActionResult ThoiKhoaBieu(string maSinhVien, string matKhau, int maHocKy = 0)
+        {
+            if (string.IsNullOrEmpty(maSinhVien) || string.IsNullOrEmpty(matKhau))
+                return BadRequest("Thông tin người dùng không được rỗng");
+
+            if (!SinhVienDao.TonTaiSinhVien(maSinhVien, matKhau))
+                return BadRequest("Thông tin người dùng không đúng");
+
+            var list = SinhVienDao.GetThoiKhoaBieu(maSinhVien, maHocKy);
+
+            return Ok(list);
+        }
     }
 }

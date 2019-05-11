@@ -85,5 +85,20 @@ namespace UMS_HUSC_WEB_API.Daos
             UMS_HUSCEntities db = new UMS_HUSCEntities();
             return db.FIREBASEs.FirstOrDefault(f => f.Token.Equals(token));
         }
+
+        public static string[] GetFireBaseTokenByClass(string maLopHocPhan)
+        {
+            using (var db = new UMS_HUSCEntities())
+            {
+                var result = new List<string>();
+                var list = db.DANGKYTHEOHOCs.Where(i => i.MaLopHocPhan.Equals(maLopHocPhan)).ToList();
+
+                list.ForEach(l => {
+                    var tokens = db.FIREBASEs.Where(f => f.MaSinhVien.Equals(l.MaSinhVien)).ToList();
+                    tokens.ForEach(t => result.Add(t.Token));
+                });
+                return result.ToArray();
+            }
+        }
     }
 }

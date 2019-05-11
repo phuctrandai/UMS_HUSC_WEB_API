@@ -1,0 +1,44 @@
+﻿@model UMS_HUSC_WEB_API.ViewModels.Demo.DemoSignUpCourse
+@{
+    ViewBag.Title = "DemoSignUpCourse";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<br />
+<center>
+    <h2>Demo Đăng Ký Lớp Học</h2>
+</center>
+<div class="" style="width: 50%; margin: 0 auto">
+    @using (Html.BeginForm("DemoSignUpClassThird", "Demo", FormMethod.Post))
+    {
+        <div class="form-group">
+            <label>Sinh viên:</label>
+            <select class="form-control" name="sinhVien" required>
+                @foreach (var item in Model.sinhViens)
+                {
+                    <option value="@item.MaSinhVien">
+                        @item.HoTen
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Lớp học phần:</label>
+            <select class="form-control" name="lopHocPhan" required>
+                @foreach (var item in Model.LopHocPhans)
+                {
+                    <option value="@item.MaLopHocPhan">
+                        @item.TenLopHocPhan
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Submit" class="btn btn-success" style="width: 100%" />
+        </div>
+    }
+</div>
+

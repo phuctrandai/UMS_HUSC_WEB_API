@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using UMS_HUSC_WEB_API.Daos;
 using UMS_HUSC_WEB_API.Models;
 using UMS_HUSC_WEB_API.ViewModels;
+using UMS_HUSC_WEB_API.ViewModels.Demo;
 
 namespace UMS_HUSC_WEB_API.Controllers
 {
@@ -13,12 +15,6 @@ namespace UMS_HUSC_WEB_API.Controllers
     {
         [HttpGet]
         public ActionResult DemoPostNews(DemoKetQua demo)
-        {
-            return View(demo);
-        }
-
-        [HttpGet]
-        public ActionResult DemoPostMessage(DemoKetQua demo)
         {
             return View(demo);
         }
@@ -64,6 +60,12 @@ namespace UMS_HUSC_WEB_API.Controllers
             return RedirectToAction("DemoPostNews", "Demo", demo);
         }
 
+        [HttpGet]
+        public ActionResult DemoPostMessage(DemoKetQua demo)
+        {
+            return View(demo);
+        }
+       
         [HttpPost, ValidateInput(false)]
         public ActionResult DemoPostMessage(FormCollection form)
         {
@@ -149,6 +151,149 @@ namespace UMS_HUSC_WEB_API.Controllers
             }
 
             return Json(new { items = list }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult DemoPostClass()
+        {
+            using (var db = new UMS_HUSCEntities())
+            {
+                var demo = new DemoPostClass()
+                {
+
+                    PhongHocs = db.PHONGHOCs.ToList(),
+                    HocKys = db.VHocKies.OrderByDescending(i => i.NamBatDau).ToList(),
+                    GiangViens = db.GIANGVIENs.ToList(),
+                    HocPhans = db.HOCPHANs.ToList(),
+                };
+                return View(demo);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DemoPostClass(FormCollection form)
+        {
+            using (var db = new UMS_HUSCEntities())
+            {
+                var hocKy = form["hocKy"];
+                var hocPhan = form["hocPhan"];
+                var giangVien = form["giangVien"];
+                var ngayHetHanDangKy = form["ngayHetHanDangKy"];
+                var ngayBatDauHoc = form["ngayBatDauHoc"];
+                var ngayKetThucHoc = form["ngayKetThucHoc"];
+                var phongHoc = form["phongHoc"];
+                var tietHocBatDau = form["tietHocBatDau"];
+                var tietHocKetThuc = form["tietHocKetThuc"];
+                var ngayTrongTuan = form["ngayTrongTuan"];
+                var soThuTu = form["soThuTu"];
+
+                LopHocPhanDao.AddLopHocPhan(hocPhan, int.Parse(soThuTu), int.Parse(hocKy), int.Parse(giangVien), DateTime.Parse(ngayHetHanDangKy), DateTime.Parse(ngayBatDauHoc),
+                    DateTime.Parse(ngayKetThucHoc), int.Parse(phongHoc), int.Parse(ngayTrongTuan), int.Parse(tietHocBatDau), int.Parse(tietHocKetThuc));
+
+                return RedirectToAction("DemoPostClass", "Demo", null);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult DemoSignUpClassFirst()
+        {
+            using (var db = new UMS_HUSCEntities())
+            {
+                var hocKys = db.VHocKies.OrderByDescending(i => i.TenHocKy)
+                    .OrderByDescending(i => i.NamBatDau).ToList();
+                return View(new DemoSignUpCourse() { HocKys = hocKys });
+            }
+        }
+
+        [HttpGet]
+        public ActionResult DemoSignUpClassSecond(int hocKy)
+        {
+            using (var db = new UMS_HUSCEntities())
+            {
+                var lopHocPhans = db.LOPHOCPHANs.Where(i => i.HocKy == hocKy).ToList();
+                var sinhViens = db.VThongTinChungs.ToList();
+                return View(new DemoSignUpCourse() { LopHocPhans = lopHocPhans, sinhViens = sinhViens });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DemoSignUpClassThird(FormCollection form)
+        {
+            using (var db = new UMS_HUSCEntities())
+            {
+                var maSinhVien = form["sinhVien"];
+                var lopHocPhan = form["lopHocPhan"];
+                LopHocPhanDao.DangKyLop(maSinhVien, lopHocPhan);
+                return RedirectToAction("DemoSignUpClassFirst", "Demo");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult DemoAddScheduleFirst(DemoKetQua demo)
+        {
+            using (var db = new UMS_HUSCEntities())
+            {
+                var maxHocKy = db.VHocKies.Max(i => i.MaHocKy);
+                var lopHocPhans = db.LOPHOCPHANs.Where(i => i.HocKy == maxHocKy).ToList();
+                var phongHocs = db.PHONGHOCs.ToList();
+                return View(new DemoAddSchedule() { LopHocPhans = lopHocPhans, PhongHocs = phongHocs, Demo = demo });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DemoAddScheduleSecond(FormCollection form)
+        {
+            var maLopHocPhan = form["maLopHocPhan"];
+            var tietHocBatDau = form["tietHocBatDau"];
+            var tietHocKetThuc = form["tietHocKetThuc"];
+            var ngayHoc = form["ngayHoc"];
+            var phongHoc = form["phongHoc"];
+
+            var lichHoc = new LICHHOC()
+            {
+                MaLopHocPhan = maLopHocPhan,
+                PhongHoc = int.Parse(phongHoc),
+                TietHocBatDau = int.Parse(tietHocBatDau),
+                TietHocKetThuc = int.Parse(tietHocKetThuc),
+                NgayHoc = DateTime.ParseExact(ngayHoc, "yyyy-MM-dd", CultureInfo.InvariantCulture)
+            };
+
+            DemoKetQua demo = new DemoKetQua();
+
+            if (LopHocPhanDao.TonTaiLichHoc(lichHoc))
+            {
+                demo.PhanHoi = "Lịch học đã tồn tại";
+                return RedirectToAction("DemoAddScheduleFirst", "Demo", demo);
+            }
+
+            LopHocPhanDao.AddLichHoc(lichHoc);
+            FCMController fcm = new FCMController();
+            string notification = fcm.CreateScheduleNotification(lichHoc);
+            string response = fcm.SendMessage(notification);
+
+            demo.PhanHoi = response;
+            demo.TinGuiDi = notification;
+
+            return RedirectToAction("DemoAddScheduleFirst", "Demo", demo);
+        }
+
+        [HttpGet]
+        public ActionResult DemoSubScheduleFirst(DemoKetQua demo)
+        {
+            using (var db = new UMS_HUSCEntities())
+            {
+                var maxHocKy = db.VHocKies.Max(i => i.MaHocKy);
+                var lopHocPhans = db.LOPHOCPHANs.Where(i => i.HocKy == maxHocKy).ToList();
+                return View(new DemoAddSchedule() { LopHocPhans = lopHocPhans, Demo = demo });
+            }
+        }
+         
+        [HttpPost]
+        public ActionResult DemoSubScheduleSecond(FormCollection form)
+        {
+            var maLopHocPhan = form["maLopHocPhan"];
+            var lichHocs = LopHocPhanDao.GetLichHoc(maLopHocPhan);
+            return View(lichHocs);
         }
     }
 }

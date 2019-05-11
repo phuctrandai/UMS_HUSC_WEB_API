@@ -60,10 +60,22 @@ namespace UMS_HUSC_WEB_API.Daos
             return current;
         }
 
-        public static VThongTinCaNhan GetThongTinCaNhan(string maSinhVien)
+        public static ThongTinCaNhan GetThongTinCaNhan(string maSinhVien)
         {
             UMS_HUSCEntities db = new UMS_HUSCEntities();
-            return db.VThongTinCaNhans.FirstOrDefault(v => v.MaSinhVien.Equals(maSinhVien));
+            var thongTinCaNhan = db.VThongTinCaNhans.FirstOrDefault(v => v.MaSinhVien.Equals(maSinhVien));
+            var hocKyTacNghiep = db.VHocKies.FirstOrDefault(i => i.MaHocKy == thongTinCaNhan.HocKyTacNghiep);
+            var thongTin = new ThongTinCaNhan()
+            {
+                MaSinhVien = thongTinCaNhan.MaSinhVien,
+                HoTen = thongTinCaNhan.HoTen,
+                MaTaiKhoan = thongTinCaNhan.MaTaiKhoan,
+                KhoaHoc = thongTinCaNhan.KhoaHoc,
+                TenNganh = thongTinCaNhan.TenNganh,
+                AnhDaiDien = thongTinCaNhan.AnhDaiDien,
+                HocKyTacNghiep = hocKyTacNghiep
+            };
+            return thongTin;
         }
 
         public static ThongTinChung GetThongTinChung(string maSinhVien)
@@ -333,6 +345,7 @@ namespace UMS_HUSC_WEB_API.Daos
                         QUOCGIA1 = null,
                         THANHPHO1 = null
                     };
+                    db.QUEQUANs.Add(newObj);
                 }
                 db.SaveChanges();
             }
@@ -343,6 +356,53 @@ namespace UMS_HUSC_WEB_API.Daos
             UMS_HUSCEntities db = new UMS_HUSCEntities();
             var current = db.VDacDiemBanThans.FirstOrDefault(v => v.MaSinhVien.Equals(maSinhVien));
             return current;
+        }
+
+        public static bool UpdateDacDiemBanThan(VDacDiemBanThan dacDiemBanThan)
+        {
+            if (dacDiemBanThan == null) return false;
+
+            using (var db = new UMS_HUSCEntities())
+            {
+                var current = db.DACDIEMBANTHANs.FirstOrDefault(i => i.MaSinhVien.Equals(dacDiemBanThan.MaSinhVien));
+
+                if (current != null)
+                {
+                    current.ThanhPhanXuatThan = dacDiemBanThan.ThanhPhanXuatThan;
+                    current.NhomMau = dacDiemBanThan.NhomMau;
+                    current.ChieuCao = dacDiemBanThan.ChieuCao;
+                    current.TinhTrangHonNhan = dacDiemBanThan.TinhTrangHonNhan;
+                    current.DienUuTienBanThan = dacDiemBanThan.DienUuTienBanThan;
+                    current.DienUuTienGiaDinh = dacDiemBanThan.DienUuTienGiaDinh;
+                    current.NgayVaoDoan = dacDiemBanThan.NgayVaoDoan;
+                    current.NgayVaoDang = dacDiemBanThan.NgayVaoDang;
+                    current.NgayChinhThucVaoDang = dacDiemBanThan.NgayChinhThucVaoDang;
+                    current.NoiKetNapDoan = dacDiemBanThan.NoiKetNapDoan;
+                    current.NoiKetNapDang = dacDiemBanThan.NoiKetNapDang;
+                }
+                else
+                {
+                    DACDIEMBANTHAN newRow = new DACDIEMBANTHAN()
+                    {
+                        MaSinhVien = dacDiemBanThan.MaSinhVien,
+                        ThanhPhanXuatThan = dacDiemBanThan.ThanhPhanXuatThan,
+                        ChieuCao = dacDiemBanThan.ChieuCao,
+                        NhomMau = dacDiemBanThan.NhomMau,
+                        TinhTrangHonNhan = dacDiemBanThan.TinhTrangHonNhan,
+                        DienUuTienBanThan = dacDiemBanThan.DienUuTienBanThan,
+                        DienUuTienGiaDinh = dacDiemBanThan.DienUuTienGiaDinh,
+                        NgayVaoDoan = dacDiemBanThan.NgayVaoDoan,
+                        NgayVaoDang = dacDiemBanThan.NgayVaoDang,
+                        NgayChinhThucVaoDang = dacDiemBanThan.NgayChinhThucVaoDang,
+                        NoiKetNapDang = dacDiemBanThan.NoiKetNapDang,
+                        NoiKetNapDoan = dacDiemBanThan.NoiKetNapDoan,
+                        SINHVIEN = null
+                    };
+                    db.DACDIEMBANTHANs.Add(newRow);
+                }
+                db.SaveChanges();
+                return true;
+            }
         }
 
         public static VLichSuBanThan GetLichSuBanThan(string maSinhVien)
@@ -426,5 +486,32 @@ namespace UMS_HUSC_WEB_API.Daos
                 return sinhViens.Skip(skipRow).Take(soDong).ToList();
             }
         }
+
+        public static List<ThoiKhoaBieu> GetThoiKhoaBieu(string maSinhVien, int maHocKy)
+        {
+            using (var db = new UMS_HUSCEntities())
+            {
+                var list = db.VThoiKhoaBieux.Where(i => i.HocKy == maHocKy
+                    && i.MaSinhVien.Equals(maSinhVien)).OrderBy(i => i.NgayHoc)
+                    .Select(i => new ThoiKhoaBieu()
+                    {
+                        MaSinhVien = maSinhVien,
+                        HoVaTen = i.HoVaTen, // Ho ten giang vien
+                        MaLopHocPhan = i.MaLopHocPhan,
+                        TenLopHocPhan = i.TenLopHocPhan,
+                        HocKy = i.HocKy,
+                        NgayHoc = i.NgayHoc,
+                        PhongHoc = i.PhongHoc,
+                        TenPhong = i.TenPhong,
+                        TietHocBatDau = i.TietHocBatDau,
+                        TietHocKetThuc = i.TietHocKetThuc
+                    }).ToList();
+
+                list.ForEach(i => i.NgayTrongTuan = i.NgayHoc.DayOfWeek.GetHashCode() + 1);
+
+                return list;
+            }
+        }
+
     }
 }

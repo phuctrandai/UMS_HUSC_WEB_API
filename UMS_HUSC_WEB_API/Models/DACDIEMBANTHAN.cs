@@ -12,7 +12,7 @@ namespace UMS_HUSC_WEB_API.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class VDacDiemBanThan
+    public partial class DACDIEMBANTHAN
     {
         public string MaSinhVien { get; set; }
         public Nullable<int> TinhTrangHonNhan { get; set; }
@@ -26,5 +26,7 @@ namespace UMS_HUSC_WEB_API.Models
         public Nullable<System.DateTime> NgayVaoDang { get; set; }
         public string NoiKetNapDang { get; set; }
         public Nullable<System.DateTime> NgayChinhThucVaoDang { get; set; }
+    
+        public virtual SINHVIEN SINHVIEN { get; set; }
     }
 }

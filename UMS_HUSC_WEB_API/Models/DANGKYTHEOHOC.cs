@@ -12,14 +12,18 @@ namespace UMS_HUSC_WEB_API.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class VThongTinCaNhan
+    public partial class DANGKYTHEOHOC
     {
         public string MaSinhVien { get; set; }
-        public string TenNganh { get; set; }
-        public string KhoaHoc { get; set; }
-        public string HoTen { get; set; }
-        public string AnhDaiDien { get; set; }
-        public int MaTaiKhoan { get; set; }
-        public Nullable<int> HocKyTacNghiep { get; set; }
+        public string MaLopHocPhan { get; set; }
+        public int LanHoc { get; set; }
+        public System.DateTime ThoiDiemDangKy { get; set; }
+        public Nullable<int> HinhThucDangKy { get; set; }
+        public Nullable<bool> TinhTichLuyTinChi { get; set; }
+        public bool TrangThaiXuLy { get; set; }
+        public Nullable<System.DateTime> ThoiDiemXuLy { get; set; }
+    
+        public virtual LOPHOCPHAN LOPHOCPHAN { get; set; }
+        public virtual SINHVIEN SINHVIEN { get; set; }
     }
 }

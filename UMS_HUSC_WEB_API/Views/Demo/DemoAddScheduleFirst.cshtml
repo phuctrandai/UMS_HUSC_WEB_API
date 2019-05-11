@@ -1,0 +1,78 @@
+﻿@model UMS_HUSC_WEB_API.ViewModels.Demo.DemoAddSchedule
+@{
+    ViewBag.Title = "DemoAddSchedule";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<br />
+<center>
+    <h2>Demo Thêm Buổi Học</h2>
+</center>
+<div class="" style="width: 50%; margin: 0 auto">
+    @using (Html.BeginForm("DemoAddScheduleSecond", "Demo", FormMethod.Post))
+    {
+        <div class="form-group">
+            <label>Lớp học phần:</label>
+            <select class="form-control" name="maLopHocPhan" required>
+                @foreach (var item in Model.LopHocPhans)
+                {
+                    <option value="@item.MaLopHocPhan">
+                        @{ Write(string.Format("{0}", item.TenLopHocPhan)); }
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Ngày học:</label>
+            <input type="date" class="form-control" name="ngayHoc" required />
+        </div>
+
+        <div class="form-group">
+            <label>Tiết học bắt đầu:</label>
+            <select class="form-control" name="tietHocBatDau" required>
+                @for (int i = 1; i <= 12; i++)
+                {
+                    <option value="@i">
+                        Tiết @i
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Tiết học kết thúc:</label>
+            <select class="form-control" name="tietHocKetThuc" required>
+                @for (int i = 1; i <= 12; i++)
+                {
+                    <option value="@i">
+                        Tiết @i
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Phòng học:</label>
+            <select class="form-control" name="phongHoc" required>
+                @foreach (var item in Model.PhongHocs)
+                {
+                    <option value="@item.MaPhong">
+                        @{ Write(item.TenPhong); }
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Submit" class="btn btn-success" style="width: 100%" />
+        </div>
+
+        <div class="form-group">
+            <label>
+                @Model.Demo.PhanHoi
+            </label>
+        </div>
+    }
+</div>

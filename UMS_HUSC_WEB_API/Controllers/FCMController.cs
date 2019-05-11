@@ -22,6 +22,7 @@ namespace UMS_HUSC_WEB_API.Controllers
 
         public const string MESSAGE_NOTIFICATION = "message_notification";
         public const string NEWS_NOTIFICATION = "news_notification";
+        public const string SCHEDULE_NOTIFICATION = "add_schedule_notification";
 
         [HttpGet]
         public IHttpActionResult Get()
@@ -110,6 +111,49 @@ namespace UMS_HUSC_WEB_API.Controllers
                     id = id,
                     type = MESSAGE_NOTIFICATION,
                     postTime = sendTime
+                }
+            };
+            string postData = JsonConvert.SerializeObject(notification);
+            return postData;
+        }
+
+        public string CreateScheduleNotification(LICHHOC lichHoc)
+        {
+            var arrRegid = FireBaseDao.GetFireBaseTokenByClass(lichHoc.MaLopHocPhan);
+
+            if (arrRegid.Length == 0) return null;
+
+            var lopHocPhan = LopHocPhanDao.GetLopHocPhan(lichHoc.MaLopHocPhan);
+
+            var phongHoc = LopHocPhanDao.GetPhongHoc(lichHoc.PhongHoc);
+
+            var giangVien = LopHocPhanDao.GetGiangVien(lopHocPhan.GiangVienPhuTrach);
+            
+            ThoiKhoaBieu thoiKhoaBieu = new ThoiKhoaBieu()
+            {
+                MaLopHocPhan = lopHocPhan.MaLopHocPhan,
+                TenLopHocPhan = lopHocPhan.TenLopHocPhan,
+                NgayHoc = lichHoc.NgayHoc,
+                HoVaTen = giangVien.HoVaTen,
+                NgayTrongTuan = lichHoc.NgayHoc.DayOfWeek.GetHashCode() + 1,
+                PhongHoc = phongHoc.MaPhong,
+                TenPhong = phongHoc.TenPhong,
+                TietHocBatDau = lichHoc.TietHocBatDau,
+                TietHocKetThuc = lichHoc.TietHocKetThuc,
+                HocKy = LopHocPhanDao.MaxMaHocKy(),
+                MaSinhVien = ""
+            };
+
+            string notiBody = JsonConvert.SerializeObject(thoiKhoaBieu);
+
+            PushNotification notification = new PushNotification() {
+                registration_ids = arrRegid,
+                data = new Data()
+                {
+                    title = "Lịch học bù",
+                    body = notiBody,
+                    postTime = DateTime.Now.ToString(),
+                    type = SCHEDULE_NOTIFICATION
                 }
             };
             string postData = JsonConvert.SerializeObject(notification);

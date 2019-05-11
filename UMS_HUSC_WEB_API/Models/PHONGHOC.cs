@@ -12,20 +12,21 @@ namespace UMS_HUSC_WEB_API.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class GIANGVIEN
+    public partial class PHONGHOC
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public GIANGVIEN()
+        public PHONGHOC()
         {
-            this.LOPHOCPHANs = new HashSet<LOPHOCPHAN>();
+            this.THOIKHOABIEUx = new HashSet<THOIKHOABIEU>();
+            this.LICHHOCs = new HashSet<LICHHOC>();
         }
     
-        public int MaGiangVien { get; set; }
-        public string HoVaTen { get; set; }
-        public Nullable<int> MaTaiKhoan { get; set; }
+        public int MaPhong { get; set; }
+        public string TenPhong { get; set; }
     
-        public virtual TAIKHOAN TAIKHOAN { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LOPHOCPHAN> LOPHOCPHANs { get; set; }
+        public virtual ICollection<THOIKHOABIEU> THOIKHOABIEUx { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LICHHOC> LICHHOCs { get; set; }
     }
 }

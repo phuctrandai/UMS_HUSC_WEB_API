@@ -12,30 +12,34 @@ namespace UMS_HUSC_WEB_API.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class SINHVIEN
+    public partial class LOPHOCPHAN
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SINHVIEN()
+        public LOPHOCPHAN()
         {
-            this.FIREBASEs = new HashSet<FIREBASE>();
+            this.LICHHOCs = new HashSet<LICHHOC>();
+            this.THOIKHOABIEUx = new HashSet<THOIKHOABIEU>();
             this.DANGKYTHEOHOCs = new HashSet<DANGKYTHEOHOC>();
         }
     
-        public string MaSinhVien { get; set; }
-        public Nullable<int> MaTaiKhoan { get; set; }
-        public Nullable<int> HocKyTacNghiep { get; set; }
+        public string TenLopHocPhan { get; set; }
+        public string MaLopHocPhan { get; set; }
+        public int HocKy { get; set; }
+        public string MaHocPhan { get; set; }
+        public int SoThuTuLop { get; set; }
+        public int GiangVienPhuTrach { get; set; }
+        public System.DateTime NgayHetHanDangKy { get; set; }
+        public System.DateTime NgayBatDauHoc { get; set; }
+        public System.DateTime NgayKetThucHoc { get; set; }
+        public Nullable<int> HinhThucHoc { get; set; }
+        public Nullable<int> TrangThaiHoatDong { get; set; }
     
+        public virtual GIANGVIEN GIANGVIEN { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FIREBASE> FIREBASEs { get; set; }
-        public virtual NOISINH NOISINH { get; set; }
-        public virtual LICHSUBANTHAN LICHSUBANTHAN { get; set; }
-        public virtual TAIKHOAN TAIKHOAN { get; set; }
-        public virtual THONGTINCHUNG THONGTINCHUNG { get; set; }
-        public virtual QUEQUAN QUEQUAN { get; set; }
-        public virtual THONGTINLIENHE THONGTINLIENHE { get; set; }
-        public virtual THUONGTRU THUONGTRU { get; set; }
+        public virtual ICollection<LICHHOC> LICHHOCs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<THOIKHOABIEU> THOIKHOABIEUx { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DANGKYTHEOHOC> DANGKYTHEOHOCs { get; set; }
-        public virtual DACDIEMBANTHAN DACDIEMBANTHAN { get; set; }
     }
 }
